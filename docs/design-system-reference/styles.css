@@ -1,0 +1,1321 @@
+/* ============================================
+   future.ly — Design System
+   Component & layout styles
+   ============================================ */
+
+@import "tokens.css";
+@import "fonts.css";
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-cream);
+  color: var(--ink);
+  font-family: var(--type-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding: var(--s-22) var(--s-12);
+}
+
+/* ============================================
+   Layout scaffolding
+   ============================================ */
+main { max-width: 1600px; margin: 0 auto; }
+
+.page-header {
+  margin-bottom: var(--s-22);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--s-12);
+}
+
+.page-header h1 {
+  font-family: var(--type-display-72);
+  font-weight: 900;
+  font-size: var(--fs-hero);
+  line-height: 0.9;
+  margin: 0 0 var(--s-4);
+  letter-spacing: -0.01em;
+}
+
+.page-header .sub {
+  font-family: var(--type-display-36);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--mute);
+  margin: 0 0 var(--s-6);
+}
+
+.page-header .meta {
+  font-family: var(--type-body);
+  font-size: var(--fs-small);
+  color: var(--mute);
+  max-width: 700px;
+}
+
+section { margin-bottom: var(--s-22); }
+
+.section-label {
+  font-family: var(--type-body);
+  font-weight: 500;
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  margin-bottom: var(--s-3);
+}
+
+.section-title {
+  font-family: var(--type-display-36);
+  font-weight: 900;
+  font-size: 36px;
+  margin: 0 0 var(--s-3);
+  letter-spacing: 0.01em;
+}
+
+.section-desc {
+  font-family: var(--type-body);
+  font-size: var(--fs-small);
+  color: var(--mute);
+  max-width: 700px;
+  margin-bottom: var(--s-8);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-6);
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-6);
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6);
+}
+
+/* ============================================
+   Glyph — inline Blazeface dingbats/arrows/ornaments
+   See GLYPHS.md for codepoints and restraint rules.
+   Base renders at the 14pt cut (small inline use);
+   size modifiers switch to larger cuts for bigger
+   rendering sizes, per §4a optical-size discipline.
+   ============================================ */
+.glyph {
+  font-family: var(--type-display-14);
+  font-style: normal;
+  font-weight: 900;
+  font-feature-settings: normal;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+  color: currentColor;
+}
+.glyph--xs { font-family: var(--type-display-12); }     /* 10–15 px  */
+.glyph--sm { font-family: var(--type-display-16); }     /* 16–23 px  */
+.glyph--md { font-family: var(--type-display-24); }     /* 24–40 px  */
+.glyph--lg { font-family: var(--type-display-48); }     /* 48–72 px  */
+.glyph--xl { font-family: var(--type-display-72); }     /* 72–144 px */
+
+/* Proper fractions via the Blazeface `frac` feature. */
+.frac { font-feature-settings: "frac" on; }
+
+/* ============================================
+   Lockup frames
+   ============================================ */
+.lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-16) var(--s-8);
+  min-height: 320px;
+  text-align: center;
+  border-radius: var(--radius);
+}
+.lockup.bg-cream {
+  background: var(--bg-cream);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+.lockup.bg-ink {
+  background: var(--ink);
+  color: var(--dark-text);
+}
+.lockup.bg-vermillion {
+  background: var(--vermillion);
+  color: #fff;
+}
+.lockup.bg-kraft {
+  background: var(--kraft);
+  color: var(--ink);
+}
+.lockup.bg-white {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid #e5e5e5;
+}
+
+.lockup .wordmark {
+  font-family: var(--type-display-72);
+  font-weight: 900;
+  font-size: 72px;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+  margin: 0;
+}
+
+.lockup .wordmark.size-48 {
+  font-family: var(--type-display-48);
+  font-size: 48px;
+}
+.lockup .wordmark.size-36 {
+  font-family: var(--type-display-36);
+  font-size: 36px;
+}
+
+.lockup .sub-italic {
+  font-family: var(--type-display-24);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 24px;
+  margin: var(--s-4) 0 0;
+  letter-spacing: 0.01em;
+}
+
+.lockup .sub-sans {
+  font-family: var(--type-body);
+  font-size: var(--fs-small);
+  text-transform: none;
+  letter-spacing: 0.22em;
+  margin: var(--s-5) 0 0;
+}
+
+.lockup .closing-sun {
+  margin-top: var(--s-5);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.lockup-label {
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  text-align: center;
+  margin-top: var(--s-3);
+}
+
+/* ============================================
+   Colour swatches
+   ============================================ */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--s-4);
+}
+.swatch {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.swatch-colour {
+  height: 100px;
+}
+.swatch-meta {
+  padding: var(--s-3);
+  font-family: var(--type-mono);
+  font-size: var(--fs-small);
+}
+.swatch-name {
+  font-family: var(--type-body);
+  font-weight: 500;
+  font-size: var(--fs-small);
+  color: var(--ink);
+  display: block;
+  margin-bottom: 2px;
+}
+.swatch-hex {
+  color: var(--mute);
+  font-size: var(--fs-micro);
+}
+
+/* ============================================
+   Type scale showcase
+   ============================================ */
+.type-row {
+  display: flex;
+  align-items: baseline;
+  padding: var(--s-4) 0;
+  border-bottom: 1px dashed var(--rule);
+  gap: var(--s-6);
+}
+.type-row:last-child { border-bottom: 0; }
+
+.type-meta {
+  width: 140px;
+  flex-shrink: 0;
+  font-family: var(--type-mono);
+  font-size: var(--fs-small);
+  color: var(--mute);
+}
+.type-sample { flex: 1; }
+
+.type-sample.s72 { font-family: var(--type-display-72); font-size: 72px; line-height: 0.95; }
+.type-sample.s60 { font-family: var(--type-display-60); font-size: 60px; line-height: 0.95; }
+.type-sample.s48 { font-family: var(--type-display-48); font-size: 48px; line-height: 1; }
+.type-sample.s36 { font-family: var(--type-display-36); font-size: 36px; line-height: 1; }
+.type-sample.s24 { font-family: var(--type-display-24); font-size: 24px; line-height: 1.1; }
+.type-sample.s18 { font-family: var(--type-display-18); font-size: 18px; line-height: 1.3; }
+.type-sample.s16 { font-family: var(--type-display-16); font-size: 16px; line-height: 1.35; }
+.type-sample.s14 { font-family: var(--type-display-14); font-size: 14px; line-height: 1.4; }
+.type-sample.s12 { font-family: var(--type-display-12); font-size: 12px; line-height: 1.5; }
+.type-sample.italic { font-style: italic; }
+
+/* ============================================
+   Story panel
+   ============================================ */
+.story-panel {
+  width: 440px;
+  aspect-ratio: 210 / 297; /* A3 */
+  background: var(--kraft);
+  padding: var(--s-16) var(--s-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.story-panel .sp-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--type-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 var(--s-4);
+}
+.story-panel .sp-kicker .glyph {
+  font-size: 10px;
+}
+.story-panel .sp-kicker .flanker {
+  font-family: var(--type-display-18);
+  font-size: 22px;
+  margin: 0 var(--s-2);
+}
+.story-panel .sp-title {
+  font-family: var(--type-display-60);
+  font-weight: 900;
+  font-size: 60px;
+  line-height: 0.88;
+  margin: 0 0 var(--s-5);
+  letter-spacing: 0.02em;
+}
+.story-panel .sp-sub {
+  font-family: var(--type-display-24);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 22px;
+  margin: 0 0 var(--s-5);
+}
+.story-panel .sp-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 80%;
+  margin: var(--s-4) 0 var(--s-6);
+}
+.story-panel .sp-divider::before,
+.story-panel .sp-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ink);
+}
+/* Preview approximates A3 at 440px. Real print uses the 18pt cut
+   at 18pt; this on-screen preview uses the 14pt cut at 13px so
+   hairlines survive the reduced scale. */
+.story-panel .sp-body {
+  font-family: var(--type-display-14);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1.55;
+  max-width: 320px;
+  margin: 0 0 var(--s-6);
+}
+.story-panel .sp-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--type-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-4);
+}
+.story-panel .sp-qr {
+  width: 80px;
+  height: 80px;
+  background: var(--ink);
+}
+.story-panel .sp-url {
+  font-family: var(--type-mono);
+  font-size: 9px;
+  margin-top: var(--s-2);
+}
+.story-panel .sp-closing {
+  margin-top: var(--s-3);
+  color: var(--ink);
+}
+.story-panel .sp-footer {
+  position: absolute;
+  bottom: var(--s-8);
+  left: 0;
+  right: 0;
+  font-family: var(--type-body);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   Kraft mailer shipping stamp
+   ============================================ */
+.mailer {
+  background: var(--kraft);
+  padding: var(--s-12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stamp {
+  border: 2px solid var(--ink);
+  padding: 3px;
+  display: inline-block;
+}
+.stamp-inner {
+  border: 0.5px solid var(--ink);
+  padding: var(--s-6) var(--s-10);
+  text-align: center;
+}
+.stamp-title {
+  font-family: var(--type-display-36);
+  font-weight: 900;
+  font-size: 36px;
+  letter-spacing: 0.02em;
+  margin: 0 0 var(--s-2);
+}
+.stamp-sub {
+  font-family: var(--type-display-18);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 18px;
+  margin: 0 0 var(--s-4);
+}
+.stamp-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  justify-content: center;
+  margin: var(--s-3) 0 var(--s-4);
+}
+.stamp-divider::before,
+.stamp-divider::after {
+  content: "";
+  width: 80px;
+  height: 0.5px;
+  background: var(--ink);
+}
+.stamp-origin {
+  font-family: var(--type-body);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+.stamp-origin .small {
+  font-weight: 400;
+  font-size: 9px;
+}
+.stamp-closing {
+  margin-top: var(--s-3);
+  text-align: center;
+  color: var(--ink);
+}
+
+/* ============================================
+   T-shirt mockup
+   ============================================ */
+.tshirt {
+  background: var(--vermillion);
+  height: 560px;
+  border-radius: 4px;
+  padding: 140px var(--s-8) 0;
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+.tshirt::before {
+  /* crude neckline */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 30px;
+  background: transparent;
+  border: 0 solid transparent;
+  border-bottom: 30px solid rgba(0, 0, 0, 0.15);
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-radius: 0 0 60% 60%;
+}
+/* Real tee chest print is 48pt physical; this 560px mockup is scaled down,
+   so we use 36pt at 40px on screen — right cut for the preview size. */
+.tshirt .tee-title {
+  font-family: var(--type-display-36);
+  font-weight: 900;
+  font-size: 40px;
+  letter-spacing: 0.025em;
+  margin: 0 0 var(--s-2);
+}
+.tshirt .tee-sub {
+  font-family: var(--type-display-14);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 16px;
+  margin: 0 0 var(--s-3);
+}
+.tshirt .tee-sun {
+  font-size: 12px;
+}
+
+/* ============================================
+   Stickers
+   ============================================ */
+.sticker-wordmark {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: var(--s-6) var(--s-8);
+  display: inline-block;
+}
+.sticker-wordmark .sw-text {
+  font-family: var(--type-mono);
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--vermillion);
+  letter-spacing: -0.02em;
+}
+
+.sticker-seal {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+  width: 170px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+}
+.sticker-seal .seal-sun {
+  font-size: 56px;
+  line-height: 1;
+  color: var(--vermillion);
+}
+.sticker-seal .seal-star {
+  font-family: var(--type-display-48);
+  font-weight: 900;
+  line-height: 0.85;
+  color: var(--vermillion);
+}
+.sticker-seal .seal-flanked {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--vermillion);
+}
+.sticker-seal .seal-text {
+  font-family: var(--type-mono);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--vermillion);
+  letter-spacing: -0.02em;
+}
+
+/* ============================================
+   Brand system moments — reference blocks
+   ============================================ */
+.moment {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: var(--s-6);
+  border-radius: var(--radius);
+}
+.moment-header {
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  margin-bottom: var(--s-4);
+}
+
+/* Transparency ledger */
+.ledger-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+}
+.ledger-row .amt {
+  font-family: var(--type-mono);
+  font-weight: 500;
+  font-size: 13px;
+  width: 72px;
+}
+.ledger-row .desc {
+  font-family: var(--type-body);
+  font-size: 13px;
+  color: var(--mute);
+}
+.ledger-row.highlight .amt,
+.ledger-row.highlight .desc {
+  color: var(--vermillion);
+  font-weight: 600;
+}
+
+/* Milestone cascade — print
+   Amounts use JetBrains Mono Bold (tabular figures, clean scan).
+   Earlier version used Blazeface display-16 at 16 px — the heavy
+   display numerals and £ glyph crashed at small scale; mono fixes it. */
+.cascade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: center;
+}
+.cascade-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--type-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.cascade-row .amount {
+  font-family: var(--type-mono);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+/* Bullet mark — tiny solid square reads as a print tick. */
+.cascade-row .cascade-mark {
+  font-size: 7px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+/* Editorial scroll divider */
+.divider-block {
+  text-align: center;
+  padding: var(--s-6) var(--s-4);
+}
+.divider-block .prev,
+.divider-block .next {
+  font-family: var(--type-body);
+  font-size: 12px;
+  color: var(--mute);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.divider-block .scroll-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+  margin: var(--s-6) 0;
+}
+.divider-block .scroll-divider .line {
+  width: 1px;
+  height: 30px;
+  background: var(--ink);
+}
+.divider-block .scroll-divider .dot {
+  font-size: 14px;
+}
+
+/* Email subject line treatment */
+.email-block {
+  font-family: var(--type-body);
+  font-size: 13px;
+}
+.email-line {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+}
+.email-line .label {
+  color: var(--mute);
+  width: 60px;
+}
+.email-line .value {
+  color: var(--ink);
+}
+.email-line .value.italic {
+  font-family: var(--type-display-14);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 14px;
+}
+.countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--type-display-14);
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--vermillion);
+  letter-spacing: 0.03em;
+  margin-top: var(--s-3);
+}
+
+/* Ornament-flanked number device (e.g. ✸ £2,200 ✸) */
+.ornament-device {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--type-display-24);
+  font-weight: 900;
+  font-size: 28px;
+}
+.ornament-device .glyph {
+  font-size: 0.55em;
+}
+
+/* Ornament-flanked section kicker (e.g. ✸ KINGS OF THE PACIFIC ✸) */
+.ornament-kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+  font-family: var(--type-body);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.ornament-kicker .glyph { color: var(--vermillion); font-size: 14px; }
+
+/* Favicon previews — Italic is canonical (per John's pick).
+   Each size picks the matching optical cut per §4a. */
+.favicon-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-8);
+  padding: var(--s-6) 0;
+}
+.favicon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+}
+.favicon.size-128 { width: 128px; height: 128px; font-size: 104px; font-family: var(--type-display-72); }
+.favicon.size-64  { width: 64px;  height: 64px;  font-size: 52px;  font-family: var(--type-display-48); }
+.favicon.size-32  { width: 32px;  height: 32px;  font-size: 26px;  font-family: var(--type-display-24); }
+.favicon.size-16  { width: 16px;  height: 16px;  font-size: 13px;  font-family: var(--type-display-12); }
+.favicon.bg-cream { background: var(--bg-cream); color: var(--ink); border: 1px solid var(--rule); }
+.favicon.bg-ink   { background: var(--ink); color: var(--bg-cream); }
+.favicon.bg-red   { background: var(--vermillion); color: #fff; }
+/* Opt-out: explicit Roman variant for the comparison cell */
+.favicon.roman    { font-style: normal; }
+
+/* ============================================
+   Editorial note moment (writing hand ✍)
+   ============================================ */
+.editor-note .en-kicker {
+  display: flex;
+  align-items: center;
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vermillion);
+  margin-bottom: var(--s-4);
+}
+.editor-note .en-body {
+  font-family: var(--type-display-14);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 0 0 var(--s-4);
+}
+.editor-note .en-footer {
+  display: flex;
+  align-items: center;
+  font-family: var(--type-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+  border-top: 1px solid var(--rule);
+  padding-top: var(--s-3);
+}
+
+/* Back-link pattern */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--type-display-14);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--vermillion);
+  text-decoration: none;
+  margin-bottom: var(--s-4);
+}
+.back-link-note {
+  font-family: var(--type-body);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--mute);
+  margin: 0;
+}
+.back-link-note code {
+  font-family: var(--type-mono);
+  font-size: 10px;
+  background: var(--bg-cream);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+/* Press-kit kicker */
+.press-kicker {
+  display: flex;
+  align-items: center;
+  font-family: var(--type-display-18);
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 var(--s-3);
+}
+.press-kicker .glyph {
+  font-size: 14px;
+  color: var(--vermillion);
+}
+.press-kicker-sub {
+  font-family: var(--type-body);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--mute);
+  margin: 0;
+}
+
+/* ============================================
+   Logo lab — wordmark explorations
+   ============================================ */
+.logo-lab {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s-6);
+  margin-bottom: var(--s-8);
+}
+.logo-lab--dark {
+  margin-top: var(--s-4);
+}
+.logo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-5);
+  padding: var(--s-12) var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  min-height: 180px;
+}
+.logo-card--dark {
+  background: var(--ink);
+  color: var(--dark-text);
+  border: 1px solid var(--ink);
+}
+.logo-card .logo-meta {
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  color: var(--mute);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+.logo-card--dark .logo-meta { color: #9a9388; }
+.logo-card--dark .logo-meta strong { color: var(--dark-text); }
+
+/* Per-family render classes for the logo lab */
+.logo-blz-48 {
+  font-family: var(--type-display-48);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--ink);
+}
+.logo-card--dark .logo-blz-48 { color: var(--dark-text); }
+.logo-sans {
+  font-family: "Instrument Sans", -apple-system, system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.logo-card--dark .logo-sans { color: var(--dark-text); }
+.logo-mono {
+  font-family: "JetBrains Mono", "SF Mono", Menlo, monospace;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.logo-card--dark .logo-mono { color: var(--dark-text); }
+
+/* ============================================
+   Fleuron flankers — real Blazeface ornaments
+   Reserved for paired title-flanker slot only.
+   Codepoints U+E000–U+E009 after local font patch.
+   ============================================ */
+.flanker {
+  font-family: var(--type-display-48);
+  font-weight: 900;
+  font-style: normal;
+  line-height: 0.9;
+  display: inline-block;
+  vertical-align: middle;
+  color: currentColor;
+}
+
+/* Inventory — show all 5 pairs */
+.fleuron-inventory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-10);
+  padding: var(--s-10) var(--s-8);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  margin-bottom: var(--s-10);
+}
+.fl-pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-10);
+}
+.fl-label {
+  font-family: var(--type-body);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* Flanked title — left fleuron, title, right fleuron */
+.tt-flanked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-5);
+  margin-bottom: var(--s-4);
+}
+.tt-flanked .tt-title { margin: 0; }
+
+/* Small-scale fleuron demos — exploration */
+.small-fleuron-demos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s-6);
+}
+.sf-demo {
+  padding: var(--s-8) var(--s-6);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  text-align: center;
+}
+.sf-line {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+}
+.sf-text {
+  font-family: var(--type-body);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.sf-body {
+  font-family: var(--type-display-14);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mute);
+  margin: 0 0 var(--s-5);
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.sf-caption {
+  font-family: var(--type-mono);
+  font-size: var(--fs-micro);
+  color: var(--mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+/* ============================================
+   Title treatments — layout
+   ============================================ */
+.title-treatments {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: var(--s-6);
+}
+.title-treatments-hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(640px, 1fr));
+  gap: var(--s-6);
+  margin-top: var(--s-6);
+}
+.tt-subhead {
+  font-family: var(--type-body);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  margin: var(--s-10) 0 var(--s-4);
+}
+.tt-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-12) var(--s-6);
+  text-align: center;
+  border-radius: var(--radius);
+  min-height: 220px;
+}
+.tt-block.tt-hero {
+  padding: var(--s-16) var(--s-10);
+  min-height: 280px;
+}
+.tt-block.tt-bg-cream {
+  background: var(--bg-cream);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+}
+.tt-block.tt-bg-ink {
+  background: var(--ink);
+  color: var(--dark-text);
+}
+.tt-title {
+  font-family: var(--type-display-36);
+  font-weight: 900;
+  margin: 0 0 var(--s-4);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.tt-title--md { font-size: 32px; }
+.tt-title--xl { font-family: var(--type-display-60); font-size: 56px; line-height: 0.95; }
+.tt-rule {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 70%;
+  margin: var(--s-3) 0 var(--s-4);
+}
+.tt-rule--long { width: 80%; }
+.tt-rule .tt-line {
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+.tt-sub {
+  font-family: var(--type-body);
+  font-size: 13px;
+  color: var(--mute);
+  margin: var(--s-2) 0 0;
+  max-width: 320px;
+}
+.tt-bg-ink .tt-sub { color: #9a9388; }
+.tt-sub--italic {
+  font-family: var(--type-display-24);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 22px;
+  color: currentColor;
+  margin-top: var(--s-3);
+}
+.tt-caption {
+  font-family: var(--type-mono);
+  font-size: var(--fs-micro);
+  color: var(--mute);
+  margin: var(--s-5) 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tt-bg-ink .tt-caption { color: #6e685f; }
+
+/* ============================================
+   Other ornaments in context
+   ============================================ */
+.other-ornaments {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+.oo-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--s-6);
+  padding: var(--s-5) var(--s-3);
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+.oo-label {
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+}
+.oo-demo {
+  font-family: var(--type-display-18);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+/* ============================================
+   Mark candidates — trials grid
+   ============================================ */
+.mark-trials {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.mark-trial-header,
+.mark-trial {
+  display: grid;
+  grid-template-columns: 160px 120px repeat(6, 1fr);
+  background: var(--surface);
+}
+.mark-trial-header {
+  background: var(--bg-cream);
+}
+.mark-trial-header > span {
+  padding: var(--s-4) var(--s-3);
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  border-right: 1px solid var(--rule);
+}
+.mark-trial-header > span:first-child { padding-left: var(--s-5); }
+.mark-trial-header > span:last-child { border-right: 0; }
+
+.mark-trial > .mt-label,
+.mark-trial > .mt-cell {
+  padding: var(--s-5) var(--s-3);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  gap: var(--s-2);
+}
+.mark-trial > .mt-label {
+  flex-direction: column;
+  gap: var(--s-2);
+  padding-left: var(--s-5);
+  align-items: flex-start;
+  justify-content: center;
+}
+.mark-trial .mt-code {
+  font-family: var(--type-mono);
+  font-size: var(--fs-micro);
+  color: var(--mute);
+  letter-spacing: 0.04em;
+}
+.mark-trial .mt-name {
+  font-family: var(--type-display-14);
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+.mark-trial .mt-name em {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--mute);
+}
+.mark-trial > .mt-cell:last-child { border-right: 0; }
+.mark-trial .mt-big { background: var(--bg-cream); }
+.mark-trial .mt-divider { gap: var(--s-3); }
+.mark-trial .mt-rule {
+  flex: 1;
+  max-width: 40px;
+  height: 1px;
+  background: var(--ink);
+}
+.mark-trial .mt-rule-short { max-width: 24px; }
+.mark-trial .mt-amt {
+  font-family: var(--type-mono);
+  font-size: 11px;
+  color: var(--mute);
+  margin-left: var(--s-2);
+}
+.mark-trial .mt-cd {
+  font-family: var(--type-display-14);
+  font-weight: 900;
+  font-size: 12px;
+  color: var(--vermillion);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================
+   Glyph inventory table
+   ============================================ */
+.glyph-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-10);
+}
+.glyph-group-label {
+  font-family: var(--type-body);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  margin: 0 0 var(--s-4);
+}
+.glyph-cells {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--s-4);
+}
+.glyph-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  padding: var(--s-5) var(--s-3);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  min-height: 110px;
+}
+.glyph-code {
+  font-family: var(--type-mono);
+  font-size: var(--fs-micro);
+  color: var(--mute);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================
+   Fractions demo
+   ============================================ */
+.frac-demos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-12);
+  align-items: flex-end;
+}
+.frac-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.frac-demo .frac-big {
+  font-family: var(--type-display-48);
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--ink);
+}
+.frac-demo .frac-mid {
+  font-family: var(--type-display-36);
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--ink);
+}
+.frac-label {
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+}
+
+/* Utility */
+.spacer-s { height: var(--s-6); }
+.spacer-m { height: var(--s-12); }
+.spacer-l { height: var(--s-22); }
+.flex-row { display: flex; gap: var(--s-6); align-items: flex-start; flex-wrap: wrap; }
+.flex-col { display: flex; flex-direction: column; gap: var(--s-6); }
+.caption {
+  font-family: var(--type-body);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  margin-top: var(--s-3);
+}

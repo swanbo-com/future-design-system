@@ -45,5 +45,23 @@ next-env.d.ts
 
 # User-created archive — not tracked
 /public/brand.zip
-# .git.corrupt-backup
+
+# migration artefacts (from extraction out of the platform repo)
 /.git.corrupt-backup
+/_migrated-from-outer
+/.delivery-staging
+
+# zip delivery output
+/deliveries
+
+# migration artefacts
+_migrated-from-outer/
+
+# migration artefacts
+deliveries/
+
+# migration artefacts
+.git.corrupt-backup/
+
+# migration artefacts
+.delivery-staging/

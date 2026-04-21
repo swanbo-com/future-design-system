@@ -1,0 +1,157 @@
+/* ============================================
+   Ohno Blazeface — full optical size system
+   9 Roman + 9 Italic = 18 cuts
+   ============================================ */
+
+/* Roman — one family, nine style names per the foundry convention */
+@font-face {
+  font-family: "Ohno Blazeface 72";
+  src: url("fonts/OhnoBlazeface-72Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 60";
+  src: url("fonts/OhnoBlazeface-60Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 48";
+  src: url("fonts/OhnoBlazeface-48Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 36";
+  src: url("fonts/OhnoBlazeface-36Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 24";
+  src: url("fonts/OhnoBlazeface-24Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 18";
+  src: url("fonts/OhnoBlazeface-18Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 16";
+  src: url("fonts/OhnoBlazeface-16Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 14";
+  src: url("fonts/OhnoBlazeface-14Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 12";
+  src: url("fonts/OhnoBlazeface-12Point.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic — nine optical sizes */
+@font-face {
+  font-family: "Ohno Blazeface 72";
+  src: url("fonts/OhnoBlazeface-72PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 60";
+  src: url("fonts/OhnoBlazeface-60PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 48";
+  src: url("fonts/OhnoBlazeface-48PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 36";
+  src: url("fonts/OhnoBlazeface-36PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 24";
+  src: url("fonts/OhnoBlazeface-24PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 18";
+  src: url("fonts/OhnoBlazeface-18PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 16";
+  src: url("fonts/OhnoBlazeface-16PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 14";
+  src: url("fonts/OhnoBlazeface-14PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ohno Blazeface 12";
+  src: url("fonts/OhnoBlazeface-12PointItalic.otf?v=2") format("opentype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================
+   Supporting families — self-hosted
+   Variable-weight WOFF2 from Google Fonts, downloaded
+   locally to avoid the no-CDN privacy stance and to
+   remove the runtime network dependency.
+   ============================================ */
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("fonts/InstrumentSans-Variable.woff2") format("woff2-variations"),
+       url("fonts/InstrumentSans-Variable.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("fonts/JetBrainsMono-Variable.woff2") format("woff2-variations"),
+       url("fonts/JetBrainsMono-Variable.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}

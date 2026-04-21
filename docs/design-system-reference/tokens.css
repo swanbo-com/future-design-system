@@ -1,0 +1,73 @@
+/* ============================================
+   future.ly — Design Tokens
+   Aligned with docs/brand-spec.md §6
+   ============================================ */
+
+:root {
+  /* ----- Colour: core ----- */
+  --bg-cream: #F5F1EA;
+  --surface: #FFFDF8;
+  --ink: #111111;
+  --mute: #6B645A;
+  --rule: #CFC4AF;
+  --kraft: #C4A882;
+  --kraft-shadow: #A08060;
+
+  /* ----- Colour: accent ----- */
+  --vermillion: #D93A2B;
+  --vermillion-dark: #B22D21;
+  --vermillion-light: #E5524A;
+  --vermillion-muted: #A03020;
+  --vermillion-wash: rgba(217, 58, 43, 0.08);
+  --amber: #D97706;
+
+  /* ----- Colour: dark mode ----- */
+  --dark-bg: #111111;
+  --dark-surface: #1A1A1A;
+  --dark-text: #FAFAF9;
+  --dark-accent: #F28C83;
+
+  /* ----- Type family aliases ----- */
+  --type-display-72: "Ohno Blazeface 72", "Fraunces", Georgia, serif;
+  --type-display-60: "Ohno Blazeface 60", "Fraunces", Georgia, serif;
+  --type-display-48: "Ohno Blazeface 48", "Fraunces", Georgia, serif;
+  --type-display-36: "Ohno Blazeface 36", "Fraunces", Georgia, serif;
+  --type-display-24: "Ohno Blazeface 24", "Fraunces", Georgia, serif;
+  --type-display-18: "Ohno Blazeface 18", "Fraunces", Georgia, serif;
+  --type-display-16: "Ohno Blazeface 16", "Fraunces", Georgia, serif;
+  --type-display-14: "Ohno Blazeface 14", "Fraunces", Georgia, serif;
+  --type-display-12: "Ohno Blazeface 12", "Fraunces", Georgia, serif;
+  --type-body: "Instrument Sans", -apple-system, system-ui, sans-serif;
+  --type-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* ----- Type scale ----- */
+  --fs-hero: clamp(64px, 10vw, 140px);
+  --fs-display: clamp(48px, 7vw, 104px);
+  --fs-h1: 40px;
+  --fs-h2: 28px;
+  --fs-h3: 22px;
+  --fs-body: 18px;
+  --fs-body-sm: 15px;
+  --fs-small: 13px;
+  --fs-label: 11px;
+  --fs-micro: 9px;
+
+  /* ----- Spacing (4px base) ----- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-22: 88px;
+
+  /* ----- Other ----- */
+  --radius: 2px;
+  --border-w: 1px;
+  --max-text-width: 640px;
+  --shadow-offset: 10px 10px 0 var(--ink);
+}
