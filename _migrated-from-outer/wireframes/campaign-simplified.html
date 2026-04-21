@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campaign Zero — Wireframe v1.2 (simplified)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F1EA;
+    --paper:#FFFDF8;
+    --ink:#111111;
+    --mute:#6B645A;
+    --rule:#CFC4AF;
+    --rule-2:#E6DCC5;
+    --accent:#0D9488;
+    --accent-ink:#0B6F66;
+    --warn:#A04A14;
+    --cut:#B1321B;
+    --shadow: 0 1px 0 rgba(17,17,17,.04), 0 24px 48px -24px rgba(17,17,17,.18);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, #EFE6D0 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, #F1E7CE 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Instrument Sans",-apple-system,Helvetica,Arial,sans-serif;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+
+  /* Noise / grain overlay */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode:multiply;
+    pointer-events:none;
+    z-index:1;
+  }
+
+  .page{
+    position:relative;
+    z-index:2;
+    max-width:1320px;
+    margin:0 auto;
+    padding:48px 56px 120px;
+  }
+
+  /* Topbar */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--rule);
+    margin-bottom:56px;
+  }
+  .brand{
+    font-family:"Fraunces",serif;
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:-0.02em;
+  }
+  .brand em{font-style:italic;font-weight:400;color:var(--accent-ink)}
+  .topbar .meta{
+    font-family:"JetBrains Mono",monospace;
+    font-size:11px;
+    color:var(--mute);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+
+  /* Two-column: main + annotations */
+  .layout{
+    display:grid;
+    grid-template-columns: minmax(0,1fr) 300px;
+    gap:72px;
+    align-items:start;
+  }
+  @media (max-width: 980px){
+    .layout{grid-template-columns:1fr;gap:40px}
+    .page{padding:32px 24px 80px}
+  }
+
+  /* Section block styling */
+  section + section{margin-top:88px}
+  .section-label{
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--mute);
+    display:flex;align-items:center;gap:12px;
+    margin-bottom:14px;
+  }
+  .section-label::before{
+    content:"";width:22px;height:1px;background:var(--ink)
+  }
+
+  /* Hero */
+  .hero h1{
+    font-family:"Fraunces",serif;
+    font-weight:300;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height:0.92;
+    letter-spacing:-0.035em;
+    margin:0 0 24px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:400;
+  }
+  .hero h1 .rule-thru{
+    text-decoration: line-through;
+    text-decoration-color: var(--warn);
+    text-decoration-thickness: 3px;
+    color:var(--mute);
+    font-style:normal;
+    font-weight:300;
+  }
+  .hero .sub{
+    max-width: 56ch;
+    font-size:18px;
+    color:var(--mute);
+    margin:0 0 36px;
+  }
+  .hero .sub b{color:var(--ink);font-weight:600}
+
+  .video-frame{
+    position:relative;
+    aspect-ratio: 16 / 9;
+    background:
+      repeating-linear-gradient(135deg, #EDE3C8 0 14px, #E5DABB 14px 28px);
+    border:1px solid var(--rule);
+    border-radius:2px;
+    box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .video-frame .play{
+    width:78px;height:78px;border-radius:999px;
+    background:var(--paper);
+    border:1px solid var(--ink);
+    display:grid;place-items:center;
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .video-frame .play::after{
+    content:"";
+    border-style:solid;
+    border-width:12px 0 12px 18px;
+    border-color:transparent transparent transparent var(--ink);
+    margin-left:4px;
+  }
+  .video-frame .ticker{
+    position:absolute;bottom:14px;left:14px;
+    background:var(--paper);
+    border:1px solid var(--ink);
+    padding:6px 10px;
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+  }
+
+  /* Progress — SINGLE cascade */
+  .progress-card{
+    background:var(--paper);
+    border:1px solid var(--ink);
+    padding:32px 36px;
+    box-shadow: 10px 10px 0 var(--ink);
+    position:relative;
+  }
+  .progress-top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:18px;
+  }
+  .progress-top .raised{
+    font-family:"Fraunces",serif;
+    font-size:42px;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1;
+  }
+  .progress-top .raised small{
+    font-size:16px;font-weight:400;color:var(--mute);
+    font-family:"Instrument Sans",sans-serif;
+    margin-left:8px;
+  }
+  .progress-top .days{
+    font-family:"JetBrains Mono",monospace;
+    font-size:11px;
+    color:var(--mute);
+    text-transform:uppercase;letter-spacing:0.1em;
+    text-align:right;
+  }
+  .progress-top .days b{display:block;color:var(--ink);font-size:18px;letter-spacing:-0.01em;text-transform:none;margin-top:2px}
+
+  .bar{
+    position:relative;
+    height:14px;
+    background:var(--rule-2);
+    border:1px solid var(--ink);
+    margin:24px 0 8px;
+  }
+  .bar .fill{
+    position:absolute;inset:0;
+    width:18.2%;
+    background:
+      repeating-linear-gradient(45deg, var(--accent) 0 8px, var(--accent-ink) 8px 16px);
+  }
+  .bar .goals{position:absolute;inset:0;pointer-events:none}
+  .bar .goals i{
+    position:absolute;top:-6px;bottom:-6px;width:1px;background:var(--ink);
+  }
+  .bar .goals i:nth-child(1){left:10.3%}   /* 800 */
+  .bar .goals i:nth-child(2){left:28.2%}   /* 2200 */
+  .bar .goals i:nth-child(3){left:61.5%}   /* 4800 */
+  .bar .goals i:nth-child(4){left:100%}    /* 7800 */
+
+  .milestones{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:0;
+    margin-top:28px;
+    border-top:1px dashed var(--rule);
+    padding-top:20px;
+  }
+  .milestone{
+    padding:0 14px;
+    border-left:1px solid var(--rule);
+  }
+  .milestone:first-child{border-left:none;padding-left:0}
+  .milestone:last-child{padding-right:0}
+  .milestone .amt{
+    font-family:"Fraunces",serif;
+    font-size:22px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin-bottom:2px;
+  }
+  .milestone .tag{
+    font-family:"JetBrains Mono",monospace;
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--mute);
+    display:inline-block;
+    margin-bottom:6px;
+  }
+  .milestone .tag.done{color:var(--accent-ink)}
+  .milestone .tag.now{color:var(--warn)}
+  .milestone .name{
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:4px;
+  }
+  .milestone .desc{color:var(--mute);font-size:13px;line-height:1.4}
+  .milestone.is-edu .name::after{
+    content:" ✎";
+    color:var(--accent-ink);
+  }
+
+  /* Story */
+  .story-beat{
+    display:grid;
+    grid-template-columns: 5fr 7fr;
+    gap:40px;
+    align-items:center;
+    margin-bottom:72px;
+  }
+  .story-beat:nth-child(even){grid-template-columns: 7fr 5fr}
+  .story-beat:nth-child(even) .copy{order:2}
+  .story-beat:nth-child(even) .imgbox{order:1}
+  .story-beat h2{
+    font-family:"Fraunces",serif;
+    font-size:40px;
+    font-weight:300;
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    margin:0 0 18px;
+  }
+  .story-beat h2 em{font-style:italic;color:var(--accent-ink);font-weight:400}
+  .story-beat p{color:var(--mute);max-width:44ch;margin:0}
+  .imgbox{
+    aspect-ratio: 4 / 5;
+    background:
+      linear-gradient(135deg, #E8DCBE 0%, #D9CDA9 100%);
+    border:1px solid var(--ink);
+    position:relative;
+    box-shadow: 8px 8px 0 var(--rule);
+  }
+  .imgbox::after{
+    content:"IMG / 35mm";
+    position:absolute;top:10px;left:12px;
+    font-family:"JetBrains Mono",monospace;
+    font-size:9px;
+    letter-spacing:0.12em;
+    color:var(--mute);
+    text-transform:uppercase;
+  }
+  .story-beat:nth-child(2) .imgbox{aspect-ratio: 5 / 4}
+  .story-beat:nth-child(3) .imgbox{aspect-ratio: 1 / 1}
+
+  /* Tiers */
+  .tiers{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:18px;
+  }
+  @media (max-width:1100px){.tiers{grid-template-columns:repeat(2,1fr)}}
+  .tier{
+    background:var(--paper);
+    border:1px solid var(--ink);
+    padding:22px 20px 26px;
+    display:flex;flex-direction:column;gap:8px;
+    position:relative;
+    min-height:260px;
+  }
+  .tier.hero-tier{
+    border-width:2px;
+    box-shadow: 8px 8px 0 var(--ink);
+    background:
+      linear-gradient(180deg, #FFFDF8 0 65%, #F2E8CE 100%);
+  }
+  .tier .kicker{
+    font-family:"JetBrains Mono",monospace;
+    font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--mute);
+  }
+  .tier h3{
+    font-family:"Fraunces",serif;
+    font-weight:600;
+    font-size:22px;
+    margin:2px 0 2px;
+    letter-spacing:-0.01em;
+    line-height:1.1;
+  }
+  .tier .price{
+    font-family:"Fraunces",serif;
+    font-size:28px;font-weight:300;
+    letter-spacing:-0.01em;
+  }
+  .tier .price small{font-size:14px;color:var(--mute)}
+  .tier p{font-size:13px;color:var(--mute);margin:6px 0 0;flex:1}
+  .tier .cta{
+    margin-top:16px;
+    border:1px solid var(--ink);
+    padding:10px 14px;
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    display:inline-flex;align-items:center;justify-content:space-between;
+    cursor:pointer;
+    background:transparent;
+  }
+  .tier.hero-tier .cta{background:var(--ink);color:var(--paper)}
+  .tier .badge{
+    position:absolute;top:-10px;right:14px;
+    background:var(--warn);color:var(--paper);
+    font-family:"JetBrains Mono",monospace;
+    font-size:9px;padding:4px 8px;letter-spacing:0.12em;text-transform:uppercase;
+  }
+
+  /* Upsell modal block */
+  .upsell{
+    background:var(--ink);
+    color:var(--paper);
+    padding:40px 44px;
+    border:1px solid var(--ink);
+    position:relative;
+  }
+  .upsell::before{
+    content:"POST-PURCHASE MODAL";
+    position:absolute;top:-10px;left:24px;
+    background:var(--bg);color:var(--ink);
+    font-family:"JetBrains Mono",monospace;
+    font-size:9px;padding:4px 10px;letter-spacing:0.14em;
+    border:1px solid var(--ink);
+  }
+  .upsell h3{
+    font-family:"Fraunces",serif;
+    font-weight:300;
+    font-size:36px;
+    margin:0 0 8px;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  .upsell h3 em{font-style:italic;color:#7EEFE3;font-weight:400}
+  .upsell .lede{color:#CFC4AF;max-width:54ch;margin:0 0 26px}
+  .upsell .choices{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  }
+  @media (max-width:820px){.upsell .choices{grid-template-columns:repeat(2,1fr)}}
+  .choice{
+    border:1px solid #555;
+    padding:18px 16px;
+    font-family:"Fraunces",serif;
+    font-size:22px;
+    display:flex;flex-direction:column;gap:2px;
+    cursor:pointer;
+  }
+  .choice small{font-family:"Instrument Sans",sans-serif;font-size:11px;color:#CFC4AF;font-weight:400}
+  .choice.recommended{
+    background:var(--accent);color:var(--ink);
+    border-color:var(--accent);
+  }
+  .choice.recommended small{color:var(--ink);opacity:.7}
+
+  /* Transparency ledger */
+  .ledger{
+    background:var(--paper);
+    border:1px solid var(--ink);
+    overflow:hidden;
+  }
+  .ledger table{width:100%;border-collapse:collapse}
+  .ledger th, .ledger td{
+    text-align:left;
+    padding:14px 20px;
+    border-bottom:1px solid var(--rule-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .ledger th{
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--mute);
+    background:#F9F3E1;
+    font-weight:500;
+  }
+  .ledger td.num{text-align:right}
+  .ledger td.pos{color:var(--accent-ink)}
+  .ledger td.neg{color:var(--warn)}
+  .ledger tr:last-child td{border-bottom:none;font-weight:600}
+  .ledger tr.edu{background:#FBF7E9}
+
+  /* Community wall */
+  .wall{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+  }
+  @media (max-width:820px){.wall{grid-template-columns:repeat(2,1fr)}}
+  .name-card{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    padding:14px 16px;
+  }
+  .name-card .n{font-family:"Fraunces",serif;font-size:18px;line-height:1}
+  .name-card .c{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:0.1em;margin-top:6px;display:block}
+
+  /* Footer */
+  footer{
+    margin-top:96px;padding-top:24px;
+    border-top:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--mute);
+  }
+  footer .brand{font-family:"Fraunces",serif;font-size:16px;color:var(--ink);letter-spacing:-0.01em;text-transform:none}
+
+  /* Annotations column */
+  aside.notes{
+    position:sticky;
+    top:32px;
+    align-self:start;
+    font-family:"JetBrains Mono",monospace;
+    font-size:11px;
+    line-height:1.6;
+    color:var(--mute);
+    padding-left:20px;
+    border-left:1px dashed var(--rule);
+  }
+  aside.notes h4{
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--ink);
+    margin:0 0 8px;
+  }
+  aside.notes .note{
+    margin-bottom:28px;
+  }
+  aside.notes .note p{margin:0 0 6px}
+  aside.notes .cut{
+    border:1px solid var(--cut);
+    color:var(--cut);
+    padding:12px 14px;
+    margin-bottom:28px;
+    background:#FDF6F2;
+  }
+  aside.notes .cut h4{color:var(--cut)}
+  aside.notes .cut p{margin:0 0 4px}
+  aside.notes code{
+    background:#EFE6D0;padding:1px 4px;font-size:10px;color:var(--ink);
+  }
+
+  @media (max-width:980px){
+    aside.notes{position:static;border-left:none;border-top:1px dashed var(--rule);padding:24px 0 0}
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="topbar">
+      <div class="brand">future<em>.ly</em></div>
+      <div class="meta">Campaign Zero &middot; Wireframe v1.2 &middot; 2026-04-11</div>
+    </div>
+
+    <div class="layout">
+
+      <main>
+
+        <!-- HERO -->
+        <section class="hero">
+          <div class="section-label">Campaign · Siargao, Philippines</div>
+          <h1>The school that rewards <em>English class</em><br>with skateboards — <span class="rule-thru">but has none left to give.</span></h1>
+          <p class="sub">One 30-day campaign. One village. A 4-step cascade from <b>safety gear</b> to a <b>community-built classroom</b> to a <b>concrete skate park</b>. Every pledge moves the village one step further down the ladder. When the campaign ends, the story doesn't.</p>
+          <div class="video-frame">
+            <div class="play" aria-hidden="true"></div>
+            <div class="ticker">Documentary · 02:14 · directed by Swanbo</div>
+          </div>
+        </section>
+
+        <!-- PROGRESS -->
+        <section>
+          <div class="section-label">Milestone cascade · single ledger</div>
+          <div class="progress-card">
+            <div class="progress-top">
+              <div class="raised">£1,420<small>&nbsp;of £7,800 raised</small></div>
+              <div class="days">Campaign ends<b>18 days left</b></div>
+            </div>
+            <div class="bar">
+              <div class="fill"></div>
+              <div class="goals"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="milestones">
+              <div class="milestone">
+                <span class="tag done">✓ Unlocked</span>
+                <div class="amt">£800</div>
+                <div class="name">Safety gear</div>
+                <div class="desc">Helmets + pads for 40 kids. Shipped direct from Manila.</div>
+              </div>
+              <div class="milestone">
+                <span class="tag now">● Current</span>
+                <div class="amt">£2,200</div>
+                <div class="name">Mini ramp build</div>
+                <div class="desc">Plywood quarter-pipe at the existing slab. Built on weekends by the older kids.</div>
+              </div>
+              <div class="milestone is-edu">
+                <span class="tag">Next</span>
+                <div class="amt">£4,800</div>
+                <div class="name">School classroom</div>
+                <div class="desc">Bamboo + concrete learning space. English lessons 5 days/week. Graduates earn a deck.</div>
+              </div>
+              <div class="milestone">
+                <span class="tag">Stretch</span>
+                <div class="amt">£7,800</div>
+                <div class="name">Concrete skate park</div>
+                <div class="desc">Permanent bowl poured by a Cebu crew. Community-owned forever.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STORY -->
+        <section>
+          <div class="section-label">The story · three beats</div>
+
+          <div class="story-beat">
+            <div class="copy">
+              <h2>A village on the <em>east reef</em>, six hours from the nearest skate shop.</h2>
+              <p>Siargao's skate kids ride hand-me-down decks pulled from typhoon debris. The nearest replacement is a flight away. The waves are world-class. The concrete is not.</p>
+            </div>
+            <div class="imgbox"></div>
+          </div>
+
+          <div class="story-beat">
+            <div class="copy">
+              <h2>The school rewards English class <em>with skateboards.</em></h2>
+              <p>Janiece runs a volunteer-led literacy class out of a bamboo pavilion. The kids who finish a module earn a deck. The decks ran out in January. The class kept going anyway.</p>
+            </div>
+            <div class="imgbox"></div>
+          </div>
+
+          <div class="story-beat">
+            <div class="copy">
+              <h2>One cascade. One budget. <em>One story.</em></h2>
+              <p>Every pledge buys a real thing on a real ladder. Gear → ramp → classroom → park. You'll see every receipt. You'll meet every kid. This is not a charity page — it's a commerce site with a conscience.</p>
+            </div>
+            <div class="imgbox"></div>
+          </div>
+        </section>
+
+        <!-- EXCHANGE TIERS -->
+        <section>
+          <div class="section-label">Exchange tiers · commerce-first</div>
+          <div class="tiers">
+            <div class="tier hero-tier">
+              <div class="badge">Live auction</div>
+              <div class="kicker">Tier 01 · 5 available</div>
+              <h3>Handmade skate deck</h3>
+              <div class="price">from £180 <small>bid</small></div>
+              <p>Cebu-shaped, hand-painted by local artist Rey Cuartero. Numbered 1 / 5. Real-time bidding, sealed-bid fallback on Day 14.</p>
+              <button class="cta">Place a bid →</button>
+            </div>
+
+            <div class="tier">
+              <div class="kicker">Tier 02 · 1,000 available</div>
+              <h3>Darkroom documentary print</h3>
+              <div class="price">£45</div>
+              <p>A3 archival print from the 35mm documentary reel. Finished + sleeved in Cebu, shipped via ShipBob in 4 regions.</p>
+              <button class="cta">Add to cart →</button>
+            </div>
+
+            <div class="tier">
+              <div class="kicker">Tier 03 · unlimited</div>
+              <h3>Thank-you card</h3>
+              <div class="price">£15</div>
+              <p>Hand-written postcard from one of the kids. Stamped in Siargao. The cheapest thing on the site that still ships.</p>
+              <button class="cta">Add to cart →</button>
+            </div>
+
+            <div class="tier">
+              <div class="kicker">Tier 04 · digital</div>
+              <h3>Name on the wall</h3>
+              <div class="price">from £5</div>
+              <p>Your name painted on the skate park wall when it's built. No shipping. No limits. Pure contribution.</p>
+              <button class="cta">Pledge →</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- UPSELL -->
+        <section>
+          <div class="section-label">Post-purchase upsell · conversion moment</div>
+          <div class="upsell">
+            <h3>Keep <em>future.ly</em> running?</h3>
+            <p class="lede">Your order is confirmed. Before you go — would you turn this into a monthly drop? We pick one grassroots campaign a month and send you the documentary, the receipts, and the story beats.</p>
+            <div class="choices">
+              <div class="choice">£5<small>/month</small></div>
+              <div class="choice recommended">£10<small>/month · recommended</small></div>
+              <div class="choice">£20<small>/month</small></div>
+              <div class="choice">Custom<small>you choose</small></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TRANSPARENCY -->
+        <section>
+          <div class="section-label">Transparency ledger · one table, one truth</div>
+          <div class="ledger">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Entry</th><th class="num">Amount</th><th class="num">Running</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Apr 11</td><td>Opening balance</td><td class="num">£0.00</td><td class="num">£0.00</td></tr>
+                <tr><td>Apr 12</td><td>42 pledges (day 1)</td><td class="num pos">+£615.00</td><td class="num">£615.00</td></tr>
+                <tr><td>Apr 12</td><td>Stripe fees (1.5% + 20p)</td><td class="num neg">−£17.63</td><td class="num">£597.37</td></tr>
+                <tr><td>Apr 13</td><td>Platform fee (5%)</td><td class="num neg">−£30.75</td><td class="num">£566.62</td></tr>
+                <tr><td>Apr 14</td><td>Safety gear — 40 helmets (Manila)</td><td class="num neg">−£420.00</td><td class="num">£146.62</td></tr>
+                <tr><td>Apr 15</td><td>68 pledges (day 4)</td><td class="num pos">+£1,273.50</td><td class="num">£1,420.12</td></tr>
+                <tr class="edu"><td>Apr 30</td><td><i>Queued:</i> classroom build — Janiece / school partner</td><td class="num">—</td><td class="num">£4,800.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- COMMUNITY WALL -->
+        <section>
+          <div class="section-label">The wall · community roll-call</div>
+          <div class="wall">
+            <div class="name-card"><div class="n">Maya H.</div><span class="c">Brighton, UK</span></div>
+            <div class="name-card"><div class="n">Koa T.</div><span class="c">Byron Bay, AU</span></div>
+            <div class="name-card"><div class="n">Renée A.</div><span class="c">Toronto, CA</span></div>
+            <div class="name-card"><div class="n">Jake O.</div><span class="c">Venice, US</span></div>
+            <div class="name-card"><div class="n">Sofia R.</div><span class="c">Lisbon, PT</span></div>
+            <div class="name-card"><div class="n">Ben W.</div><span class="c">Cornwall, UK</span></div>
+            <div class="name-card"><div class="n">Arlo M.</div><span class="c">Cebu, PH</span></div>
+            <div class="name-card"><div class="n">+ 218 more</div><span class="c">Campaign Zero backers</span></div>
+          </div>
+        </section>
+
+        <footer>
+          <div class="brand">future<em style="color:var(--accent-ink);font-style:italic">.ly</em></div>
+          <div>A UK CIC · Siargao &middot; Cebu &middot; London</div>
+        </footer>
+
+      </main>
+
+      <!-- ANNOTATIONS COLUMN -->
+      <aside class="notes">
+        <div class="note">
+          <h4>// wireframe v1.2</h4>
+          <p>Single 4-milestone cascade. Education = milestone #3. One ledger, one narrative arc, one allocation engine.</p>
+        </div>
+
+        <div class="cut">
+          <h4>✂ Cut from v1.1</h4>
+          <p>Parallel "Skate / Education" fund split at checkout.</p>
+          <p>Removed: <code>fund_splits</code> JSON on Campaign, <code>FundTrack</code> enum, dual ledger writes, per-order <code>split_override</code>.</p>
+          <p><b>Saves ~3 dev-days.</b></p>
+        </div>
+
+        <div class="cut">
+          <h4>✂ Cut from v1.1</h4>
+          <p>MoU-with-school as a launch blocker.</p>
+          <p>Now a Phase 5 task with a Janiece-led LOI fallback if the formal MoU slips past Apr 30. Classroom milestone still ships; disbursement just waits on paperwork.</p>
+          <p><b>Saves ~1 dev-day &amp; unblocks legal review.</b></p>
+        </div>
+
+        <div class="note">
+          <h4>// hero</h4>
+          <p>Display serif (Fraunces) carries the narrative. The <b>strike-through</b> of "but has none left to give" is the emotional hook — it says <i>the problem is solvable</i>.</p>
+        </div>
+
+        <div class="note">
+          <h4>// progress card</h4>
+          <p>Offset box-shadow + hatched accent fill = blueprint aesthetic, not SaaS. 4 milestones on a single bar reads as a <b>ladder</b>, not a menu.</p>
+          <p>Education milestone marked with ✎ glyph in the UI so it visibly differs from the physical builds but sits in the <i>same</i> cascade.</p>
+        </div>
+
+        <div class="note">
+          <h4>// exchange tiers</h4>
+          <p>Commerce-first. Auction tier is the hero (heavier border + offset shadow), print is the volume driver (Cebu-finish + ShipBob), card is the £15 entry, name-on-the-wall is the £5 long tail.</p>
+        </div>
+
+        <div class="note">
+          <h4>// upsell modal</h4>
+          <p>Inverted dark block = the checkout's post-purchase moment. £10/mo highlighted per conversion best-practice. Feature-flagged, can ship Day-2.</p>
+        </div>
+
+        <div class="note">
+          <h4>// transparency ledger</h4>
+          <p>One table. Cream row = queued classroom disbursement. Backers can see the classroom is <i>budgeted</i> even before the cascade reaches it — that's the trust mechanism that replaces the parallel track.</p>
+        </div>
+
+        <div class="note">
+          <h4>// what's left to decide</h4>
+          <p>1. Does Janiece want a visible role on the classroom milestone card? (photo + bio?)</p>
+          <p>2. Do we localise milestone amounts into PHP on the card for Siargao visitors, or keep GBP canonical?</p>
+          <p>3. Classroom build quote — who writes the PO?</p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</body>
+</html>

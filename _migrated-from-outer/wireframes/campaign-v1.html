@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>future.ly — Campaign Page Wireframe</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, sans-serif; background: #fff; color: #222; line-height: 1.5; font-size: 13px; }
+
+  .placeholder {
+    background: #EDEDED;
+    border: 2px dashed #C0C0C0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .ann {
+    background: #FFFDE7;
+    border-left: 3px solid #FDD835;
+    padding: 8px 12px;
+    margin: 8px 0;
+    font-size: 11px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .ann b { color: #333; }
+  .s {
+    border: 1px solid #DDD;
+    padding: 24px;
+    position: relative;
+  }
+  .s::before {
+    content: attr(data-s);
+    position: absolute;
+    top: -1px; left: -1px;
+    background: #333;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+  }
+  .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #AAA; margin-bottom: 4px; }
+  .h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .body { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .btn { display: inline-block; padding: 7px 18px; border: 2px solid #333; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .btn.f { background: #333; color: #fff; }
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .g4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+  .fr { display: flex; gap: 12px; align-items: center; }
+  .fb { display: flex; justify-content: space-between; align-items: center; }
+  .bb { border-bottom: 1px solid #EEE; padding-bottom: 10px; margin-bottom: 10px; }
+  .m { color: #AAA; font-size: 11px; }
+  .mt { margin-top: 12px; }
+  .mb { margin-bottom: 12px; }
+  @media (max-width: 700px) { .g2,.g3,.g4 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     FUTURE.LY — CAMPAIGN PAGE WIREFRAME
+     Pure structure. No copy. For Claude Code.
+     ════════════════════════════════════════ -->
+
+<!-- 01 NAV -->
+<div class="s" data-s="01 · Nav" style="padding:12px 24px;">
+  <div class="fb">
+    <div style="font-weight:700;">future.ly</div>
+    <div class="fr" style="gap:20px; font-size:12px;">
+      <span class="m">[nav link]</span>
+      <span class="m">[nav link]</span>
+      <span class="m">[nav link]</span>
+      <span class="m">[nav link]</span>
+      <span class="btn f" style="padding:5px 14px;">[Primary CTA]</span>
+    </div>
+  </div>
+  <div class="ann"><b>Fixed.</b> Transparent over hero → solid on scroll. Mobile: hamburger → bottom-sheet. CTA always visible.</div>
+</div>
+
+<!-- 02 HERO — DOCUMENTARY VIDEO -->
+<div class="s" data-s="02 · Hero — Full Viewport Documentary Video">
+  <div class="placeholder" style="height:400px; flex-direction:column; gap:8px;">
+    <div style="width:60px; height:60px; border:2px solid #BBB; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px;">▶</div>
+    <span>Full viewport — Mux video player / poster image</span>
+  </div>
+  <div class="mt">
+    <div class="lbl">[Campaign label — number, location]</div>
+    <div class="h1">[Campaign title]</div>
+    <div class="body">[One-line campaign description — placeholder]</div>
+    <div class="fr mt" style="gap:24px;">
+      <div><strong style="font-size:18px;">[N]</strong><br><span class="m">Supporters</span></div>
+      <div style="width:1px; height:24px; background:#DDD;"></div>
+      <div><strong style="font-size:18px;">[£X,XXX]</strong><br><span class="m">of [£X,XXX] raised</span></div>
+      <div style="width:1px; height:24px; background:#DDD;"></div>
+      <div><strong style="font-size:18px;">[N%]</strong><br><span class="m">Funded</span></div>
+    </div>
+  </div>
+  <div class="ann"><b>The documentary IS the pitch.</b> Mux player, autoplay muted desktop, poster+tap mobile. Stats overlay bottom-left on gradient. This is full viewport height. The video alone should make someone want to fund.</div>
+</div>
+
+<!-- 03 STICKY COUNTDOWN BAR -->
+<div class="s" data-s="03 · Sticky Countdown Bar" style="padding:12px 24px;">
+  <div class="fb">
+    <div style="flex:1; margin-right:20px;">
+      <!-- Progress bar -->
+      <div style="height:5px; background:#EEE; border-radius:3px; position:relative;">
+        <div style="height:100%; width:62%; background:#333; border-radius:3px;"></div>
+        <div style="position:absolute; left:25%; top:-3px; width:1px; height:11px; background:#333;"></div>
+        <div style="position:absolute; left:50%; top:-3px; width:1px; height:11px; background:#333;"></div>
+        <div style="position:absolute; left:75%; top:-3px; width:1px; height:11px; background:#CCC;"></div>
+        <div style="position:absolute; left:100%; top:-3px; width:1px; height:11px; background:#CCC;"></div>
+      </div>
+      <div class="fb mt" style="font-size:9px; color:#AAA; text-transform:uppercase; letter-spacing:0.06em;">
+        <span>[25% milestone label]</span>
+        <span>[50% milestone label]</span>
+        <span>[75% milestone label]</span>
+        <span>[100% milestone label]</span>
+      </div>
+    </div>
+    <div style="text-align:right; min-width:100px;">
+      <strong>[£X,XXX]</strong> <span class="m">/ [£X,XXX]</span>
+    </div>
+    <div class="fr" style="min-width:140px; justify-content:center;">
+      <div style="text-align:center;"><strong>[DD]</strong><br><span class="m">Days</span></div>
+      <span class="m">:</span>
+      <div style="text-align:center;"><strong>[HH]</strong><br><span class="m">Hrs</span></div>
+      <span class="m">:</span>
+      <div style="text-align:center;"><strong>[MM]</strong><br><span class="m">Min</span></div>
+    </div>
+    <span class="btn f" style="padding:6px 16px;">[CTA]</span>
+  </div>
+  <div class="ann"><b>Sticky below nav on scroll.</b> Progress bar with 4 milestone markers (labeled). Hit vs unhit styled differently. Amount, countdown (no seconds), CTA. Animates in on first scroll. Mobile: simplified — progress bar + amount + CTA only.</div>
+</div>
+
+<!-- 04 STORY — EDITORIAL SCROLL -->
+<div class="s" data-s="04 · The Story — Editorial Long-form Scroll">
+  <div style="max-width:540px; margin:0 auto;">
+    <div style="font-size:18px; font-weight:500; color:#333; margin-bottom:16px;">[Opening paragraph — large serif text. Sets the scene.]</div>
+    <div class="body">[Body paragraph — placeholder text]</div>
+    <div class="body">[Body paragraph — placeholder text]</div>
+  </div>
+
+  <div class="placeholder mt" style="height:200px; width:100%;">Full-width image — bleeds to viewport edges</div>
+
+  <div style="max-width:540px; margin:16px auto 0;">
+    <div style="padding:16px 0 16px 16px; border-left:2px solid #DDD; font-size:16px; font-style:italic; color:#666; margin:16px 0;">[Pull quote — placeholder]</div>
+    <div class="body">[Body paragraph — placeholder text]</div>
+  </div>
+
+  <div class="placeholder mt" style="height:50px; width:100%;">Inline video clip — 15-30s, autoplay muted, tap for sound</div>
+
+  <div style="max-width:540px; margin:16px auto 0;">
+    <div class="body">[Body paragraph — placeholder text]</div>
+  </div>
+
+  <div class="g2 mt">
+    <div class="placeholder" style="height:180px;">Image</div>
+    <div class="placeholder" style="height:180px;">Image</div>
+  </div>
+
+  <div class="ann"><b>Editorial layout.</b> Narrow text column (~600px) with full-bleed images/video breaking to viewport width. Pull quotes in serif italic. Inline Mux clips autoplay muted. Image pairs in 2-col. Strapi dynamic zones: text_block, full_image, image_pair, inline_video, pull_quote. This should feel like a documentary companion piece.</div>
+</div>
+
+<!-- 05 MEET THE PEOPLE -->
+<div class="s" data-s="05 · Meet the People">
+  <div class="lbl">[Section label]</div>
+  <div class="h2 mb">[Section heading]</div>
+  <div class="g4">
+    <div style="text-align:center;">
+      <div class="placeholder" style="width:80px; height:80px; border-radius:50%; margin:0 auto 8px;">Photo</div>
+      <div class="h3">[Name, age]</div>
+      <div class="m mb">[Role]</div>
+      <div style="font-size:11px; font-style:italic; color:#999;">[One-line story — placeholder]</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="placeholder" style="width:80px; height:80px; border-radius:50%; margin:0 auto 8px;">Photo</div>
+      <div class="h3">[Name, age]</div>
+      <div class="m mb">[Role]</div>
+      <div style="font-size:11px; font-style:italic; color:#999;">[One-line story — placeholder]</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="placeholder" style="width:80px; height:80px; border-radius:50%; margin:0 auto 8px;">Photo</div>
+      <div class="h3">[Name]</div>
+      <div class="m mb">[Role — filmmaker]</div>
+      <div style="font-size:11px; font-style:italic; color:#999;">[One-line story + revenue share disclosure]</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="placeholder" style="width:80px; height:80px; border-radius:50%; margin:0 auto 8px;">Photo</div>
+      <div class="h3">[Name]</div>
+      <div class="m mb">[Role — director]</div>
+      <div style="font-size:11px; font-style:italic; color:#999;">[One-line story — placeholder]</div>
+    </div>
+  </div>
+  <div class="ann"><b>Individual profiles.</b> Real photos (with consent). First names only for kids. Photographer revenue share disclosed. Strapi "Person Profile" content type. Mobile: 2-col.</div>
+</div>
+
+<!-- 06 EXCHANGE TIERS -->
+<div class="s" data-s="06 · Exchange Tiers">
+  <div class="lbl">[Section label]</div>
+  <div class="h2 mb">[Section heading]</div>
+  <div class="g4">
+    <!-- Tier 1 -->
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:120px;">[Tier image]</div>
+      <div style="padding:12px;">
+        <div class="lbl">[Tier label — e.g. Supporter]</div>
+        <div class="h3">[Tier name]</div>
+        <div class="body">[What you get — placeholder]</div>
+        <div><strong>[Price — from £X]</strong></div>
+        <div class="m mb">[Price note]</div>
+        <div class="btn" style="width:100%; text-align:center;">[CTA]</div>
+      </div>
+    </div>
+    <!-- Tier 2 -->
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:120px;">[Tier image]</div>
+      <div style="padding:12px;">
+        <div class="lbl">[Tier label]</div>
+        <div class="h3">[Tier name]</div>
+        <div class="body">[What you get — placeholder]</div>
+        <div><strong>[£XX]</strong></div>
+        <div class="m mb">[Shipping note]</div>
+        <div class="btn" style="width:100%; text-align:center;">[CTA]</div>
+      </div>
+    </div>
+    <!-- Tier 3 (featured) -->
+    <div style="border:2px solid #333;">
+      <div class="placeholder" style="height:120px;">[Tier image]</div>
+      <div style="padding:12px;">
+        <div class="lbl">[Tier label]</div>
+        <div class="h3">[Tier name]</div>
+        <div class="body">[What you get — placeholder]</div>
+        <div><strong>[£XX]</strong></div>
+        <div class="m mb">[Fulfillment note]</div>
+        <div class="btn f" style="width:100%; text-align:center;">[CTA]</div>
+      </div>
+    </div>
+    <!-- Tier 4 (auction) -->
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:120px;">[Tier image]</div>
+      <div style="padding:12px;">
+        <div class="lbl">[Tier label — auction]</div>
+        <div class="h3">[Tier name]</div>
+        <div class="body">[What you get — placeholder]</div>
+        <div style="font-size:11px; color:#C62828; margin-bottom:4px;">[X of X remaining]</div>
+        <div><strong>[Current bid: £XXX]</strong></div>
+        <div class="m mb">[Time remaining]</div>
+        <div class="btn" style="width:100%; text-align:center;">[Bid CTA]</div>
+      </div>
+    </div>
+  </div>
+  <div class="ann"><b>4 tiers, left-to-right by price.</b> Featured tier: thicker border + filled CTA. Auction tier: remaining count, current bid, time left (Supabase realtime). Prices geo-targeted to visitor's currency. Desktop: 4-col. Tablet: 2-col. Mobile: 1-col.</div>
+</div>
+
+<!-- 07 CONTENT UNLOCKS -->
+<div class="s" data-s="07 · Content Unlocks (Public — For Sharing)">
+  <div class="lbl">[Section label]</div>
+  <div class="h2 mb">[Section heading]</div>
+  <div class="g4">
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:100px;">[Thumbnail]</div>
+      <div style="padding:8px; text-align:center;">
+        <div style="font-size:10px; color:#2E7D32; text-transform:uppercase;">✓ [Milestone %] — Unlocked</div>
+        <div class="h3" style="margin-top:2px;">[Content title]</div>
+      </div>
+    </div>
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:100px;">[Thumbnail]</div>
+      <div style="padding:8px; text-align:center;">
+        <div style="font-size:10px; color:#2E7D32; text-transform:uppercase;">✓ [Milestone %] — Unlocked</div>
+        <div class="h3" style="margin-top:2px;">[Content title]</div>
+      </div>
+    </div>
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:100px; background:#D8D8D8;">🔒</div>
+      <div style="padding:8px; text-align:center;">
+        <div class="m" style="text-transform:uppercase; font-size:10px;">[Unlocks at X%]</div>
+        <div class="h3" style="margin-top:2px;">[Content title]</div>
+      </div>
+    </div>
+    <div style="border:1px solid #DDD;">
+      <div class="placeholder" style="height:100px; background:#D8D8D8;">🔒</div>
+      <div style="padding:8px; text-align:center;">
+        <div class="m" style="text-transform:uppercase; font-size:10px;">[Unlocks at X%]</div>
+        <div class="h3" style="margin-top:2px;">[Content title]</div>
+      </div>
+    </div>
+  </div>
+  <div class="ann"><b>PUBLIC — visible to everyone.</b> These drive sharing. Unlocked: click to play video in modal (Mux). Locked: blurred thumb + lock icon + milestone label. Auto-unlocks when campaign hits milestone % (Supabase trigger). 4 milestones at 25/50/75/100%.</div>
+</div>
+
+<!-- 08 ACTIVITY FEED + COMMUNITY WALL -->
+<div class="s" data-s="08 · Live Activity Feed + Community Wall">
+  <div class="g2">
+    <div>
+      <div class="lbl">[Live activity label]</div>
+      <div class="h3 mb">[Subheading]</div>
+      <div class="bb fb"><span class="m">● <b>[Name] from [City]</b> — [Tier]</span> <span class="m">[X min ago]</span></div>
+      <div class="bb fb"><span class="m">● <b>[Name] from [City]</b> — [Tier]</span> <span class="m">[X min ago]</span></div>
+      <div class="bb fb"><span class="m">● <b>[Anonymous] from [City]</b> — [Action]</span> <span class="m">[X min ago]</span></div>
+      <div class="bb fb"><span class="m">● <b>[Name] from [City]</b> — [Tier]</span> <span class="m">[X min ago]</span></div>
+    </div>
+    <div>
+      <div class="lbl">[Community wall label]</div>
+      <div class="h3 mb">[N] supporters</div>
+      <div class="g2" style="gap:8px;">
+        <div style="border:1px solid #EEE; padding:10px;">
+          <div style="font-weight:600; font-size:12px;">[Name]</div>
+          <div style="font-size:9px; color:#C09030; text-transform:uppercase; letter-spacing:0.08em;">[Founding Supporter #N]</div>
+          <div style="font-size:11px; font-style:italic; color:#999; margin-top:4px;">[Message — placeholder]</div>
+        </div>
+        <div style="border:1px solid #EEE; padding:10px;">
+          <div style="font-weight:600; font-size:12px;">[Name]</div>
+          <div style="font-size:9px; color:#C09030; text-transform:uppercase; letter-spacing:0.08em;">[Founding Supporter #N]</div>
+          <div style="font-size:11px; font-style:italic; color:#999; margin-top:4px;">[Message — placeholder]</div>
+        </div>
+        <div style="border:1px solid #EEE; padding:10px;">
+          <div style="font-weight:600; font-size:12px;">[Name]</div>
+          <div style="font-size:11px; font-style:italic; color:#999; margin-top:4px;">[Message — placeholder]</div>
+        </div>
+        <div style="border:1px solid #EEE; padding:10px;">
+          <div style="font-weight:600; font-size:12px;">[Anonymous]</div>
+          <div style="font-size:11px; font-style:italic; color:#999; margin-top:4px;">[Message — placeholder]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann"><b>Feed:</b> Supabase realtime on orders. Name + city (geo) + tier. Anonymous option. Last 10, auto-scroll. Pulsing dot on latest.<br><b>Wall:</b> Funder name + optional message (from checkout). First 50 get "Founding Supporter #N" badge. Messages moderated before display. Mobile: stacked.</div>
+</div>
+
+<!-- 09 GATED STORY UPDATES -->
+<div class="s" data-s="09 · Story Updates (Donor-Only Gate)">
+  <div class="lbl">[Section label]</div>
+  <div class="h2 mb">[Section heading]</div>
+
+  <!-- Visible update -->
+  <div class="bb" style="display:grid; grid-template-columns:140px 1fr; gap:16px; padding:14px 0;">
+    <div class="placeholder" style="height:90px;">[Video thumb]</div>
+    <div>
+      <div class="m">[Date]</div>
+      <div class="h3">[Update title — placeholder]</div>
+      <div class="body">[Update excerpt — placeholder]</div>
+    </div>
+  </div>
+
+  <!-- Visible update -->
+  <div class="bb" style="display:grid; grid-template-columns:140px 1fr; gap:16px; padding:14px 0;">
+    <div class="placeholder" style="height:90px;">[Video thumb]</div>
+    <div>
+      <div class="m">[Date]</div>
+      <div class="h3">[Update title — placeholder]</div>
+      <div class="body">[Update excerpt — placeholder]</div>
+    </div>
+  </div>
+
+  <!-- Locked update -->
+  <div class="bb" style="display:grid; grid-template-columns:140px 1fr; gap:16px; padding:14px 0; opacity:0.45;">
+    <div class="placeholder" style="height:90px; background:#D5D5D5;">🔒</div>
+    <div>
+      <div class="m">[Date]</div>
+      <div class="h3" style="color:#BBB;">[Update title — placeholder]</div>
+      <div class="body" style="filter:blur(3px); color:#CCC;">[Blurred excerpt — inaccessible]</div>
+    </div>
+  </div>
+
+  <!-- Locked update -->
+  <div style="display:grid; grid-template-columns:140px 1fr; gap:16px; padding:14px 0; opacity:0.45;">
+    <div class="placeholder" style="height:90px; background:#D5D5D5;">🔒</div>
+    <div>
+      <div class="m">[Date]</div>
+      <div class="h3" style="color:#BBB;">[Update title — placeholder]</div>
+      <div class="body" style="filter:blur(3px); color:#CCC;">[Blurred excerpt — inaccessible]</div>
+    </div>
+  </div>
+
+  <!-- Gate CTA -->
+  <div style="border:2px dashed #CCC; padding:20px; text-align:center; margin-top:16px;">
+    <div class="h3">[Gate heading — placeholder]</div>
+    <div class="body" style="max-width:360px; margin:4px auto 12px;">[Gate description — placeholder]</div>
+    <div class="btn f">[CTA]</div>
+  </div>
+
+  <div class="ann"><b>Mixed gating.</b> Milestone unlocks (Section 07) = PUBLIC. Regular updates = DONOR-ONLY. Non-donors see: blurred thumb, dimmed title, blurred+unselectable excerpt, gate CTA. Gating logic: Supabase checks user has order for this campaign. Updates are video-first (documentary footage) with written context. Content from Strapi, gate state from Supabase. Mobile: stacked (thumb above text).</div>
+</div>
+
+<!-- 10 BUDGET TRANSPARENCY -->
+<div class="s" data-s="10 · Budget Transparency">
+  <div class="lbl">[Section label]</div>
+  <div class="h2 mb">[Section heading]</div>
+  <div class="g2">
+    <div>
+      <div class="bb fb"><span>[Budget item]</span> <strong>[£X,XXX]</strong></div>
+      <div style="height:3px; background:#EEE; margin-bottom:12px;"><div style="height:100%; width:100%; background:#333;"></div></div>
+      <div class="bb fb"><span>[Budget item]</span> <strong>[£XXX]</strong></div>
+      <div style="height:3px; background:#EEE; margin-bottom:12px;"><div style="height:100%; width:80%; background:#333;"></div></div>
+      <div class="bb fb"><span>[Budget item]</span> <strong>[£X,XXX]</strong></div>
+      <div style="height:3px; background:#EEE; margin-bottom:12px;"><div style="height:100%; width:45%; background:#333;"></div></div>
+    </div>
+    <div>
+      <div class="bb fb"><span>[Budget item]</span> <strong>[£XXX]</strong></div>
+      <div style="height:3px; background:#EEE; margin-bottom:12px;"><div style="height:100%; width:30%; background:#333;"></div></div>
+      <div class="bb fb"><span>[Budget item]</span> <strong>[£XXX]</strong></div>
+      <div style="height:3px; background:#EEE; margin-bottom:12px;"><div style="height:100%; width:0%; background:#333;"></div></div>
+      <div class="bb fb"><span>[Budget item]</span> <strong>[£XXX]</strong></div>
+      <div style="height:3px; background:#EEE; margin-bottom:12px;"><div style="height:100%; width:60%; background:#333;"></div></div>
+    </div>
+  </div>
+  <div class="m mt">[Fee disclosure line — platform fee, creator fund, processing. All at-cost, transparent.]</div>
+  <div class="ann"><b>Every line item visible.</b> Progress bars = allocated vs spent. Updated by admin via Supabase as receipts come in. Fee breakdown in small text. This is the trust mechanic.</div>
+</div>
+
+<!-- 11 NEXT STORY SIGNUP -->
+<div class="s" data-s="11 · Next Story — Waitlist Signup">
+  <div style="text-align:center; padding:32px;">
+    <div class="m" style="text-transform:uppercase; letter-spacing:0.2em; margin-bottom:8px;">[Coming next label]</div>
+    <div class="h1">[Next story teaser headline]</div>
+    <div class="body" style="max-width:360px; margin:6px auto 16px;">[One line about next campaign — placeholder]</div>
+    <div style="display:flex; gap:8px; max-width:340px; margin:0 auto;">
+      <input type="text" placeholder="[Email placeholder]" style="flex:1; padding:8px 14px; border:1px solid #DDD; font-size:12px;">
+      <div class="btn f" style="padding:8px 16px;">[CTA]</div>
+    </div>
+  </div>
+  <div class="ann"><b>Growth engine.</b> Converts visitors → leads for next campaign. Email → Supabase waitlist table with source tracking. Minimal — don't compete with current story. Optional single teaser image.</div>
+</div>
+
+<!-- 12 FOOTER -->
+<div class="s" data-s="12 · Footer" style="padding:12px 24px;">
+  <div class="fb">
+    <div class="m">[Entity name — CIC registration note]</div>
+    <div class="fr" style="gap:16px;">
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

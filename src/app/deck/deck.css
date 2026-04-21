@@ -1,0 +1,66 @@
+/**
+ * Deck page styles — 1920×1080 slides with CSS page-break so Playwright's
+ * page.pdf() produces a multi-page vector PDF with live text.
+ *
+ * In browser view: slides stack vertically at full 1920 width (desktop
+ * review). Scroll to navigate.
+ *
+ * In print / PDF export: each .slide becomes a single PDF page.
+ */
+
+.deck-root {
+  /* Center stack of slides in browser view */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #262626;
+  padding: 40px 0;
+  gap: 24px;
+}
+
+.slide {
+  width: 1920px;
+  height: 1080px;
+  flex-shrink: 0;
+  /* Subtle shadow so slides feel like cards against the dark backdrop in
+     browser view — stripped in print via @media print below */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   @media print — PDF export path
+   ============================================================ */
+@media print {
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  .deck-root {
+    padding: 0;
+    gap: 0;
+    background: transparent;
+  }
+
+  .slide {
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .slide:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  /* Hide slide chrome (number/date lines) in print if we ever need a
+     clean version — currently kept in; flip this rule if the user wants
+     a chrome-less export. */
+}

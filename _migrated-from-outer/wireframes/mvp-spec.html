@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>future.ly — MVP Platform Spec</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #FAF9F6;
+    --surface: #FFFFFF;
+    --surface-alt: #F5F3EF;
+    --fg: #171717;
+    --muted: #6B7280;
+    --accent: #2A9D8F;
+    --accent-hover: #238B7E;
+    --accent-light: #E6F5F3;
+    --error: #E5383B;
+    --warning: #C77B1F;
+    --border: #F2F0E9;
+    --shadow-card: 0 8px 32px rgba(0,0,0,0.04);
+    --shadow-form: 0 12px 48px rgba(0,0,0,0.08);
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+
+  /* Header */
+  .header { margin-bottom: 56px; }
+  .header-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .header .subtitle {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 660px;
+    line-height: 1.6;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .header-meta span {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .header-meta span strong { color: var(--fg); }
+
+  /* Sections */
+  .section { margin-bottom: 56px; }
+  .section h2 {
+    font-size: clamp(1.375rem, 3vw, 2.25rem);
+    font-weight: 500;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .section h3 {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 500;
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+  .section h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-top: 20px;
+  }
+  .section p { margin-bottom: 16px; font-size: 1rem; }
+  .section ul { margin-bottom: 16px; padding-left: 20px; }
+  .section li { margin-bottom: 8px; font-size: 0.95rem; }
+
+  .divider { height: 1px; background: var(--border); margin: 56px 0; }
+
+  /* Callouts */
+  .callout {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 24px 28px;
+    margin: 28px 0;
+    box-shadow: var(--shadow-card);
+  }
+  .callout p { margin-bottom: 0; font-size: 1.05rem; line-height: 1.7; }
+  .callout-red { border-left-color: var(--error); }
+  .callout-amber { border-left-color: var(--warning); }
+
+  /* Tables */
+  .spec-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin: 24px 0;
+    border: 1px solid var(--border);
+  }
+  .spec-table thead { background: var(--surface-alt); }
+  .spec-table th {
+    text-align: left;
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .spec-table td {
+    padding: 14px 20px;
+    font-size: 0.93rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+
+  .tier-table thead { background: var(--accent); color: white; }
+  .tier-table th {
+    text-align: left;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: white;
+  }
+
+  /* Score banner */
+  .score-banner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 40px;
+    margin-bottom: 56px;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .score-number {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .score-number span { font-size: 1.5rem; color: var(--muted); font-weight: 500; }
+  .score-detail h2 { font-size: 1.25rem; font-weight: 600; margin-bottom: 4px; color: var(--accent); }
+  .score-detail p { font-size: 0.95rem; color: var(--muted); }
+
+  /* Steps */
+  .steps { counter-reset: step; list-style: none; padding-left: 0; }
+  .steps li {
+    counter-increment: step;
+    padding: 16px 0 16px 48px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .steps li strong { display: block; margin-bottom: 4px; }
+
+  /* Code */
+  code {
+    background: var(--surface-alt);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  pre {
+    background: var(--fg);
+    color: #E0E0E0;
+    padding: 20px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 16px 0;
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+
+  /* Two column */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  .two-col > div {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* Flow diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+  .flow-step {
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .flow-arrow { color: var(--muted); font-size: 0.85rem; }
+
+  @media print {
+    body { background: white; }
+    .page { padding: 20px; }
+    .callout, .spec-table, .score-banner { box-shadow: none; break-inside: avoid; }
+  }
+  @media (max-width: 600px) {
+    .page { padding: 24px 20px 40px; }
+    .score-banner { flex-direction: column; gap: 16px; padding: 24px; }
+    .two-col { grid-template-columns: 1fr; }
+    .header-meta { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">MVP Platform Specification</div>
+    <h1>future.ly</h1>
+    <p class="subtitle">One story. One countdown. One community. A storytelling fundraising platform for grassroots action-sports projects where people follow the journey, support the project, and get something real in exchange.</p>
+    <div class="header-meta">
+      <span><strong>Date:</strong> March 2026</span>
+      <span><strong>Version:</strong> 1.0 — MVP</span>
+      <span><strong>Entity:</strong> UK CIC (registered)</span>
+      <span><strong>Confidential</strong></span>
+    </div>
+  </div>
+
+  <!-- Positioning -->
+  <div class="score-banner">
+    <div style="flex-shrink:0; font-size: 2.5rem;">🌊</div>
+    <div class="score-detail">
+      <h2>One story at a time. Full focus. 30 days.</h2>
+      <p>future.ly isn't a platform with many campaigns — it's one story at a time, with the full attention of the community. When a story is funded, it stays alive with updates. Then the next story takes its place. Sign up to see what's next. Unlike GoFundMe, people get something real. Unlike Kickstarter, the story never dies.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 1. WHAT WE'RE BUILDING -->
+  <div class="section">
+    <h2>1. What we're building</h2>
+
+    <p>future.ly is a platform where grassroots action-sports projects tell their stories and get funded through them. Every campaign centres on an exchange — not a donation. Funders contribute to a specific, transparent goal and receive something tangible and authentic from the community they supported.</p>
+
+    <p>The platform differentiates on three things that nobody else combines:</p>
+
+    <div class="callout">
+      <p><strong>Living stories</strong> — Campaigns don't end when they're funded. Updates, photos, and progress reports keep the story alive. People follow along and stay connected to the communities they helped.<br><br>
+      <strong>Tangible exchanges</strong> — Funders receive real things: handmade items, signed prints, personal thank-yous. Not donation receipts. Not digital badges. Something you'd hang on your wall.<br><br>
+      <strong>Radical transparency</strong> — Every campaign has a public budget. Every dollar is accounted for. People know exactly what their money bought.</p>
+    </div>
+
+    <h3>The positioning gap</h3>
+
+    <table class="spec-table">
+      <thead><tr><th>Platform</th><th>Model</th><th>The gap</th></tr></thead>
+      <tbody>
+        <tr><td>GoFundMe</td><td>Open crowdfunding, donations</td><td>No story arc, no exchange, no curation. Commodity platform. Aggressive tipping.</td></tr>
+        <tr><td>Kickstarter</td><td>Reward-based, all-or-nothing</td><td>Creator/product focused, not impact-focused. Story ends at funding.</td></tr>
+        <tr><td>charity: water</td><td>Story-driven donations</td><td>Single org, not a platform. No exchange model.</td></tr>
+        <tr><td>Patreon</td><td>Subscription content</td><td>Creator tool, not project funding. 15%+ effective fees.</td></tr>
+        <tr><td>JustGiving</td><td>Charity fundraising</td><td>UK-centric. Donation-only. No exchange.</td></tr>
+        <tr><td>Chuffed</td><td>Free social enterprise crowdfunding</td><td>No storytelling emphasis. Unclear sustainability (seed-funded).</td></tr>
+        <tr><td><strong>future.ly</strong></td><td><strong>Story-driven exchanges</strong></td><td><strong>One story at a time. Living narratives + tangible rewards + radical transparency + gamified momentum.</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 1B. THE ONE STORY MODEL -->
+  <div class="section">
+    <h2>1b. The "One Story" model</h2>
+
+    <p>future.ly doesn't launch as a marketplace of campaigns. It launches as one story. The entire site IS the campaign. This is a deliberate constraint that solves multiple problems at once.</p>
+
+    <h3>Why one story is better than many</h3>
+    <table class="spec-table">
+      <thead><tr><th>Problem</th><th>How "One Story" solves it</th></tr></thead>
+      <tbody>
+        <tr><td>Empty platform feel</td><td>There's no "browse campaigns" page with one entry. The site IS the story. It feels intentional, not sparse.</td></tr>
+        <tr><td>Attention dilution</td><td>One story gets 100% of the community's focus, shares, and energy. No competition for eyeballs.</td></tr>
+        <tr><td>Quality control</td><td>We curate intensely. Every story on future.ly is vetted, shot, and built by us. Quality is non-negotiable.</td></tr>
+        <tr><td>Urgency</td><td>30-day countdown. When it's done, it's done. A new story takes its place.</td></tr>
+        <tr><td>Growth engine</td><td>"Sign up to see the next story" converts visitors into a waitlist for Campaign One. Built-in lead generation.</td></tr>
+        <tr><td>Narrative arc</td><td>The platform itself has a story: "This was our first. Here's what happened. Now meet the next community."</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The cycle</h3>
+    <div class="flow">
+      <span class="flow-step">Story goes live</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">30-day countdown</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Community funds it</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Story stays alive (updates)</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Next story teased</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Waitlist notified</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">New story goes live</span>
+    </div>
+
+    <h3>What happens after 30 days?</h3>
+    <p>If the campaign is fully funded: the exchange tiers close, the story transitions to "living story" mode (updates continue), and the homepage begins teasing the next story with a signup wall.</p>
+    <p>If the campaign is partially funded: the money raised still goes to the project (no all-or-nothing). The campaign page stays live with a "Funded: 72% of goal" badge. Exchange tiers remain open for an additional grace period (7 days). Then it transitions to living story mode regardless.</p>
+    <p>If the campaign fails to hit 30% in the first week: this is a kill signal. The story isn't reaching people. Pause, diagnose distribution, consider whether to extend or pull.</p>
+
+    <div class="callout">
+      <p><strong>The 30/90 rule from Kickstarter data:</strong> campaigns that hit 30% of their goal in the first week have a 90% chance of fully funding. Track this metric from day one. If you're at 15% after 7 days, something is wrong with distribution, not the product.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 1C. GAMIFICATION -->
+  <div class="section">
+    <h2>1c. Engagement mechanics</h2>
+
+    <p>These aren't gimmicks — they're behavioural design grounded in research. Every mechanic serves the story and the community. Nothing is fake, nothing is manipulative, everything is transparent.</p>
+
+    <h3>The countdown (always visible)</h3>
+    <p>A real 30-day countdown displayed prominently on the campaign page. This is a legitimate deadline — the campaign closes, period. No extensions, no "we'll keep it open." Research shows 20-30% of total funding on Kickstarter comes in the final 48 hours. The countdown creates a natural narrative arc: launch energy → mid-campaign engagement → final push urgency.</p>
+
+    <p>Design: large, beautiful, always visible in the sticky header on scroll. Days : Hours : Minutes. Not seconds — seconds feel like a sales timer. Days and hours feel like a deadline.</p>
+
+    <h3>Live activity feed</h3>
+    <p>A real-time ticker on the campaign page: "Sarah from Bristol backed the Standard tier — 3 min ago." Research shows funders are 50% more likely to back when they see peer activity. This creates herding behaviour — late-stage funders imitate early ones. Built on Supabase realtime subscriptions, so it's genuinely live, not batched.</p>
+
+    <p>Rules: first name + city only (privacy). Anonymous backers show as "Someone from London." No amounts shown in the feed (avoids wealth signalling). Feed shows last 10 entries, auto-scrolls.</p>
+
+    <h3>Milestone progress bar</h3>
+    <p>Not a simple fill bar — a narrative progress bar with four milestones tied to the campaign phases. Each milestone has a label describing what that funding level unlocks for the project:</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Milestone</th><th>Campaign Zero example</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td><strong>25% funded</strong></td><td>"Safety gear for all 15 kids"</td><td>Content unlock #1 (behind-the-scenes video). Visual celebration on the progress bar.</td></tr>
+        <tr><td><strong>50% funded</strong></td><td>"10 complete skateboard setups"</td><td>Content unlock #2 (unseen photo set from Bren). Community wall highlight.</td></tr>
+        <tr><td><strong>75% funded</strong></td><td>"Mini ramp materials purchased"</td><td>Content unlock #3 (personal video message from the community). Push notification to all supporters.</td></tr>
+        <tr><td><strong>100% funded</strong></td><td>"Full build: gear + ramp + skatepark plan"</td><td>Content unlock #4 (the full story — trip footage, the build, the result). Celebration moment.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Content unlocks (the differentiator)</h3>
+    <p>This is the mechanic that makes future.ly feel genuinely different. When the community collectively hits a funding milestone, new content is unlocked for everyone — supporters and visitors alike. It creates a sense of "we did this together" and gives people a reason to share: "We just unlocked a new video — help us get to 75%."</p>
+
+    <p>The content is pre-planned and loaded before launch. It's revealed, not created on the fly. Bren and the team plan four content pieces that map to the four milestones. The quality matters — each unlock should feel like a reward, not filler.</p>
+
+    <div class="callout">
+      <p><strong>Content unlock planning (documentary footage — coordinate with Bren &amp; Rick before launch):</strong><br><br>
+      <strong>25% unlock:</strong> Documentary teaser (2 min) — cinematic. The kids, the boards, the barangay. This is the trailer people share.<br><br>
+      <strong>50% unlock:</strong> Extended raw scene — building a board from scrap wood. Unedited, intimate. Shows the craft and reality.<br><br>
+      <strong>75% unlock:</strong> The kids speaking directly to the community. Subtitled. Their words, their faces, their thank-yous. Emotional peak.<br><br>
+      <strong>100% unlock:</strong> Exclusive rough-cut scene from the documentary (5-10 min). A preview of the film that nobody else has seen. Creates anticipation for the full release.</p>
+    </div>
+
+    <h3>Founding supporter status</h3>
+    <p>The first 50 backers receive a "Founding Supporter" badge visible on the community wall. Numbered: "Founding Supporter #23." This creates early-bird urgency without discounting the exchange tiers. The badge is permanent — when Campaign One launches, founding supporters from Campaign Zero are visibly marked as originals. This is about identity, not perks.</p>
+
+    <h3>Supporter count as social proof</h3>
+    <p>"147 people are funding this story" — displayed prominently next to the progress bar. Not just the pound amount (which can feel abstract) but the number of humans. This is tribal psychology — people want to join a crowd that's already forming.</p>
+
+    <h3>"Sign up for the next story" (growth engine)</h3>
+    <p>Below the campaign, a simple CTA: "This is our first story. The next one is coming. Sign up to be the first to know." Email capture with a teaser of Campaign One (Our Ocean School — one image, one line). This converts every visitor into a lead for the next campaign, even if they don't fund this one.</p>
+
+    <h3>What we deliberately don't do</h3>
+    <table class="spec-table">
+      <thead><tr><th>Mechanic</th><th>Why we skip it</th></tr></thead>
+      <tbody>
+        <tr><td>Fake scarcity ("only 10 prints left!")</td><td>Prints are unlimited. Lying about scarcity destroys the trust we're building. Premium boards have real scarcity — we don't need to manufacture it.</td></tr>
+        <tr><td>Auto-sharing to friends</td><td>Never post to someone's social media without explicit action. Social manipulation backfires and feels invasive.</td></tr>
+        <tr><td>Gamified donation amounts ("☕=£5")</td><td>Patronising. Cheapens the exchange model. The tiers speak for themselves.</td></tr>
+        <tr><td>Streak mechanics</td><td>Doesn't fit a 30-day campaign. Streaks work for daily-use apps, not fundraising.</td></tr>
+        <tr><td>Leaderboards by amount</td><td>Celebrating wealth, not generosity. A £10 supporter is as valuable as a £200 one.</td></tr>
+        <tr><td>Countdown in seconds</td><td>Seconds feel like a Black Friday timer. Days and hours feel like a deadline.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2. THE PILOTS -->
+  <div class="section">
+    <h2>2. The pilots</h2>
+
+    <h3>Campaign Zero: Siargao skate kids</h3>
+    <p>Filipino kids in a remote barangay building skateboards from scrap wood. The story has already validated — strangers are messaging Bren unprompted wanting to buy boards or fund the kids. Vice editor Sam Graham is a confirmed contact. Vans Philippines has already sent decks. This is Campaign Zero because the assets are warm, the demand is proven, and the story makes people stop scrolling.</p>
+
+    <h3>Campaign One: Our Ocean School</h3>
+    <p>A nonprofit providing free English education to 250+ students in Mentawai, Indonesia. Connected in the surf industry. Rick has already produced fundraising content for them. Same model, different sport, different country. Two independent pilots from different geographies proves this is a platform, not a project.</p>
+
+    <div class="callout">
+      <p>Campaign Zero proves the exchange model works. Campaign One proves the platform thesis. A third campaign approaching us (inbound) proves it scales.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3. REVENUE MODEL -->
+  <div class="section">
+    <h2>3. Revenue model</h2>
+
+    <p>future.ly uses a hybrid model designed to be the fairest in the space: a small fixed fee per exchange that covers platform costs, plus a dedicated Creator Fund that pays the photographers and videographers who tell these stories. No percentage-based fees that scale greedily with donation size. Every penny is accounted for publicly.</p>
+
+    <h3>The model</h3>
+    <table class="spec-table">
+      <thead><tr><th>Component</th><th>Amount</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Platform fee</strong></td><td>£2 flat per exchange</td><td>Covers hosting, development, operations, support. Does not scale with exchange size.</td></tr>
+        <tr><td><strong>Creator Fund</strong></td><td>£1 per exchange + voluntary funder contributions</td><td>Pays photographers, videographers, and content creators who tell these stories. Published transparently.</td></tr>
+        <tr><td><strong>Payment processing</strong></td><td>~2.9% + 30p (Stripe)</td><td>Unavoidable. Passed through at cost. Shown transparently.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>Why this is different.</strong> Kickstarter takes 5% + 3-5% processing (effectively 8-10%). GoFundMe prompts a 13.5% default "tip." Patreon charges 10-15%. future.ly takes a flat £2 + £1 for creators, regardless of exchange size. On a £50 exchange, that's ~8.5% total (including processing). On a £200 auction, it drops to ~4.5%. The bigger the contribution, the more goes to the project.</p>
+    </div>
+
+    <h3>Unit economics</h3>
+    <p>On a £50 exchange: the project receives £45.25. Platform takes £2 (operations). Creator Fund receives £1. Stripe takes £1.75 (processing). On a £200 auction item: the project receives £191.50. The percentages improve as the exchange value rises.</p>
+
+    <h3>Creator Fund transparency</h3>
+    <p>The Creator Fund is published on the site. Every quarter: how much collected, who was paid, what for. Photographers and videographers receive a per-campaign fee (agreed upfront) for their work. This is the story of the storytellers being told transparently — and it's a differentiator nobody else offers.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Revenue stream</th><th>Model</th><th>Phase</th></tr></thead>
+      <tbody>
+        <tr><td>Platform fee</td><td>£2 flat per exchange</td><td>MVP</td></tr>
+        <tr><td>Creator Fund</td><td>£1 per exchange + voluntary contributions</td><td>MVP</td></tr>
+        <tr><td>Payment processing</td><td>Passed through at cost (~2.9% + 30p)</td><td>MVP</td></tr>
+        <tr><td>Brand sponsorship</td><td>Brands sponsor campaigns (e.g. Vans sponsors skate projects)</td><td>V2</td></tr>
+        <tr><td>Premium campaign tools</td><td>Analytics, storytelling features for campaign creators</td><td>V3</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-amber">
+      <p><strong>Tax note.</strong> HMRC treats exchanges as commercial sales, not donations. The CIC pays corporation tax on surpluses. VAT applies at 20% above the threshold (£90,000 as of 2026). Structure from day one: separate donation-only contributions (no VAT) from exchange purchases (VAT applicable). Consult accountant before launch.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. USER FLOWS -->
+  <div class="section">
+    <h2>4. User flows</h2>
+
+    <h3>Funder journey</h3>
+    <div class="flow">
+      <span class="flow-step">Discovers story</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Reads campaign</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Chooses exchange tier</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Pays via Lago/Stripe</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Gets confirmation</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Follows updates</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Receives exchange</span>
+    </div>
+
+    <p>No account required to browse stories. Account required to fund (email + name). Returning funders can see all their supported campaigns in one place. Email notifications for story updates on campaigns they've funded.</p>
+
+    <h3>Campaign creator journey (Phase 2)</h3>
+    <div class="flow">
+      <span class="flow-step">Submits story</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Review &amp; vetting</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Campaign built</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Goes live</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Posts updates</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Receives funds</span>
+    </div>
+
+    <p>For MVP, campaigns are created by us (John + team). Campaign creator self-service is a Phase 2 feature. This keeps quality high and lets us develop a playbook before opening it up.</p>
+
+    <h3>Auction flow (premium tier)</h3>
+    <div class="flow">
+      <span class="flow-step">Item listed</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Bidding opens</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Countdown timer</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Auction closes</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Winner pays</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">Item shipped</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5. EXCHANGE TIERS -->
+  <div class="section">
+    <h2>5. Exchange tiers</h2>
+
+    <p>Every campaign has a tiered exchange model. The tiers scale from high-value scarce items to accessible micro-contributions. This is the Kickstarter reward model applied to grassroots impact.</p>
+
+    <table class="spec-table tier-table">
+      <thead><tr><th>Tier</th><th>What you get</th><th>Price model</th><th>Supply</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Premium</strong></td><td>Original handmade item (e.g. skateboard, artwork)</td><td>Auction (starting bid ~$100)</td><td>Scarce (5-10 per campaign)</td></tr>
+        <tr><td><strong>Standard</strong></td><td>High-quality framed photo print from the story, signed</td><td>Fixed price ($25-$50)</td><td>Unlimited</td></tr>
+        <tr><td><strong>Personal</strong></td><td>Handwritten thank-you card from the community</td><td>Fixed price ($10-$15)</td><td>Scales with community</td></tr>
+        <tr><td><strong>Supporter</strong></td><td>Name on the campaign wall + story updates</td><td>Donation (any amount, min $5)</td><td>Unlimited</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-amber">
+      <p><strong>Fulfillment reality check.</strong> Physical exchanges require fulfillment infrastructure. For MVP: prints are produced by a UK-based print-on-demand partner (shortlist: Prodigi, Gelato). Handwritten cards are coordinated through on-the-ground contacts (Bren for Siargao). Premium auction items are shipped directly from origin — shipping cost is factored into auction reserve price, not absorbed by the platform. For boards specifically: sea freight PH→UK is ~37 working days, plus customs (12% duty + 20% VAT). Minimum viable auction price after costs: $200.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 6. THE LIVING STORY -->
+  <div class="section">
+    <h2>6. The living story</h2>
+
+    <p>This is the core differentiator and the hardest product to build well. A living story is not a blog. It's a narrative timeline that shows how a project evolves from idea to funded to built to impact. Every campaign page is a story that unfolds over time.</p>
+
+    <h3>Story structure</h3>
+
+    <table class="spec-table">
+      <thead><tr><th>Element</th><th>Content</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Origin</strong></td><td>The founding story. How this started. Why it matters. Photos, video, raw emotion.</td><td>Launch</td></tr>
+        <tr><td><strong>The goal</strong></td><td>What specifically will be built/achieved. Transparent budget breakdown.</td><td>Launch</td></tr>
+        <tr><td><strong>Exchange showcase</strong></td><td>Photos and descriptions of what funders receive.</td><td>Launch</td></tr>
+        <tr><td><strong>Progress updates (gated)</strong></td><td>Video updates from the documentary shoot, written context, what the money bought. <strong>Donor-only access.</strong> Non-donors see teaser thumbnail + blurred excerpt.</td><td>Ongoing (weekly minimum)</td></tr>
+        <tr><td><strong>Milestone unlocks (public)</strong></td><td>Content unlocks at 25/50/75/100% funded — exclusive documentary scenes. <strong>Public</strong> to maximise sharing and reach.</td><td>As achieved</td></tr>
+        <tr><td><strong>Community wall</strong></td><td>Names and messages from funders. Social proof and belonging.</td><td>Ongoing</td></tr>
+        <tr><td><strong>Impact report</strong></td><td>What was accomplished. Photos of the result. What's next.</td><td>Campaign complete</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Content pipeline: documentary-driven</h3>
+    <p>Campaign Zero is backed by a documentary shoot. This changes everything — instead of scrambling for content, the campaign draws from a professional production pipeline. The documentary shoot produces hours of footage; the platform becomes the documentary's companion experience. People follow the story on future.ly while the full film is being made.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Cadence</th><th>Content type</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Daily (during shoot)</td><td>Short video clips (15-60s), behind-the-scenes stills</td><td>Documentary dailies — Rick and Bren select the best moments</td></tr>
+        <tr><td>Weekly</td><td>Edited video update (1-3 min) + written context</td><td>Rough cuts from documentary footage, edited for the platform</td></tr>
+        <tr><td>On milestone</td><td>Content unlock — exclusive documentary scene</td><td>Scenes from the film that won't be in the final cut, or early previews of key moments</td></tr>
+        <tr><td>Post-campaign</td><td>Living story updates as the documentary progresses</td><td>Edit room updates, festival submissions, screening dates</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>The documentary is the content engine.</strong> This solves the biggest risk (stale content) because the production generates more material than the platform can use. The challenge flips from "how do we get enough content?" to "how do we curate the best moments?" Every future campaign should aim for this model — a documentary or serious content production backing the campaign, not phone footage and afterthoughts.</p>
+    </div>
+
+    <h3>Content unlock upgrades (documentary-grade)</h3>
+    <p>With documentary footage, the content unlocks become genuinely exclusive. These aren't "a photo Bren took" — they're scenes from a film.</p>
+    <table class="spec-table">
+      <thead><tr><th>Milestone</th><th>Unlock content</th><th>Why it works</th></tr></thead>
+      <tbody>
+        <tr><td><strong>25%</strong></td><td>2-minute documentary teaser — the kids, the boards, the barangay. Cinematic. This is the trailer.</td><td>Gives funders something powerful to share. "Watch this. Then help us fund it."</td></tr>
+        <tr><td><strong>50%</strong></td><td>Extended scene — the process of building a board from scrap. Raw, unedited, intimate.</td><td>Shows the craft and the reality. No polish, just truth.</td></tr>
+        <tr><td><strong>75%</strong></td><td>Personal video — the kids speaking directly to the community. Subtitled. Their words, their faces.</td><td>Emotional peak. The most shareable moment of the campaign.</td></tr>
+        <tr><td><strong>100%</strong></td><td>Full rough-cut scene from the documentary (5-10 min). An exclusive preview of the film.</td><td>Rewards the community with something genuinely exclusive. Creates anticipation for the full documentary.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The documentary ↔ platform flywheel</h3>
+    <p>The documentary and the platform feed each other:</p>
+    <ul>
+      <li>The documentary produces content for the platform (daily footage, edits, scenes)</li>
+      <li>The platform funds the project the documentary covers (equipment, ramps, gear for the kids)</li>
+      <li>The platform audience becomes the documentary's built-in audience (screening invites, premiere access)</li>
+      <li>The documentary's release drives new traffic back to future.ly (for the next campaign)</li>
+    </ul>
+    <p>This flywheel is the long-term model. Every future.ly campaign should ideally have a documentary or serious content production attached. The platform doesn't just fund projects — it funds the stories about them.</p>
+
+    <div class="callout">
+      <p><strong>Minimum content commitment still applies.</strong> Even with documentary backing, campaigns must have a named content lead committed to weekly updates for the 30-day window. The documentary provides raw material; someone still needs to edit and publish platform-specific content. For Campaign Zero, that's Bren and Rick.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 7. SITE STRUCTURE -->
+  <div class="section">
+    <h2>7. Site structure</h2>
+
+    <h3>Pages</h3>
+    <table class="spec-table">
+      <thead><tr><th>Route</th><th>Purpose</th><th>Phase</th></tr></thead>
+      <tbody>
+        <tr><td><code>/</code></td><td>THE campaign page. Hero, story, countdown, tiers, progress bar, content unlocks, activity feed, community wall, next story signup. The homepage IS the campaign.</td><td>MVP</td></tr>
+        <tr><td><code>/story/[slug]</code></td><td>Archived campaign page — living story with updates. Used after a campaign's 30 days end.</td><td>MVP</td></tr>
+        <tr><td><code>/campaign/[slug]/updates</code></td><td>Full updates feed for a campaign</td><td>MVP</td></tr>
+        <tr><td><code>/campaign/[slug]/budget</code></td><td>Transparent budget breakdown and spend tracking</td><td>MVP</td></tr>
+        <tr><td><code>/auction/[item-slug]</code></td><td>Individual auction item page with bidding</td><td>MVP</td></tr>
+        <tr><td><code>/checkout</code></td><td>Payment flow for fixed-price exchanges</td><td>MVP</td></tr>
+        <tr><td><code>/me</code></td><td>Funder dashboard — campaigns supported, exchange status, updates</td><td>MVP</td></tr>
+        <tr><td><code>/about</code></td><td>About future.ly, the team, the CIC structure, transparency</td><td>MVP</td></tr>
+        <tr><td><code>/wall/[slug]</code></td><td>Community wall — all funders for a campaign</td><td>MVP</td></tr>
+        <tr><td><code>/next</code></td><td>Next story teaser + email signup waitlist</td><td>MVP</td></tr>
+        <tr><td><code>/submit</code></td><td>Campaign submission form for new projects</td><td>V2</td></tr>
+        <tr><td><code>/admin</code></td><td>Admin panel — campaign management, order tracking, content publishing</td><td>MVP (internal)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Homepage structure (the homepage IS the campaign)</h3>
+    <p>There is no "browse campaigns" page. The homepage is the story. One page, one mission, one countdown.</p>
+
+    <ol class="steps">
+      <li><strong>Hero — the image, the countdown, the ask</strong> Full-width cinematic image from Campaign Zero. The countdown timer (Days : Hours : Minutes). One sentence: "15 kids in a remote Filipino village build skateboards from scrap wood. Help us give them the real thing." A CTA: "Support this story." Supporter count: "147 people are funding this."</li>
+      <li><strong>The story</strong> The full narrative — photo-led, short paragraphs, interspersed with images. This is the emotional core. It should feel like reading a short documentary piece. The milestone progress bar sits here, with labels for each phase.</li>
+      <li><strong>Exchange tiers</strong> Sticky sidebar on desktop, card section on mobile. Each tier: what you get (photo), price, what the money funds, how many remaining (if limited). The auction item(s) get special treatment with current bid and time remaining.</li>
+      <li><strong>Content unlocks</strong> A visual section showing four locked/unlocked content pieces. Unlocked pieces are playable/viewable. Locked pieces show a teaser thumbnail with "Unlocks at 50% funded." Creates collective anticipation.</li>
+      <li><strong>Live activity feed + community wall</strong> Real-time ticker of recent supporters. Below it, the full community wall with founding supporter badges. Social proof and belonging.</li>
+      <li><strong>The budget</strong> Transparent breakdown: where every pound goes. Collapsible but visible. The trust mechanic.</li>
+      <li><strong>The next story (growth engine)</strong> A single teaser image from Campaign One (Our Ocean School). One line of copy. "This was our first story. The next one is coming." Email signup. This converts every visitor — even non-funders — into a lead.</li>
+      <li><strong>Footer</strong> future.ly CIC. UK registered. Links to about, safeguarding, terms, privacy. Creator Fund transparency link.</li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 8. CAMPAIGN PAGE ANATOMY -->
+  <div class="section">
+    <h2>8. Campaign page anatomy</h2>
+
+    <p>Each campaign page is the product. It needs to be beautiful, emotional, and functional. Here's the structure:</p>
+
+    <h3>Above the fold</h3>
+    <p>Hero image (full width, cinematic). Campaign title. One-line description. Funding progress bar with amount raised / goal. Number of supporters. Days remaining (if applicable).</p>
+
+    <h3>The story</h3>
+    <p>Photo-led narrative. Short paragraphs. Interspersed with full-width images and image grids. This is the emotional core — it should feel like reading a short documentary piece, not a fundraising appeal.</p>
+
+    <h3>The exchange tiers</h3>
+    <p>Sticky sidebar on desktop, card section on mobile. Each tier shows: what you get (photo), price, what the money funds, how many remaining (if limited). Clear CTA on each tier.</p>
+
+    <h3>The budget</h3>
+    <p>Collapsible section showing exactly where the money goes. Line items with amounts. This is the transparency mechanic — it builds trust.</p>
+
+    <h3>The timeline</h3>
+    <p>Reverse-chronological updates. Photos, text, video. Each update has a date and optional milestone badge. Funders get email notifications for new updates. This is the "living" part of the living story.</p>
+
+    <h3>Community wall</h3>
+    <p>Grid of funder names (or anonymous) with optional short messages. Social proof + belonging.</p>
+
+    <h3>Campaign phases</h3>
+    <p>Visual roadmap showing phases (e.g. Phase 1: Gear, Phase 2: Mini Ramp, Phase 3: Skatepark). Current phase highlighted. Completed phases marked. Creates a sense of journey and momentum.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 9. TECH STACK -->
+  <div class="section">
+    <h2>9. Tech stack</h2>
+
+    <h3>Architecture overview</h3>
+    <p>Two systems with clear separation of concerns. Strapi handles everything content (stories, updates, media, campaign narratives). Supabase handles everything transactional (auth, payments, orders, realtime feeds, auctions). Next.js sits in front of both.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>Framework</td><td>Next.js (App Router)</td><td>From boilerplate. SSR for SEO. ISR for story pages. Fast shipping.</td></tr>
+        <tr><td>Styling</td><td>Tailwind CSS</td><td>Rapid UI development. Consistent design system.</td></tr>
+        <tr><td>CMS</td><td><strong>Strapi v5</strong></td><td>Headless CMS for all content: stories, updates, media galleries, campaign narratives, photographer profiles. Dynamic zones for flexible story layouts. Visual admin for non-technical creators. RBAC for admin/editor/photographer roles.</td></tr>
+        <tr><td>Transactional DB</td><td>Supabase (Postgres)</td><td>Auth, orders, payments, bids, realtime subscriptions (activity feed, auction countdown), waitlist. Everything that involves money or user state.</td></tr>
+        <tr><td>Auth</td><td>Supabase Auth</td><td>Funder auth: magic link (low friction) + social (Google). Strapi handles its own admin auth separately.</td></tr>
+        <tr><td>Payments</td><td>Lago + Stripe</td><td>Lago for billing orchestration. Stripe for payment processing. Multi-currency handled by Stripe (display in local currency, settle in GBP).</td></tr>
+        <tr><td>Media CDN</td><td>Cloudinary or Cloudflare R2</td><td>Image optimisation, responsive sizes, video transcoding. Strapi's media library uploads to Cloudinary via plugin.</td></tr>
+        <tr><td>Email</td><td>Resend</td><td>Transactional (receipts, update alerts, auction notifications) + waitlist notifications.</td></tr>
+        <tr><td><strong>Video (critical)</strong></td><td>Mux or Cloudflare Stream</td><td>Primary content medium. Documentary footage requires adaptive streaming, HLS delivery, and thumbnail generation. Mux preferred — better API, built-in player, per-minute pricing ($0.007/min stored, $0.04/min delivered). Videos served inline on story pages, not behind embeds.</td></tr>
+        <tr><td>Hosting</td><td><strong>DigitalOcean (full stack)</strong></td><td>Existing infrastructure. Strapi on DO App Platform or Droplet. Managed PostgreSQL for Strapi. Next.js on DO App Platform. All in one place.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Strapi content model</h3>
+    <p>Strapi manages all editorial content. The content types:</p>
+    <table class="spec-table">
+      <thead><tr><th>Content type</th><th>Fields</th><th>Who edits</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Campaign Story</strong></td><td>Title, slug, hero image, story body (dynamic zone: text blocks, image galleries, video embeds, pull quotes), people profiles, location</td><td>Admin, Editor</td></tr>
+        <tr><td><strong>Story Update</strong></td><td>Title, body (rich text), media (images/video), milestone flag, published date</td><td>Admin, Editor, Photographer</td></tr>
+        <tr><td><strong>Person Profile</strong></td><td>Name, photo, role (kid, photographer, volunteer), one-line bio, consent status</td><td>Admin</td></tr>
+        <tr><td><strong>Content Unlock</strong></td><td>Milestone %, title, teaser image, locked media (video/gallery), description</td><td>Admin</td></tr>
+        <tr><td><strong>Campaign Phase</strong></td><td>Title, description, funding target, status</td><td>Admin</td></tr>
+        <tr><td><strong>Exchange Tier</strong></td><td>Title, description, images, price info, shipping notes</td><td>Admin</td></tr>
+      </tbody>
+    </table>
+
+    <h3>What lives where</h3>
+    <div class="two-col">
+      <div>
+        <h4 style="color: var(--accent);">Strapi (content)</h4>
+        <ul>
+          <li>Campaign stories and narratives</li>
+          <li>Story updates and media</li>
+          <li>Person profiles (kids, team, photographers)</li>
+          <li>Content unlock media</li>
+          <li>Exchange tier descriptions and images</li>
+          <li>Budget descriptions</li>
+          <li>About page, safeguarding policy</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: var(--accent);">Supabase (transactions)</h4>
+        <ul>
+          <li>User auth and profiles</li>
+          <li>Orders and payment records</li>
+          <li>Auction bids (realtime)</li>
+          <li>Community wall entries</li>
+          <li>Funding totals and supporter counts</li>
+          <li>Waitlist signups</li>
+          <li>Founding supporter badges</li>
+          <li>Creator revenue share tracking</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Deployment on DigitalOcean</h3>
+    <table class="spec-table">
+      <thead><tr><th>Service</th><th>DO resource</th><th>Est. cost/month</th></tr></thead>
+      <tbody>
+        <tr><td>Strapi v5</td><td>App Platform (Basic) or Droplet ($12-24)</td><td>$12-24</td></tr>
+        <tr><td>Strapi database</td><td>Managed PostgreSQL (Basic)</td><td>$15</td></tr>
+        <tr><td>Next.js frontend</td><td>App Platform (Basic)</td><td>$12</td></tr>
+        <tr><td>Supabase</td><td>Supabase Cloud (free tier → Pro)</td><td>$0-25</td></tr>
+        <tr><td>Cloudinary</td><td>Free tier → Paid</td><td>$0-49</td></tr>
+        <tr><td>Resend</td><td>Free tier (100 emails/day)</td><td>$0-20</td></tr>
+        <tr><td><strong>Total</strong></td><td></td><td><strong>$39-145/month</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-amber">
+      <p><strong>Strapi v5 known issue.</strong> Admin panel can slow down after 48+ hours of continuous runtime (memory leak, being actively patched). Workaround: set up a weekly auto-restart via cron on DO. Not a dealbreaker, but document it in ops runbook.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 10. DATABASE SCHEMA -->
+  <div class="section">
+    <h2>10. Database schema</h2>
+
+    <pre><code>-- Campaigns
+create table campaigns (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  title text not null,
+  subtitle text,
+  description text not null,          -- Rich text / markdown
+  hero_image_url text,
+  status text default 'draft',        -- draft, live, funded, completed, paused
+  funding_goal_cents int not null,
+  amount_raised_cents int default 0,
+  currency text default 'GBP',
+  supporter_count int default 0,
+  starts_at timestamptz,
+  ends_at timestamptz,                -- null = no deadline
+  location text,                      -- e.g. "Siargao, Philippines"
+  sport text,                         -- e.g. "skateboarding", "surfing"
+  content_lead text,                  -- Name of person responsible for updates
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Campaign phases (roadmap)
+create table campaign_phases (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  title text not null,                -- e.g. "Phase 1: Proper setups and safety gear"
+  description text,
+  funding_target_cents int,
+  status text default 'upcoming',     -- upcoming, active, funded, completed
+  sort_order int default 0,
+  created_at timestamptz default now()
+);
+
+-- Budget line items (transparency)
+create table budget_items (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  phase_id uuid references campaign_phases(id),
+  description text not null,          -- e.g. "10x complete skateboard setups"
+  amount_cents int not null,
+  spent_cents int default 0,
+  category text,                      -- equipment, shipping, labor, materials
+  sort_order int default 0
+);
+
+-- Exchange tiers
+create table exchange_tiers (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  title text not null,                -- e.g. "Premium — Handmade Board"
+  description text not null,
+  image_url text,
+  price_cents int,                    -- null for auction tiers
+  price_type text default 'fixed',    -- fixed, auction, donation
+  min_donation_cents int,             -- for donation tier
+  quantity_total int,                 -- null = unlimited
+  quantity_remaining int,
+  shipping_note text,                 -- e.g. "Ships worldwide. Allow 6-8 weeks."
+  sort_order int default 0,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
+-- Auction items (for premium tier)
+create table auction_items (
+  id uuid primary key default gen_random_uuid(),
+  tier_id uuid references exchange_tiers(id),
+  campaign_id uuid references campaigns(id),
+  title text not null,
+  description text,
+  image_urls text[],
+  reserve_price_cents int not null,
+  current_bid_cents int default 0,
+  bid_count int default 0,
+  winner_id uuid references auth.users(id),
+  starts_at timestamptz not null,
+  ends_at timestamptz not null,
+  status text default 'upcoming',     -- upcoming, live, ended, paid, shipped
+  created_at timestamptz default now()
+);
+
+-- Bids
+create table bids (
+  id uuid primary key default gen_random_uuid(),
+  auction_item_id uuid references auction_items(id),
+  user_id uuid references auth.users(id),
+  amount_cents int not null,
+  created_at timestamptz default now()
+);
+
+-- Orders (exchanges)
+create table orders (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id),
+  campaign_id uuid references campaigns(id),
+  tier_id uuid references exchange_tiers(id),
+  auction_item_id uuid references auction_items(id),
+  amount_cents int not null,
+  platform_fee_cents int not null,     -- £2 flat (200)
+  creator_fund_cents int not null,     -- £1 flat (100)
+  processing_fee_cents int not null,   -- Stripe ~2.9% + 30p
+  net_to_project_cents int not null,
+  currency text default 'GBP',
+  status text default 'pending',      -- pending, paid, fulfilled, shipped, delivered
+  shipping_address jsonb,
+  tracking_number text,
+  lago_invoice_id text,
+  stripe_payment_intent_id text,
+  funder_message text,                -- optional message for community wall
+  is_anonymous boolean default false,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Story updates (the living story)
+create table story_updates (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  title text,
+  body text not null,                 -- markdown
+  media_urls text[],                  -- images and video URLs
+  media_type text default 'image',    -- image, video, mixed
+  is_milestone boolean default false,
+  milestone_label text,               -- e.g. "Phase 1 Complete"
+  published_at timestamptz,
+  status text default 'draft',        -- draft, published
+  created_at timestamptz default now()
+);
+
+-- Community wall (funder names + messages)
+create table community_wall_entries (
+  id uuid primary key default gen_random_uuid(),
+  order_id uuid references orders(id),
+  campaign_id uuid references campaigns(id),
+  display_name text,                  -- or "Anonymous"
+  message text,
+  amount_cents int,                   -- optionally shown
+  show_amount boolean default false,
+  created_at timestamptz default now()
+);
+
+-- User profiles (extends Supabase auth)
+create table profiles (
+  id uuid primary key references auth.users(id),
+  full_name text,
+  email text,
+  avatar_url text,
+  notification_preferences jsonb default '{"story_updates": true, "campaign_milestones": true}',
+  created_at timestamptz default now()
+);
+
+-- Content unlocks (gamification)
+create table content_unlocks (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  milestone_percent int not null,      -- 25, 50, 75, 100
+  title text not null,                 -- e.g. "Behind the scenes"
+  description text,
+  media_urls text[],                   -- pre-loaded content
+  media_type text default 'video',     -- video, gallery, message
+  teaser_image_url text,               -- shown while locked
+  is_unlocked boolean default false,
+  unlocked_at timestamptz,
+  sort_order int default 0
+);
+
+-- Waitlist (next story signups)
+create table waitlist (
+  id uuid primary key default gen_random_uuid(),
+  email text unique not null,
+  name text,
+  source text,                         -- e.g. "campaign_zero_footer", "direct"
+  campaign_referred_from text,         -- which campaign page they signed up on
+  created_at timestamptz default now()
+);
+
+-- Founding supporters
+create table founding_supporters (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id),
+  campaign_id uuid references campaigns(id),
+  badge_number int not null,           -- 1-50
+  created_at timestamptz default now(),
+  unique(campaign_id, badge_number)
+);
+
+-- Campaign media gallery
+create table campaign_media (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  url text not null,
+  type text default 'image',          -- image, video
+  caption text,
+  sort_order int default 0,
+  section text,                       -- hero, story, gallery, exchange
+  created_at timestamptz default now()
+);</code></pre>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 11. PAYMENT ARCHITECTURE -->
+  <div class="section">
+    <h2>11. Payment architecture</h2>
+
+    <h3>Three payment types</h3>
+
+    <table class="spec-table">
+      <thead><tr><th>Type</th><th>Flow</th><th>Implementation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Fixed-price exchange</strong></td>
+          <td>Funder selects tier → Stripe Checkout → Lago invoice created → Confirmation email</td>
+          <td>Standard Stripe Checkout session. Lago handles invoicing, receipts, and fee calculation.</td>
+        </tr>
+        <tr>
+          <td><strong>Auction</strong></td>
+          <td>Funder places bid (no charge) → Auction ends → Winner receives Stripe payment link → Lago invoice</td>
+          <td>Bids are stored in DB. No payment at bid time. Winner has 48h to pay. If unpaid, goes to next bidder.</td>
+        </tr>
+        <tr>
+          <td><strong>Donation (supporter tier)</strong></td>
+          <td>Funder enters custom amount (min £5) → Stripe Checkout → Lago invoice → Name on wall</td>
+          <td>Custom amount input. No physical exchange — digital acknowledgement only.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Fee breakdown per transaction</h3>
+    <p>On every exchange, three deductions are made — all shown transparently at checkout:</p>
+    <table class="spec-table">
+      <thead><tr><th>Fee</th><th>Amount</th><th>Who receives</th></tr></thead>
+      <tbody>
+        <tr><td>Platform fee</td><td>£2 flat</td><td>future.ly CIC (covers ops, hosting, development)</td></tr>
+        <tr><td>Creator Fund</td><td>£1 flat</td><td>Photographers, videographers, content creators</td></tr>
+        <tr><td>Payment processing</td><td>~2.9% + 30p</td><td>Stripe (at cost, not marked up)</td></tr>
+        <tr><td>Net to project</td><td>Remainder (~90%+ on larger exchanges)</td><td>Campaign project (via Wise transfer, with CIC Regulator consent)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Multi-currency</h3>
+    <p>Campaigns are denominated in a base currency (GBP for UK CIC). Funders pay in their local currency (Stripe handles conversion). Funds are disbursed to projects via Wise in the most efficient currency (e.g. PHP for Philippines, IDR for Indonesia). All disbursements to external project bodies require CIC Regulator consent.</p>
+
+    <div class="callout">
+      <p><strong>VAT consideration.</strong> Exchange tiers where a physical item is received are treated as sales. Supporter tier (donation, no exchange) is not subject to VAT. The £2 platform fee and £1 creator fund contribution are service charges — VAT treatment to be confirmed with accountant. Register for VAT when total taxable turnover exceeds £90,000.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 11B. CREATOR ECONOMICS -->
+  <div class="section">
+    <h2>11b. Creator economics</h2>
+
+    <p>Photographers and videographers shoot for free because they believe in the stories. When a campaign succeeds, they earn. This is itself a story worth telling — and it's published transparently on the platform.</p>
+
+    <h3>Pure revenue share model</h3>
+    <table class="spec-table">
+      <thead><tr><th>Role</th><th>Share</th><th>When it pays</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lead photographer</strong></td><td>8% of net campaign revenue</td><td>Distributed monthly, starting 30 days after campaign closes</td></tr>
+        <tr><td><strong>Videographer</strong></td><td>5% of net campaign revenue</td><td>Same schedule</td></tr>
+        <tr><td><strong>Contributing photographer</strong></td><td>3% of net campaign revenue</td><td>For photographers who contribute updates (not the initial shoot)</td></tr>
+      </tbody>
+    </table>
+
+    <p>On a campaign that raises £5,000 net (after platform fee and processing): the lead photographer earns £400, the videographer earns £250. On a campaign that raises £15,000: £1,200 and £750 respectively. The incentive is perfectly aligned — better content brings more funding brings more earnings.</p>
+
+    <h3>Why this works</h3>
+    <div class="callout">
+      <p><strong>You have photographers willing to work for free who love the model.</strong> The revenue share turns "free work" into "invested work." They're not volunteers — they're equity holders in the story. They're incentivised to promote the campaign to their own audiences, keep creating content during the 30-day window, and contribute updates even after the campaign closes. This also means the content pipeline problem (who creates updates?) has a built-in answer: the people who earn from engagement.</p>
+    </div>
+
+    <h3>Creator Fund mechanics</h3>
+    <p>The £1-per-exchange Creator Fund still exists but its purpose shifts. Instead of directly paying creators (the revenue share does that), the fund covers:</p>
+    <ul>
+      <li><strong>Equipment and travel costs</strong> for photographers going to remote locations</li>
+      <li><strong>Emergency support</strong> if a campaign underperforms (so creators aren't left with nothing)</li>
+      <li><strong>New creator onboarding</strong> — covering costs for photographers on their first campaign before revenue share kicks in</li>
+    </ul>
+    <p>The fund is still published transparently. Quarterly report: how much collected, what it was used for.</p>
+
+    <h3>Creator profiles on the platform</h3>
+    <p>Every photographer gets a visible profile on the campaigns they shoot. Their name, photo, and story appear alongside the community they're documenting. When someone funds a campaign, they're supporting the photographer too — and that's made explicit. "Shot by Bren — who left his media career to document grassroots communities across Southeast Asia. He earns a share of every exchange on this campaign."</p>
+
+    <h3>Revenue share tracking (database)</h3>
+    <pre><code>-- Creator revenue shares
+create table creator_shares (
+  id uuid primary key default gen_random_uuid(),
+  campaign_id uuid references campaigns(id),
+  creator_name text not null,
+  creator_email text not null,
+  role text not null,                  -- lead_photographer, videographer, contributor
+  share_percent numeric(4,2) not null, -- e.g. 8.00
+  total_earned_cents int default 0,
+  total_paid_cents int default 0,
+  payment_method text,                 -- wise, paypal, bank
+  created_at timestamptz default now()
+);
+
+-- Creator payouts
+create table creator_payouts (
+  id uuid primary key default gen_random_uuid(),
+  creator_share_id uuid references creator_shares(id),
+  amount_cents int not null,
+  period_start date not null,
+  period_end date not null,
+  status text default 'pending',       -- pending, paid, failed
+  paid_at timestamptz,
+  wise_transfer_id text,
+  created_at timestamptz default now()
+);</code></pre>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 11C. GEO-TARGETING & MULTI-CURRENCY -->
+  <div class="section">
+    <h2>11c. Geo-targeting &amp; multi-currency</h2>
+
+    <p>future.ly is a global platform from day one. Funders in the US should see USD. Funders in the UK should see GBP. The messaging should adapt to where the audience is. And distribution should target the regions where action-sports communities are strongest.</p>
+
+    <h3>Currency display</h3>
+    <table class="spec-table">
+      <thead><tr><th>Aspect</th><th>Implementation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Detection</strong></td><td>IP-based geo detection via Cloudflare headers (<code>CF-IPCountry</code>) or Vercel's geo headers. Fallback: browser locale.</td></tr>
+        <tr><td><strong>Display currencies</strong></td><td>GBP, USD, EUR, AUD, CAD at launch. Expand based on traffic data.</td></tr>
+        <tr><td><strong>Exchange rates</strong></td><td>Stripe handles actual conversion at checkout. Display prices use daily rates from a free API (e.g. exchangerate.host) cached for 24h.</td></tr>
+        <tr><td><strong>Base currency</strong></td><td>GBP (CIC home currency). All internal accounting in GBP. Display converted for visitors.</td></tr>
+        <tr><td><strong>User override</strong></td><td>Currency selector in header. User preference stored in cookie/localStorage.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Content targeting</h3>
+    <p>Different regions see adapted messaging — not different stories, but different framing. The story is universal; the hook is local.</p>
+    <table class="spec-table">
+      <thead><tr><th>Region</th><th>Adapted element</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>US / Canada</td><td>Hero subtitle, social proof</td><td>"147 people across 12 countries are funding this story" + USD pricing</td></tr>
+        <tr><td>UK</td><td>CIC credibility, Gift Aid note</td><td>"UK Community Interest Company. Every pound accounted for." + GBP pricing</td></tr>
+        <tr><td>Australia / NZ</td><td>Proximity to Southeast Asia</td><td>"Just a few hours from here, 15 kids are building skateboards from scrap." + AUD pricing</td></tr>
+        <tr><td>Philippines</td><td>Local pride angle</td><td>"From Siargao to the world. Filipino kids inspiring a global community." + PHP pricing</td></tr>
+      </tbody>
+    </table>
+
+    <p>Implementation: content variants stored in Strapi as localised fields on the campaign story. Next.js middleware reads geo header and passes locale to page components. Minimal overhead — just subtitle and social proof copy, not full page translations.</p>
+
+    <h3>Distribution targeting</h3>
+    <p>Paid and organic distribution targeted by region, based on where action-sports communities are strongest:</p>
+    <table class="spec-table">
+      <thead><tr><th>Priority region</th><th>Channels</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>US West Coast</td><td>Instagram, TikTok, skate media</td><td>Largest skate culture, highest disposable income</td></tr>
+        <tr><td>UK</td><td>Instagram, X, surf/skate UK media</td><td>Home market. CIC credibility. Bren's existing audience.</td></tr>
+        <tr><td>Australia</td><td>Instagram, surf media</td><td>Strong surf/skate culture. Proximity to SE Asia.</td></tr>
+        <tr><td>Philippines</td><td>Facebook, Instagram, local media</td><td>Local pride. Diaspora audience. Bren's community.</td></tr>
+        <tr><td>Europe (DE, FR, NL)</td><td>Instagram, skate media</td><td>Growing skate scenes post-Olympics.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 11D. PERSONAL CONNECTION LAYER -->
+  <div class="section">
+    <h2>11d. The personal connection</h2>
+
+    <p>This is the soul of future.ly. If someone funds a campaign and feels like they donated to a website, we've failed. They should feel like they know the kids, know the photographer, and have been to the barangay themselves. Here's how we build that feeling.</p>
+
+    <h3>Know the people</h3>
+    <p>Every campaign has a "Meet the people" section — not a generic "about the community" paragraph, but individual profiles with faces, names (with consent), and one-line stories.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Person</th><th>What's shown</th><th>Consent requirement</th></tr></thead>
+      <tbody>
+        <tr><td><strong>The kids</strong> (Campaign Zero)</td><td>First name, age, photo, one sentence ("Kael, 11 — rides a piece of plywood down a hill and calls it heaven")</td><td>Written parental consent (bilingual). No surnames. No exact location beyond barangay.</td></tr>
+        <tr><td><strong>The photographer</strong></td><td>Full name, photo, their story ("Bren left his media career to document grassroots communities across SE Asia"), revenue share disclosure</td><td>Standard consent. They're an adult choosing to be public.</td></tr>
+        <tr><td><strong>The on-ground team</strong></td><td>Name, role, photo, connection to the community</td><td>Standard consent.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>Design principle:</strong> when someone scrolls through the "Meet the people" section, they should be able to close their eyes and picture the community. Not as a concept — as specific humans. Kael rides plywood. Bren quit his job. Rick carries a camera everywhere. This specificity is what turns a donation into a relationship.</p>
+    </div>
+
+    <h3>Two-way connection</h3>
+    <p>Funders aren't spectators — they're woven into the story.</p>
+    <ul>
+      <li><strong>Messages at checkout.</strong> Every funder can leave a message when they back the campaign. These appear on the community wall.</li>
+      <li><strong>Funder questions woven into updates.</strong> The content team reads funder messages. The best questions and comments get addressed in story updates: "Maria from London asked if the kids have helmets yet — here's the answer" with a photo of helmets arriving. This makes funders characters in the story.</li>
+      <li><strong>Direct thank-yous.</strong> The personal tier includes a handwritten thank-you card. But beyond that: video updates should occasionally address the community directly. "To the 147 people who made this possible — here's what your money bought this week."</li>
+    </ul>
+
+    <p>For MVP, this is editorial, not automated. No chat system, no comment threads (too moderation-heavy). The content team reads messages and weaves them into updates manually. This keeps the quality high and the voice consistent.</p>
+
+    <h3>Feel like you're there</h3>
+    <p>This is about content format and design decisions that create immersion.</p>
+    <ul>
+      <li><strong>Full-width photography.</strong> No thumbnails. No grid of tiny images. Each photo is full-width, cinematic, given room to breathe. The design gets out of the way.</li>
+      <li><strong>Inline video clips.</strong> Short clips (10-30 seconds) that autoplay muted on scroll — the sound of wheels on concrete, kids laughing, waves. Not behind a YouTube embed. Native, embedded, seamless.</li>
+      <li><strong>Ambient audio option.</strong> A small play button in the corner that plays ambient sound from the location while you read. Optional, not intrusive. The barangay comes alive.</li>
+      <li><strong>No stock anything.</strong> Every image, every video, every sound is from the actual community. This is the authenticity promise.</li>
+      <li><strong>Scroll-driven narrative.</strong> The story unfolds as you scroll — inspired by NYT/Guardian multimedia longform. New sections reveal as you move down. It's a reading experience, not a fundraising page.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Content priority for MVP: video-first.</strong> You're shooting a documentary — the platform should feel like it. The main story is video-led with supporting photography. Inline clips (15-60s) play as you scroll through the narrative. Full video pieces anchor the content unlocks. Photography fills the gaps and works for social sharing, email, and the community wall. The design should handle video natively — not as YouTube embeds, but as first-class media with adaptive streaming (Mux or Cloudflare Stream).</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 12. SAFEGUARDING -->
+  <div class="section">
+    <h2>12. Safeguarding policy</h2>
+
+    <p>This is a launch blocker. No campaign featuring children goes live without all of these completed.</p>
+
+    <h3>Before any content goes public</h3>
+    <ol class="steps">
+      <li><strong>Written parental consent</strong> Bilingual consent forms (English + local language) walked through with each family in person. Covers: use of images/video on the platform, use in social media promotion, right to withdraw consent. Forms signed, scanned, stored securely.</li>
+      <li><strong>Safeguarding policy document</strong> Published on the site at <code>/safeguarding</code>. Covers: how we work with children, who's responsible, how to report concerns, data handling for minors. Based on UK Safeguarding framework.</li>
+      <li><strong>Content review process</strong> All images/video featuring children are reviewed before publication. No content that could be considered exploitative, sexualising, or endangering. No full names of children published without explicit parental consent. Location specificity limited (barangay level, not home addresses).</li>
+      <li><strong>DBS-equivalent checks</strong> All adults working directly with children undergo background checks. UK: DBS. Philippines: NBI clearance. Indonesia: SKCK (Police clearance).</li>
+      <li><strong>Philippines compliance</strong> SEC registration check for foreign entity working with children. DSWD clearance for child welfare activities. Compliance with RA 7610 (child protection) and RA 9775 (anti-child exploitation) for all published content.</li>
+      <li><strong>UK Online Safety Act compliance</strong> Platform risk assessment completed. Age-appropriate content guidelines published. Content moderation process documented. Reporting mechanism for concerns.</li>
+    </ol>
+
+    <div class="callout callout-red">
+      <p><strong>Non-negotiable.</strong> If consent forms aren't completed before the Siargao trip, no content from the trip goes on the platform. Period. This protects the kids, the families, and the CIC.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 13. EXCHANGE FULFILLMENT -->
+  <div class="section">
+    <h2>13. Exchange fulfillment</h2>
+
+    <h3>Print fulfillment (standard tier)</h3>
+    <table class="spec-table">
+      <thead><tr><th>Aspect</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr><td>Print partner</td><td>Prodigi or Gelato (global POD, API integration). Both ship worldwide.</td></tr>
+        <tr><td>Product</td><td>Giclée print on archival paper, A4 or A3, white border. Optional framing.</td></tr>
+        <tr><td>QR code</td><td>V2 feature. Small QR code on reverse links back to the campaign story.</td></tr>
+        <tr><td>Turnaround</td><td>3-5 working days production. 5-14 days shipping depending on destination.</td></tr>
+        <tr><td>Cost to platform</td><td>~£8-15 per print (unframed, incl. shipping). Price to funder: £25-50.</td></tr>
+        <tr><td>Trigger</td><td>Automated via API after payment confirmed. Order sent to Prodigi/Gelato with image URL and shipping address.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Premium item fulfillment (auction tier)</h3>
+    <table class="spec-table">
+      <thead><tr><th>Aspect</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr><td>Packaging</td><td>Custom packaging sourced locally. Boards: bubble wrap + reinforced cardboard.</td></tr>
+        <tr><td>Shipping (boards PH→UK)</td><td>Sea freight via LBC/JRS Express or Balikbayan box service. ~37 working days. ~$40-60 per box.</td></tr>
+        <tr><td>Customs</td><td>12% import duty + 20% VAT on declared value. Funder informed pre-purchase that duties apply on arrival.</td></tr>
+        <tr><td>Alternative</td><td>UK/event pickup option for auction winners. Reduces shipping cost to zero.</td></tr>
+        <tr><td>Reserve price formula</td><td>Item value + shipping estimate + customs buffer + platform fee. Minimum viable: $200.</td></tr>
+        <tr><td>Insurance</td><td>Required for items over $200. Royal Mail or courier insurance.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Personal tier (thank-you cards)</h3>
+    <p>Handwritten by community members as part of educational activities (e.g. English class projects at Our Ocean School). Coordinated by on-the-ground contact. Scanned and emailed as digital backup if physical shipping is delayed. Physical cards shipped in batches via standard international mail.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 14. CAMPAIGN QUALITY CONTROL -->
+  <div class="section">
+    <h2>14. Campaign quality control</h2>
+
+    <p>A bad campaign kills trust for every other campaign on the platform. Quality control is how future.ly stays credible.</p>
+
+    <h3>MVP: Curated by us</h3>
+    <p>For MVP and V1, all campaigns are sourced and built by the future.ly team. No self-service campaign creation. This means every campaign has:</p>
+    <ul>
+      <li>A verified story (we've been there or have a trusted on-ground contact)</li>
+      <li>A named content lead committed to weekly updates</li>
+      <li>A realistic, priced-out budget</li>
+      <li>Exchange items that can actually be fulfilled</li>
+      <li>Complete safeguarding compliance (if children involved)</li>
+    </ul>
+
+    <h3>V2: Submission + vetting</h3>
+    <p>When we open to external campaigns, the process will be:</p>
+    <ol class="steps">
+      <li><strong>Submission</strong> Project submits story, photos, budget, team info, and proposed exchanges via <code>/submit</code> form.</li>
+      <li><strong>Review</strong> future.ly team reviews for authenticity, feasibility, and content quality. Video call with project lead.</li>
+      <li><strong>Campaign build</strong> If approved, future.ly works with the project to build their campaign page. We handle design and storytelling structure.</li>
+      <li><strong>Content commitment</strong> Project lead signs a content commitment agreement: weekly updates for the first 3 months, bi-weekly thereafter.</li>
+      <li><strong>Launch</strong> Campaign goes live. future.ly monitors for the first 30 days and provides storytelling support.</li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>Kill criteria for campaigns.</strong> A campaign is paused or removed if: no updates for 14+ days without explanation, funds are demonstrably misused, safeguarding concerns are raised, or the project team becomes unresponsive. Funders are notified and offered the choice of a refund or reallocation to another campaign.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 15. RISKS AND MITIGATIONS -->
+  <div class="section">
+    <h2>15. Risks and mitigations</h2>
+
+    <table class="spec-table">
+      <thead><tr><th>Risk</th><th>Severity</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Platform feels empty with 1-2 campaigns</strong></td>
+          <td><span style="color:var(--accent);">Solved</span></td>
+          <td>The "One Story" model makes this a feature, not a bug. The homepage IS the campaign. One story, full focus, 30-day countdown. No browse page, no empty grid. The next story waitlist converts visitors into leads. Scarcity is the design.</td>
+        </tr>
+        <tr>
+          <td><strong>Story updates go stale</strong></td>
+          <td>High</td>
+          <td>Content commitment agreement for every campaign. Minimum weekly photo update. Automated email reminders to content leads. Platform dashboard shows "days since last update" prominently.</td>
+        </tr>
+        <tr>
+          <td><strong>Shipping economics don't work for premium items</strong></td>
+          <td>Medium</td>
+          <td>Price shipping into auction reserve. Offer local pickup / event collection option. For standard prints, use global POD (ships from nearest facility). Don't promise worldwide free shipping on handmade items.</td>
+        </tr>
+        <tr>
+          <td><strong>VAT/tax treatment is wrong</strong></td>
+          <td>High</td>
+          <td>Get professional accountant advice before launch. Separate exchange sales (VATable) from donations (not VATable) in the payment system from day one. Don't retrofit.</td>
+        </tr>
+        <tr>
+          <td><strong>Safeguarding incident</strong></td>
+          <td>Critical</td>
+          <td>Complete safeguarding policy before launch. Written consent for every child. No content without review. Incident response plan documented. Named safeguarding officer.</td>
+        </tr>
+        <tr>
+          <td><strong>Campaign funds misused</strong></td>
+          <td>High</td>
+          <td>Funds held by CIC, not project directly. Disbursed against budget line items with receipts, with CIC Regulator consent for all transfers to external bodies. Public budget shows spend vs. plan. If misuse detected, campaign paused and funders notified.</td>
+        </tr>
+        <tr>
+          <td><strong>Payment processor / banking failure</strong></td>
+          <td>Medium</td>
+          <td>Stripe as primary + Wise as backup for direct transfers. Don't depend on a single banking partner (Mainvest lesson). CIC bank account with Wise provides multi-currency resilience.</td>
+        </tr>
+        <tr>
+          <td><strong>All funders are within personal network</strong></td>
+          <td>Medium</td>
+          <td>This is a kill signal. Track "degrees of separation" — if 80%+ of funders are known contacts after 30 days, the story isn't reaching strangers. Invest in distribution (Vice feature, Bren's audience, surf/skate media) before launch.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 16. SUCCESS AND KILL SIGNALS -->
+  <div class="section">
+    <h2>16. Success and kill signals</h2>
+
+    <div class="two-col">
+      <div>
+        <h4 style="color: var(--accent);">Green signals</h4>
+        <ul>
+          <li><strong>Day 7:</strong> Hit 30% funded (triggers the 30/90 rule — 90% chance of full funding)</li>
+          <li><strong>Day 7:</strong> 50%+ of funders are strangers (not personal network)</li>
+          <li><strong>Day 14:</strong> First content unlock hit (25%). Community shares it organically</li>
+          <li><strong>Day 30:</strong> 50+ funded exchanges total</li>
+          <li><strong>Day 30:</strong> Board auction bids exceed $200</li>
+          <li><strong>Day 30:</strong> 100+ email signups for "next story" waitlist</li>
+          <li><strong>Post-campaign:</strong> A third grassroots project approaches inbound</li>
+          <li><strong>Post-campaign:</strong> 20%+ of Campaign Zero funders also support Campaign One</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: var(--error);">Kill signals</h4>
+        <ul>
+          <li><strong>Day 7:</strong> Below 15% funded — distribution isn't working</li>
+          <li><strong>Day 7:</strong> 80%+ of funders are within 2 degrees of personal network</li>
+          <li><strong>Day 14:</strong> Haven't hit 25% (first content unlock) — momentum is dead</li>
+          <li><strong>Day 30:</strong> Fewer than 20 total exchanges</li>
+          <li><strong>Day 30:</strong> Page views high but conversion below 2% — story resonates but exchange model doesn't</li>
+          <li><strong>Any time:</strong> Shipping costs for boards exceed 50% of auction value</li>
+          <li><strong>Pre-launch:</strong> Safeguarding compliance can't be completed</li>
+          <li><strong>Post-launch:</strong> No story update published for 14+ days</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 17. BUILD PHASES -->
+  <div class="section">
+    <h2>17. Build phases</h2>
+
+    <h3>Phase 1: MVP (2 weeks)</h3>
+    <p>Ship a working platform with Campaign Zero live. One campaign, all exchange types, living story, payment.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Week</th><th>Deliverables</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Week 1</strong></td>
+          <td>
+            Boilerplate setup + Supabase schema<br>
+            Homepage + campaign page (story, tiers, budget)<br>
+            Fixed-price checkout flow (Lago + Stripe)<br>
+            Story update timeline component<br>
+            Community wall<br>
+            Admin panel: publish updates, manage tiers, view orders
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Week 2</strong></td>
+          <td>
+            Auction system (bidding, countdown, winner notification)<br>
+            Funder dashboard (<code>/me</code>)<br>
+            Email notifications (Resend: receipt, update alerts, auction alerts)<br>
+            Print fulfillment API integration (Prodigi/Gelato)<br>
+            About page, safeguarding page, terms<br>
+            Mobile responsive pass + polish<br>
+            Deploy to production
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Phase 2: Multi-campaign (Month 2)</h3>
+    <ul>
+      <li>Campaign One (Our Ocean School) goes live</li>
+      <li>Campaign browsing / discovery on homepage</li>
+      <li>Campaign submission form (<code>/submit</code>)</li>
+      <li>Enhanced admin: campaign analytics, funder demographics</li>
+      <li>QR codes on prints linking back to campaign story</li>
+      <li>Social sharing (campaign cards optimised for Twitter/Instagram)</li>
+    </ul>
+
+    <h3>Phase 3: Growth (Month 3-4)</h3>
+    <ul>
+      <li>Campaign creator self-service tools</li>
+      <li>Brand sponsorship infrastructure</li>
+      <li>Video hosting integration (Mux/Cloudflare)</li>
+      <li>Advanced analytics for campaign creators</li>
+      <li>API for third-party integrations</li>
+      <li>Mobile app consideration</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 18. DESIGN DIRECTION -->
+  <div class="section">
+    <h2>18. Design direction</h2>
+
+    <p>future.ly is not Kickstarter green or GoFundMe blue. It's warm, natural, photographic. The brand feels like a National Geographic documentary meets a zine. Premium but accessible. Serious about impact but not somber.</p>
+
+    <h3>Visual principles</h3>
+    <ul>
+      <li><strong>Photo-led.</strong> The images carry the emotion. UI gets out of the way.</li>
+      <li><strong>Warm neutrals.</strong> Off-white backgrounds, warm grays. Not clinical white, not dark mode.</li>
+      <li><strong>Teal accent.</strong> <code>#2A9D8F</code> from the Siargao validation doc. Ocean, nature, trust.</li>
+      <li><strong>Generous whitespace.</strong> Let the content breathe. One idea per scroll.</li>
+      <li><strong>Typography-first.</strong> Inter or similar clean sans-serif. Small body text, generous spacing. Headers don't need to shout.</li>
+      <li><strong>No stock photos.</strong> Every image on the platform is real, from the actual projects.</li>
+    </ul>
+
+    <h3>Tone of voice</h3>
+    <ul>
+      <li><strong>Direct.</strong> No charity-speak. No "make a difference today." No guilt.</li>
+      <li><strong>Authentic.</strong> Speak like the communities we represent. Real language.</li>
+      <li><strong>Confident.</strong> We know these stories matter. We don't apologise for asking.</li>
+      <li><strong>Warm.</strong> Not corporate. Not performative. Human.</li>
+    </ul>
+
+    <h3>What we never do</h3>
+    <ul>
+      <li>Poverty porn. No sad-face-kid-looking-into-camera shots.</li>
+      <li>Guilt-driven copy. No "for the price of a coffee."</li>
+      <li>Fake urgency. No countdown timers on donations (auctions are the exception).</li>
+      <li>Corporate charity language. No "impact metrics" or "beneficiary outcomes."</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 19. METRICS -->
+  <div class="section">
+    <h2>19. Metrics to track</h2>
+
+    <table class="spec-table">
+      <thead><tr><th>Metric</th><th>Target (30 days)</th><th>Alert if below</th></tr></thead>
+      <tbody>
+        <tr><td>Total exchanges</td><td>50+</td><td>20</td></tr>
+        <tr><td>Stranger ratio (non-network funders)</td><td>60%+</td><td>30%</td></tr>
+        <tr><td>Story page → checkout conversion</td><td>5%+</td><td>2%</td></tr>
+        <tr><td>Average exchange value</td><td>£30+</td><td>£15</td></tr>
+        <tr><td>Auction final bid (avg)</td><td>£200+</td><td>£100</td></tr>
+        <tr><td>Story update cadence</td><td>Weekly</td><td>No update for 14 days</td></tr>
+        <tr><td>Funder return rate</td><td>20%+</td><td>5%</td></tr>
+        <tr><td>Email open rate (update notifications)</td><td>40%+</td><td>25%</td></tr>
+        <tr><td>Social shares per update</td><td>10+</td><td>2</td></tr>
+        <tr><td>Campaign page time-on-page</td><td>3+ min</td><td>1 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 20. NEXT STEPS -->
+  <div class="section">
+    <h2>20. Next steps</h2>
+
+    <ol class="steps">
+      <li><strong>CIC resubmission</strong> Resubmit CIC36 with updated section B wording: include "with the consent of the CIC Regulator" wherever the form describes fundraising and transferring funds to project bodies. This is required because future.ly's ordinary activities include transferring raised funds to external organisations.</li>
+      <li><strong>Accountant consultation</strong> Get professional advice on CIC tax treatment, VAT obligations, and the exchange-vs-donation split. Do this before writing a line of code.</li>
+      <li><strong>Safeguarding framework</strong> Draft safeguarding policy. Prepare bilingual consent forms. Identify named safeguarding officer.</li>
+      <li><strong>Content shoot planning</strong> Confirm Siargao trip dates. Create shot list aligned with campaign page structure. Plan what content you need for launch.</li>
+      <li><strong>Print partner setup</strong> Open accounts with Prodigi and/or Gelato. Test print quality with sample images. Confirm API integration requirements.</li>
+      <li><strong>Build Week 1</strong> Boilerplate → schema → homepage → campaign page → checkout → admin. Ship internally by end of week.</li>
+      <li><strong>Build Week 2</strong> Auction → funder dashboard → emails → fulfillment integration → polish → deploy.</li>
+      <li><strong>Content population</strong> Load Campaign Zero with Bren's existing content. Publish placeholder "coming soon" for Campaign One.</li>
+      <li><strong>Soft launch</strong> Share with close network (not public). Get feedback on the story, the UX, the exchange process. Fix issues.</li>
+      <li><strong>Distribution prep</strong> Coordinate with Sam Graham (Vice) for feature timing. Prepare social content for Bren's channels. Draft launch email to network.</li>
+      <li><strong>Public launch</strong> Go live. Track metrics against success/kill signals. Evaluate at 30 days.</li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- LEGAL STRUCTURE -->
+  <div class="section">
+    <h2>21. Legal structure</h2>
+
+    <p><strong>Entity:</strong> UK Community Interest Company (CIC). Asset lock ensures funds stay tied to social mission. Allows trading (critical for exchange model). Social enterprise credibility.</p>
+
+    <div class="callout callout-amber">
+      <p><strong>CIC Regulator consent for fund transfers.</strong> Because future.ly raises funds and transfers them to external project bodies (e.g. community organisations, local partners), the CIC Regulator must consent to these transfers. This is standard for CICs whose ordinary activities include moving funds to other organisations. The CIC36 community interest statement must include the phrase "with the consent of the CIC Regulator" wherever it describes fundraising and disbursement to projects. All fund transfers to project bodies require Regulator consent — build this approval step into the disbursement workflow.</p>
+    </div>
+
+    <p><strong>Banking:</strong> Wise Business Account. Multi-currency (GBP, USD, PHP, IDR). Real exchange rates for international transfers. Payment links for manual invoice handling.</p>
+
+    <p><strong>Platform terms:</strong> Clear terms of service covering: exchange is a purchase (not a donation for tax purposes), fulfillment timelines, refund policy (full refund if exchange not delivered within stated timeframe), data handling (GDPR compliant), content licensing (projects grant future.ly license to display content).</p>
+
+    <p><strong>Refund policy:</strong> Full refund if exchange is not fulfilled within the stated timeframe. Partial refund option if project is paused or cancelled — funder chooses between refund or reallocation to another campaign. Auction items: no refund after payment (standard auction terms).</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TEAM -->
+  <div class="section">
+    <h2>22. Team</h2>
+
+    <table class="spec-table">
+      <thead><tr><th>Person</th><th>Role</th><th>Responsibility</th></tr></thead>
+      <tbody>
+        <tr><td><strong>John (Swanbo)</strong></td><td>Platform / Strategy</td><td>Platform build, campaign structure, business strategy, distribution</td></tr>
+        <tr><td><strong>Bren</strong></td><td>Content / On-ground (Siargao)</td><td>Campaign Zero content lead, community relationships, weekly updates</td></tr>
+        <tr><td><strong>Rick</strong></td><td>Video / Photography</td><td>High-quality content production, editorial direction</td></tr>
+        <tr><td><strong>Janiece</strong></td><td>Nonprofit Ops / Safeguarding</td><td>CIC governance, safeguarding policy, named safeguarding officer</td></tr>
+        <tr><td><strong>Sam Graham</strong></td><td>Editorial / Distribution</td><td>Vice connection, editorial coverage, launch amplification</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>future.ly — MVP Specification v1.0 | March 2026</span>
+    <span>Confidential</span>
+  </div>
+
+</div>
+</body>
+</html>

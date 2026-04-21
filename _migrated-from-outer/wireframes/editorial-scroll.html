@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>future.ly — Editorial Scroll Wireframe</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, sans-serif; background: #fff; color: #222; font-size: 13px; line-height: 1.6; }
+
+  .ph { background: #EDEDED; border: 2px dashed #C0C0C0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .ann { background: #FFFDE7; border-left: 3px solid #FDD835; padding: 8px 12px; font-size: 11px; color: #666; line-height: 1.7; margin: 6px 24px; }
+  .ann b { color: #333; }
+  .beat { position: relative; border-bottom: 1px solid #EEE; }
+  .beat::before {
+    content: attr(data-beat);
+    position: absolute; top: 8px; left: 8px;
+    background: #333; color: #fff;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; z-index: 2;
+  }
+  .beat-emotion::after {
+    content: attr(data-emotion);
+    position: absolute; top: 8px; right: 8px;
+    background: #E8F5E9; color: #2E7D32;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 8px;
+  }
+  .col-narrow { max-width: 560px; margin: 0 auto; padding: 32px 24px; }
+  .m { color: #AAA; font-size: 11px; }
+  .mt { margin-top: 12px; }
+  .mb { margin-bottom: 12px; }
+  .fb { display: flex; justify-content: space-between; align-items: center; }
+  .fr { display: flex; gap: 12px; align-items: center; }
+  .btn { display: inline-block; padding: 7px 18px; border: 2px solid #333; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .btn.f { background: #333; color: #fff; }
+
+  .persistent-bar {
+    border: 2px solid #333;
+    padding: 10px 24px;
+    margin: 0;
+    background: #FAFAFA;
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     FUTURE.LY — EDITORIAL SCROLL WIREFRAME
+     One continuous narrative. No sections. Story flow.
+
+     This document maps every "beat" of the scroll experience.
+     Beats are emotional/narrative moments, not UI sections.
+     The funding mechanics emerge from the story — they don't
+     interrupt it.
+     ════════════════════════════════════════════════════════════ -->
+
+<div style="padding: 16px 24px; background: #333; color: #fff; font-size: 11px; letter-spacing: 0.1em;">
+  WIREFRAME — EDITORIAL NARRATIVE SCROLL — FUTURE.LY CAMPAIGN PAGE
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PERSISTENT ELEMENTS (always visible)
+     ═══════════════════════════════════════════ -->
+
+<div class="persistent-bar fb">
+  <div style="font-weight: 700; font-size: 14px;">future.ly</div>
+  <div style="flex:1; margin: 0 32px;">
+    <div style="height:4px; background:#EEE; border-radius:2px; position:relative;">
+      <div style="height:100%; width:62%; background:#333; border-radius:2px;"></div>
+    </div>
+  </div>
+  <div class="fr" style="gap: 16px;">
+    <span class="m"><strong style="color:#222;">[£X,XXX]</strong> / [£X,XXX]</span>
+    <span class="m"><strong style="color:#222;">[DD]</strong>d <strong style="color:#222;">[HH]</strong>h</span>
+    <span class="btn f" style="padding: 5px 14px;">[CTA]</span>
+  </div>
+</div>
+<div class="ann"><b>Persistent nav bar.</b> Always visible. Contains: logo, progress bar (minimal, no labels — the milestones are visual moments in the scroll, not UI elements), amount raised, time left, CTA. This is the only "UI" on the page. Everything else is editorial content. Transparent over hero → solid on scroll. The progress bar IS the nav — it tells you how far the story has been funded at a glance.</div>
+
+
+<!-- ═══════════════════════════════════════════
+     THE SCROLL — BEAT BY BEAT
+     ═══════════════════════════════════════════ -->
+
+
+<!-- BEAT 01: THE OPENING — FULL SCREEN VIDEO -->
+<div class="beat beat-emotion" data-beat="Beat 01 · The Opening" data-emotion="Arrival → Curiosity">
+  <div class="ph" style="height: 500px; flex-direction: column; gap: 10px;">
+    <div style="width:64px; height:64px; border:2px solid #BBB; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px;">▶</div>
+    <span>Full viewport — documentary video (Mux)</span>
+    <span style="font-size:10px; color:#BBB;">Autoplay muted. Centered play button. Poster frame on mobile.</span>
+  </div>
+  <div class="col-narrow">
+    <div class="m" style="text-transform:uppercase; letter-spacing:0.15em;">[Campaign label — number · location]</div>
+    <div style="font-size: 32px; font-weight: 700; margin: 8px 0;">[Campaign title]</div>
+    <div class="m">[Single line — what this is. No more.]</div>
+  </div>
+  <div class="ann"><b>Full viewport height. The video IS the page.</b> No stats overlay, no progress bar, nothing competing. Just the film. Title and one-line description appear below the video fold. The visitor's first experience is watching, not reading. If the video is a 2-3min campaign cut, it plays in full. If it's a trailer, the play button opens a lightbox. Scroll indicator (subtle chevron or "scroll" text) at the bottom of the viewport.</div>
+</div>
+
+
+<!-- BEAT 02: THE CONTEXT — WHERE ARE WE? -->
+<div class="beat beat-emotion" data-beat="Beat 02 · The Context" data-emotion="Curiosity → Understanding">
+  <div class="ph" style="height: 300px;">Full-width image — the place. Aerial or establishing shot. Edge to edge.</div>
+  <div class="col-narrow">
+    <div style="font-size: 20px; font-weight: 500; margin-bottom: 16px; line-height: 1.5;">
+      [Opening paragraph — large text. Sets the scene. Where are we? Who lives here? What's it like? This is the lede.]
+    </div>
+    <div class="m" style="font-size: 13px; line-height: 1.7;">
+      [Body paragraph — builds context. The place, the community, the daily reality. Short paragraphs. Placeholder.]
+    </div>
+    <div class="m mt" style="font-size: 13px; line-height: 1.7;">
+      [Body paragraph — placeholder. Continue the scene-setting.]
+    </div>
+  </div>
+  <div class="ann"><b>Scene-setting.</b> Large serif opening paragraph (the lede) followed by body text in a narrow column. Think magazine feature opening. The full-width image above gives geographic/emotional context. Text appears on scroll with subtle fade-in (not aggressive animation — just gentle reveal). Content from Strapi dynamic zone: "text_block" component.</div>
+</div>
+
+
+<!-- BEAT 03: THE DISCOVERY — THE THING THAT MAKES YOU STOP -->
+<div class="beat beat-emotion" data-beat="Beat 03 · The Discovery" data-emotion="Understanding → Surprise">
+  <div class="ph" style="height: 60px;">Inline video clip — 15-30s. Autoplay muted on scroll. The moment you see IT.</div>
+  <div class="col-narrow">
+    <div class="m" style="font-size: 13px; line-height: 1.7;">
+      [Body paragraph — the discovery. What's happening that's remarkable. What did the filmmaker find? Placeholder.]
+    </div>
+  </div>
+  <div class="ph" style="height: 350px;">Full-width image — THE image. The one that stops the scroll. Edge to edge, maximum impact.</div>
+  <div class="col-narrow">
+    <div style="padding: 20px 0 20px 16px; border-left: 2px solid #DDD; font-size: 18px; font-style: italic; color: #666;">
+      [Pull quote — placeholder. The line that captures the whole story.]
+    </div>
+  </div>
+  <div class="ann"><b>The emotional hook.</b> This is where the visitor stops scrolling and starts caring. An inline video clip plays automatically (muted) showing the remarkable thing — the invention, the resilience, the moment. Then THE photograph — full width, full impact. Pull quote underneath anchors the emotion in words. Strapi dynamic zone sequence: inline_video → text_block → full_image → pull_quote.</div>
+</div>
+
+
+<!-- BEAT 04: THE PEOPLE — MET THROUGH THE STORY, NOT A GRID -->
+<div class="beat beat-emotion" data-beat="Beat 04 · Meet Someone" data-emotion="Surprise → Connection">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; min-height: 350px;">
+    <div class="ph">Full editorial portrait — [Person 1]. Not an avatar. A photograph.</div>
+    <div style="padding: 40px; display: flex; flex-direction: column; justify-content: center; background: #F8F8F8;">
+      <div style="font-size: 20px; font-weight: 600;">[Name, age]</div>
+      <div class="m mb" style="text-transform: uppercase; letter-spacing: 0.1em;">[Role]</div>
+      <div class="m" style="font-size: 13px; line-height: 1.7;">[Their story — not a bio, a moment. One paragraph that makes you see them as a person. Placeholder.]</div>
+    </div>
+  </div>
+  <div class="col-narrow">
+    <div class="m" style="font-size: 13px; line-height: 1.7;">
+      [Story continues — weaving this person into the narrative. What they do, why it matters. Placeholder.]
+    </div>
+  </div>
+  <div class="ann"><b>People are introduced IN the narrative.</b> Not in a grid. You meet one person at a time, with a full editorial portrait (half the viewport) and their story alongside it. This is how magazine profiles work — one person, given space, given dignity. Then the narrative continues and weaves them in. Repeat this pattern for each key person (2-4 per campaign). On mobile: image stacked above text, full width. Strapi: "person_feature" component in dynamic zone.</div>
+</div>
+
+
+<!-- BEAT 05: THE PROBLEM — WHAT'S MISSING -->
+<div class="beat beat-emotion" data-beat="Beat 05 · The Problem" data-emotion="Connection → Empathy">
+  <div class="col-narrow">
+    <div class="m" style="font-size: 13px; line-height: 1.7;">
+      [Body paragraph — what's missing. The gap between what exists and what could exist. Not a sob story — a clear, specific need. Placeholder.]
+    </div>
+    <div class="m mt" style="font-size: 13px; line-height: 1.7;">
+      [Body paragraph — placeholder. Concrete details, not abstraction.]
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+    <div class="ph" style="height: 280px;">Image — the reality now</div>
+    <div class="ph" style="height: 280px;">Image — what could be (or: the contrast)</div>
+  </div>
+  <div class="ann"><b>The turn.</b> The story shifts from "look at this remarkable thing" to "here's what's needed." Not guilt. Not pity. Just: here's the gap. Paired images create visual contrast (what is vs. what could be). This is the bridge to the ask — building the emotional case before the exchange tiers appear. Keep it short and specific.</div>
+</div>
+
+
+<!-- BEAT 06: MEET THE FILMMAKER — WHY THIS STORY EXISTS -->
+<div class="beat beat-emotion" data-beat="Beat 06 · The Filmmaker" data-emotion="Empathy → Trust">
+  <div style="display: grid; grid-template-columns: 1fr 1fr; min-height: 300px;">
+    <div style="padding: 40px; display: flex; flex-direction: column; justify-content: center; background: #F8F8F8;">
+      <div style="font-size: 20px; font-weight: 600;">[Filmmaker name]</div>
+      <div class="m mb" style="text-transform: uppercase; letter-spacing: 0.1em;">[Role — filmmaker / on-ground]</div>
+      <div class="m" style="font-size: 13px; line-height: 1.7;">[How they found this story. Why they keep coming back. Their relationship to the community. Revenue share disclosure. Placeholder.]</div>
+    </div>
+    <div class="ph">Full editorial portrait — the filmmaker</div>
+  </div>
+  <div class="ann"><b>Trust-building.</b> You've met the community. Now meet the person telling their story. The filmmaker's portrait and their "why" — flipped layout from Beat 04 (text left, image right) to create visual rhythm. Revenue share disclosed naturally: "[Name] earns a share of every exchange on this campaign." This humanises the platform itself.</div>
+</div>
+
+
+<!-- BEAT 07: THE PLAN — WHAT THE MONEY BUILDS (VISUAL BUDGET) -->
+<div class="beat beat-emotion" data-beat="Beat 07 · The Plan" data-emotion="Trust → Clarity">
+  <div class="col-narrow">
+    <div style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">[The plan — what specifically will happen]</div>
+    <div class="m" style="font-size: 13px; line-height: 1.7;">
+      [Short paragraph — concrete, specific. What gets bought, built, delivered. Placeholder.]
+    </div>
+    <!-- Visual budget — inline, not a separate section -->
+    <div class="mt mb" style="border: 1px solid #EEE; padding: 20px;">
+      <div class="fb" style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;">
+        <span class="m">[Budget item]</span> <strong>[£X,XXX]</strong>
+      </div>
+      <div class="fb" style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;">
+        <span class="m">[Budget item]</span> <strong>[£XXX]</strong>
+      </div>
+      <div class="fb" style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;">
+        <span class="m">[Budget item]</span> <strong>[£X,XXX]</strong>
+      </div>
+      <div class="fb" style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;">
+        <span class="m">[Budget item]</span> <strong>[£XXX]</strong>
+      </div>
+      <div class="fb" style="padding: 8px 0;">
+        <span class="m">[Budget item]</span> <strong>[£XXX]</strong>
+      </div>
+      <div class="m mt" style="font-size: 10px;">[Fee disclosure — platform £2, creator fund £1, processing ~3%]</div>
+    </div>
+  </div>
+  <div class="ann"><b>Budget is part of the story, not a section.</b> It appears naturally after the plan — "here's what we'll do, here's exactly what it costs." Simple list, no progress bars (those belong in the post-funding living story updates, not the pitch). The transparency IS the trust. Fee disclosure in small text. This is the moment before the ask — the visitor now has: emotion (the people), understanding (the problem), and clarity (the plan + cost).</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     THE ASK — EMERGES FROM THE STORY
+     ═══════════════════════════════════════════ -->
+
+<!-- BEAT 08: THE ASK — EXCHANGE TIERS WITHIN THE NARRATIVE -->
+<div class="beat beat-emotion" data-beat="Beat 08 · The Ask" data-emotion="Clarity → Action" style="background: #FAFAFA;">
+  <div class="col-narrow">
+    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">[Heading — the ask. Not "support this project." Something that continues the story. Placeholder.]</div>
+    <div class="m mb" style="font-size: 13px;">[One line — placeholder]</div>
+  </div>
+
+  <!-- Tiers as editorial cards, not a product grid -->
+  <div style="max-width: 720px; margin: 0 auto; padding: 0 24px;">
+
+    <!-- Tier: Auction / Premium — leads with the story object -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #DDD; margin-bottom: 16px;">
+      <div class="ph" style="height: 240px; border-radius: 0;">[Photo of the actual item — e.g. the handmade board]</div>
+      <div style="padding: 24px; display: flex; flex-direction: column; justify-content: center;">
+        <div class="m" style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px;">[Tier label — auction]</div>
+        <div style="font-size: 18px; font-weight: 600; margin: 6px 0;">[Tier name]</div>
+        <div class="m" style="font-size: 12px; line-height: 1.6;">[Description — what it is, why it matters, the story behind it. Placeholder.]</div>
+        <div class="mt">
+          <div style="font-size: 11px; color: #C62828;">[X of X remaining]</div>
+          <div style="font-size: 16px; font-weight: 600; margin: 4px 0;">[Current bid: £XXX]</div>
+          <div class="m mb">[Time remaining]</div>
+          <div class="btn" style="width: 100%; text-align: center;">[Bid CTA]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tier: Standard (featured) -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid #333; margin-bottom: 16px;">
+      <div style="padding: 24px; display: flex; flex-direction: column; justify-content: center;">
+        <div class="m" style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px;">[Tier label]</div>
+        <div style="font-size: 18px; font-weight: 600; margin: 6px 0;">[Tier name]</div>
+        <div class="m" style="font-size: 12px; line-height: 1.6;">[Description — placeholder]</div>
+        <div class="mt">
+          <div style="font-size: 16px; font-weight: 600; margin-bottom: 4px;">[£XX]</div>
+          <div class="m mb">[Fulfillment note]</div>
+          <div class="btn f" style="width: 100%; text-align: center;">[CTA]</div>
+        </div>
+      </div>
+      <div class="ph" style="height: 240px; border-radius: 0;">[Photo — the print / the exchange item]</div>
+    </div>
+
+    <!-- Smaller tiers — stacked row -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div style="border: 1px solid #DDD; padding: 20px;">
+        <div class="m" style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px;">[Tier label]</div>
+        <div style="font-weight: 600; margin: 4px 0;">[Tier name]</div>
+        <div class="m" style="font-size: 12px; margin-bottom: 12px;">[Description — placeholder]</div>
+        <div style="font-weight: 600;">[£XX]</div>
+        <div class="m mb">[Note]</div>
+        <div class="btn" style="width: 100%; text-align: center;">[CTA]</div>
+      </div>
+      <div style="border: 1px solid #DDD; padding: 20px;">
+        <div class="m" style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px;">[Tier label — supporter]</div>
+        <div style="font-weight: 600; margin: 4px 0;">[Tier name]</div>
+        <div class="m" style="font-size: 12px; margin-bottom: 12px;">[Description — placeholder]</div>
+        <div style="font-weight: 600;">[From £X]</div>
+        <div class="m mb">[Note]</div>
+        <div class="btn" style="width: 100%; text-align: center;">[CTA]</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ann"><b>The tiers ARE editorial.</b> Premium item leads — large image + story of the object, auction mechanics alongside. Featured tier flips layout (text left, image right). Smaller tiers in a quieter 2-col below. This isn't a product grid — it's the natural continuation of "here's the plan, here's how you can be part of it." The premium item has the most visual weight because it's the most interesting story object. Mobile: all stack to single column. Prices geo-targeted.</div>
+</div>
+
+
+<!-- BEAT 09: SOCIAL PROOF — THE COMMUNITY IS ALREADY HERE -->
+<div class="beat beat-emotion" data-beat="Beat 09 · Social Proof" data-emotion="Action → Belonging">
+  <div class="col-narrow">
+    <div class="fb mb">
+      <div style="font-size: 18px; font-weight: 600;">[N] [people label]</div>
+      <div class="m">[Live indicator — e.g. "Updated live"]</div>
+    </div>
+    <!-- Activity feed — minimal, inline -->
+    <div style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;" class="fb">
+      <span class="m">● <b style="color:#333;">[Name] from [City]</b> — [Tier]</span>
+      <span class="m">[X min ago]</span>
+    </div>
+    <div style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;" class="fb">
+      <span class="m">● <b style="color:#333;">[Name] from [City]</b> — [Tier]</span>
+      <span class="m">[X min ago]</span>
+    </div>
+    <div style="padding: 8px 0; border-bottom: 1px solid #F0F0F0;" class="fb">
+      <span class="m">● <b style="color:#333;">[Name] from [City]</b> — [Tier]</span>
+      <span class="m">[X min ago]</span>
+    </div>
+    <div style="padding: 8px 0;" class="fb">
+      <span class="m">● <b style="color:#333;">[Name] from [City]</b> — [Tier]</span>
+      <span class="m">[X min ago]</span>
+    </div>
+
+    <!-- Wall messages — a few highlights, not a grid -->
+    <div class="mt" style="padding: 16px; background: #F8F8F8; border-left: 2px solid #DDD; margin-top: 24px;">
+      <div style="font-weight: 600; font-size: 12px;">[Name] <span class="m" style="color: #C09030;">[Founding Supporter #N]</span></div>
+      <div class="m" style="font-style: italic; margin-top: 4px;">[Message — placeholder]</div>
+    </div>
+    <div style="padding: 16px; background: #F8F8F8; border-left: 2px solid #DDD; margin-top: 8px;">
+      <div style="font-weight: 600; font-size: 12px;">[Name]</div>
+      <div class="m" style="font-style: italic; margin-top: 4px;">[Message — placeholder]</div>
+    </div>
+    <div style="padding: 16px; background: #F8F8F8; border-left: 2px solid #DDD; margin-top: 8px;">
+      <div style="font-weight: 600; font-size: 12px;">[Anonymous]</div>
+      <div class="m" style="font-style: italic; margin-top: 4px;">[Message — placeholder]</div>
+    </div>
+  </div>
+  <div class="ann"><b>Social proof sits AFTER the ask.</b> You've decided to fund (or you're considering it). Now you see: other people already have. Activity feed is a simple list in the same narrow column — no separate section, just continues the scroll. Wall messages appear as editorial quotes (left-border style, like testimonials in a magazine), not a grid. Founding Supporter badges inline. Supabase realtime feed. This reinforces the decision, not pressures it.</div>
+</div>
+
+
+<!-- BEAT 10: THE UNLOCKS — COLLECTIVE MOMENTUM -->
+<div class="beat beat-emotion" data-beat="Beat 10 · Content Unlocks" data-emotion="Belonging → Anticipation">
+  <div class="col-narrow">
+    <div style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">[Heading — what the community has unlocked together. Placeholder.]</div>
+  </div>
+
+  <!-- Unlocked content — plays inline -->
+  <div class="ph" style="height: 280px; flex-direction: column; gap: 6px;">
+    <div style="width:50px; height:50px; border:2px solid #2E7D32; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:#2E7D32;">▶</div>
+    <span>✓ [Milestone %] unlocked — [Content title]</span>
+    <span style="font-size:10px; color:#BBB;">Click to play. Full-width Mux player. Documentary footage.</span>
+  </div>
+  <div style="height: 4px;"></div>
+  <div class="ph" style="height: 280px; flex-direction: column; gap: 6px;">
+    <div style="width:50px; height:50px; border:2px solid #2E7D32; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; color:#2E7D32;">▶</div>
+    <span>✓ [Milestone %] unlocked — [Content title]</span>
+    <span style="font-size:10px; color:#BBB;">Click to play.</span>
+  </div>
+
+  <!-- Locked content — teaser -->
+  <div style="height: 4px;"></div>
+  <div class="ph" style="height: 200px; background: #D8D8D8; flex-direction: column; gap: 6px;">
+    <span>🔒 [Unlocks at X%] — [Content title]</span>
+    <span style="font-size:10px; color:#AAA;">Blurred thumbnail. Visible to everyone. Drives sharing to hit milestone.</span>
+  </div>
+  <div style="height: 4px;"></div>
+  <div class="ph" style="height: 200px; background: #D8D8D8; flex-direction: column; gap: 6px;">
+    <span>🔒 [Unlocks at X%] — [Content title]</span>
+    <span style="font-size:10px; color:#AAA;">Blurred thumbnail.</span>
+  </div>
+
+  <div class="ann"><b>PUBLIC — for sharing.</b> Unlocked content plays full-width as inline video (not a modal, not a card — it takes over the scroll like the editorial images above). Locked content shows blurred full-width placeholder with milestone label. These are stacked vertically, not in a 4-col grid — each one gets its own moment. The visual rhythm: large video → large video → blurred teaser → blurred teaser. Drives collective action: "Help us unlock the next one."</div>
+</div>
+
+
+<!-- BEAT 11: THE GATE — FOLLOW WHAT HAPPENS NEXT -->
+<div class="beat beat-emotion" data-beat="Beat 11 · The Gate — Ongoing Updates" data-emotion="Anticipation → Investment">
+  <div class="col-narrow">
+    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">[Heading — follow the journey. Placeholder.]</div>
+    <div class="m mb" style="font-size: 13px;">[One line — these updates are for people who funded. Placeholder.]</div>
+
+    <!-- Teaser of latest update — visible to all -->
+    <div style="border: 1px solid #DDD; padding: 20px; margin-bottom: 12px;">
+      <div class="m">[Date]</div>
+      <div style="font-weight: 600; margin: 4px 0;">[Latest update title — placeholder]</div>
+      <div class="m" style="font-size: 12px;">[First line of update — visible to everyone as a teaser]</div>
+      <div class="ph mt" style="height: 50px; background: #E0E0E0; font-size: 10px;">Thumbnail — blurred for non-donors</div>
+    </div>
+
+    <!-- Locked updates — stacked, faded -->
+    <div style="border: 1px solid #EEE; padding: 20px; margin-bottom: 8px; opacity: 0.4;">
+      <div class="m">[Date]</div>
+      <div style="font-weight: 600; margin: 4px 0; color: #BBB;">[Update title — placeholder]</div>
+      <div class="m" style="filter: blur(3px);">[Blurred excerpt]</div>
+    </div>
+    <div style="border: 1px solid #EEE; padding: 20px; margin-bottom: 8px; opacity: 0.3;">
+      <div class="m">[Date]</div>
+      <div style="font-weight: 600; margin: 4px 0; color: #CCC;">[Update title — placeholder]</div>
+      <div class="m" style="filter: blur(3px);">[Blurred excerpt]</div>
+    </div>
+    <div style="border: 1px solid #EEE; padding: 20px; opacity: 0.2;">
+      <div class="m">[Date]</div>
+      <div style="font-weight: 600; margin: 4px 0; color: #DDD;">[Update title]</div>
+    </div>
+
+    <!-- Gate -->
+    <div style="border: 2px dashed #CCC; padding: 20px; text-align: center; margin-top: 16px;">
+      <div style="font-weight: 600;">[Gate heading — placeholder]</div>
+      <div class="m mb" style="max-width: 320px; margin: 4px auto 12px;">[Gate description — placeholder]</div>
+      <div class="btn f">[CTA]</div>
+    </div>
+  </div>
+  <div class="ann"><b>Mixed gating.</b> Latest update shows title + first line to everyone (teaser). Older updates fade out progressively (opacity decreasing). Blurred thumbnails, blurred excerpts. The visual fade creates a powerful "there's more here you can't see" effect. Gate CTA at the bottom. For donors: all updates are fully visible with video. Updates are video-first from documentary footage. Funder messages woven into updates editorially.</div>
+</div>
+
+
+<!-- BEAT 12: THE NEXT STORY — GROWTH ENGINE -->
+<div class="beat beat-emotion" data-beat="Beat 12 · What Comes Next" data-emotion="Investment → Anticipation">
+  <div class="ph" style="height: 200px;">Single teaser image — next campaign. Moody, minimal. One image.</div>
+  <div class="col-narrow" style="text-align: center;">
+    <div class="m" style="text-transform: uppercase; letter-spacing: 0.2em;">[Coming next label]</div>
+    <div style="font-size: 24px; font-weight: 700; margin: 8px 0;">[Next story headline — placeholder]</div>
+    <div class="m mb">[One line — placeholder]</div>
+    <div style="display: flex; gap: 8px; max-width: 320px; margin: 0 auto;">
+      <input type="text" placeholder="[Email]" style="flex:1; padding: 8px 12px; border: 1px solid #DDD; font-size: 12px;">
+      <div class="btn f" style="padding: 8px 14px;">[CTA]</div>
+    </div>
+  </div>
+  <div class="ann"><b>The end is a beginning.</b> Minimal. One moody image from the next campaign. A headline. One line. Email capture. This is the growth engine — every visitor becomes a lead. Don't oversell. The current story does the work; this just plants the seed.</div>
+</div>
+
+
+<!-- FOOTER -->
+<div style="padding: 16px 24px; border-top: 1px solid #EEE;">
+  <div class="fb">
+    <div class="m">[Entity — CIC note]</div>
+    <div class="fr" style="gap: 16px;">
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+      <span class="m">[Link]</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     SCROLL ARCHITECTURE NOTES
+     ═══════════════════════════════════════════ -->
+<div style="padding: 24px; background: #F5F5F5; border-top: 3px solid #333;">
+  <div style="font-weight: 700; font-size: 14px; margin-bottom: 12px;">SCROLL ARCHITECTURE — IMPLEMENTATION NOTES</div>
+  <div style="font-size: 12px; color: #555; line-height: 1.8; max-width: 700px;">
+    <p><b>Emotional arc:</b> Arrival → Curiosity → Understanding → Surprise → Connection → Empathy → Trust → Clarity → Action → Belonging → Anticipation → Investment</p>
+    <p style="margin-top: 8px;"><b>Content sources:</b> All editorial content from Strapi (dynamic zones). All transactional data from Supabase (funding amounts, bids, activity feed, gating). Video from Mux. Images from Cloudinary/R2.</p>
+    <p style="margin-top: 8px;"><b>Scroll behaviors:</b> Subtle fade-in on text blocks (IntersectionObserver, not aggressive). Inline videos autoplay muted when scrolled into view. Full-width images have slight parallax (subtle — 5-10% movement, not jarring). Progress bar in nav updates as you scroll AND as funding changes. No scroll-jacking. No horizontal scrolling. Natural vertical scroll throughout.</p>
+    <p style="margin-top: 8px;"><b>The only persistent UI:</b> The nav bar with progress bar + amount + timer + CTA. Everything else is editorial content that scrolls naturally. No sticky sidebars, no floating elements, no pop-ups.</p>
+    <p style="margin-top: 8px;"><b>Dark theme:</b> The page should be dark (near-black background, light text) to let the photography and video dominate. The content is the color. The UI is invisible.</p>
+    <p style="margin-top: 8px;"><b>Typography:</b> Distinctive serif for headlines and pull quotes. Clean sans for body and UI. TBD by design — the wireframe deliberately has no font opinions.</p>
+    <p style="margin-top: 8px;"><b>Mobile:</b> Everything stacks. Person features go image-above-text. Tiers go single column. Activity feed simplifies. The core experience (video → story → people → ask → social proof) is the same scroll on every device.</p>
+  </div>
+</div>
+
+</body>
+</html>

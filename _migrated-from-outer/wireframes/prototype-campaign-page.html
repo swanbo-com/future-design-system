@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>future.ly — Scrap Wood Saints</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════
+   FUTURE.LY — Campaign Page Prototype
+   Aesthetic: Documentary cinema × editorial magazine
+   Dark, cinematic, immersive. The video dominates.
+   ══════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black: #0A0A0A;
+  --off-black: #111111;
+  --dark: #1A1A1A;
+  --mid: #2A2A2A;
+  --muted: #666666;
+  --light: #999999;
+  --cream: #E8E4DD;
+  --white: #F5F3EF;
+  --accent: #D4A853;
+  --accent-dim: #B8923F;
+  --teal: #5BBFB5;
+  --teal-dim: rgba(91,191,181,0.15);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+  --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--accent); color: var(--black); }
+
+/* ── GRAIN OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: var(--grain);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.4s ease;
+}
+.nav.scrolled {
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-logo {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--accent); }
+.nav-right { display: flex; align-items: center; gap: 28px; }
+.nav-link {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--light);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-link:hover { color: var(--white); }
+.nav-cta {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+.nav-cta:hover { background: var(--accent-dim); }
+
+/* ── HERO: FULL VIEWPORT VIDEO ── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) contrast(1.1);
+}
+/* Simulated video play button overlay */
+.hero-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  width: 88px;
+  height: 88px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.2);
+}
+.hero-play:hover { border-color: var(--white); transform: translate(-50%, -50%) scale(1.08); }
+.hero-play svg { margin-left: 4px; }
+.hero-play-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(60px, -50%);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+}
+
+.hero-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to top, var(--black) 0%, rgba(10,10,10,0.6) 50%, transparent 100%);
+  z-index: 1;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 60px 60px;
+  max-width: 900px;
+}
+.hero-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-tag::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--light);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+.hero-stat-number {
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--white);
+}
+.hero-stat-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.hero-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.12);
+}
+
+/* ── COUNTDOWN BAR ── */
+.countdown-bar {
+  background: var(--off-black);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 60px;
+  display: flex;
+  align-items: center;
+  height: 72px;
+  gap: 40px;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+.countdown-progress {
+  flex: 1;
+  height: 4px;
+  background: var(--mid);
+  border-radius: 2px;
+  position: relative;
+  overflow: visible;
+}
+.countdown-fill {
+  height: 100%;
+  width: 62%;
+  background: linear-gradient(90deg, var(--teal), var(--accent));
+  border-radius: 2px;
+  position: relative;
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.countdown-fill::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(212,168,83,0.5);
+}
+/* Milestone markers on progress bar */
+.milestone-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.milestone-mark {
+  position: absolute;
+  top: -8px;
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.15);
+}
+.milestone-mark.hit { background: var(--teal); }
+.milestone-mark:nth-child(1) { left: 25%; }
+.milestone-mark:nth-child(2) { left: 50%; }
+.milestone-mark:nth-child(3) { left: 75%; }
+.milestone-mark:nth-child(4) { left: 100%; }
+.milestone-label {
+  position: absolute;
+  top: 16px;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.milestone-mark.hit .milestone-label { color: var(--teal); }
+
+.countdown-amount {
+  text-align: right;
+  min-width: 140px;
+}
+.countdown-raised {
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--white);
+}
+.countdown-raised span { color: var(--light); font-weight: 300; font-size: 0.9rem; }
+.countdown-timer {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  min-width: 180px;
+}
+.timer-block {
+  text-align: center;
+  min-width: 44px;
+}
+.timer-number {
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.timer-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.timer-sep {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin-top: -12px;
+}
+.countdown-cta {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 28px;
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+.countdown-cta:hover { background: var(--accent-dim); }
+
+/* ── STORY SECTION ── */
+.story {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 100px 40px;
+}
+.story-intro {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  line-height: 1.45;
+  color: var(--white);
+  margin-bottom: 48px;
+  letter-spacing: -0.01em;
+}
+.story-intro em {
+  font-style: italic;
+  color: var(--accent);
+}
+.story p {
+  font-size: 1.05rem;
+  color: var(--cream);
+  margin-bottom: 28px;
+  opacity: 0.85;
+}
+.story-pull {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1.4;
+  padding: 40px 0 40px 32px;
+  border-left: 2px solid rgba(212,168,83,0.3);
+  margin: 48px 0;
+}
+
+/* ── FULL WIDTH IMAGES ── */
+.full-image {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+  overflow: hidden;
+}
+.full-image img {
+  width: 100%;
+  height: 70vh;
+  object-fit: cover;
+  filter: brightness(0.8) contrast(1.05);
+}
+.full-image-caption {
+  position: absolute;
+  bottom: 24px;
+  right: 40px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── IMAGE PAIR ── */
+.image-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.image-pair img {
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+  filter: brightness(0.8) contrast(1.05);
+}
+
+/* ── MEET THE PEOPLE ── */
+.people-section {
+  padding: 80px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--white);
+  margin-bottom: 48px;
+  letter-spacing: -0.02em;
+}
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 32px;
+}
+.person-card {
+  text-align: center;
+}
+.person-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 16px;
+  background: var(--mid);
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.06);
+}
+.person-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 2rem;
+  color: var(--accent);
+  background: var(--dark);
+}
+.person-name {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.person-role {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.person-story {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--light);
+  line-height: 1.5;
+}
+
+/* ── EXCHANGE TIERS ── */
+.tiers-section {
+  padding: 80px 60px;
+  background: var(--off-black);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.tiers-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.tier-card {
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.tier-card:hover {
+  border-color: rgba(212,168,83,0.3);
+  transform: translateY(-4px);
+}
+.tier-card.featured { border-color: var(--accent); }
+.tier-image {
+  width: 100%;
+  height: 180px;
+  background: var(--mid);
+  overflow: hidden;
+}
+.tier-image img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
+.tier-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.tier-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.tier-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.tier-desc {
+  font-size: 0.85rem;
+  color: var(--light);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
+}
+.tier-price {
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.tier-price-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.tier-btn {
+  width: 100%;
+  padding: 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+.tier-btn:hover { background: var(--accent); color: var(--black); border-color: var(--accent); }
+.tier-card.featured .tier-btn { background: var(--accent); color: var(--black); border-color: var(--accent); }
+.tier-card.featured .tier-btn:hover { background: var(--accent-dim); }
+.tier-remaining {
+  font-size: 11px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+/* ── CONTENT UNLOCKS ── */
+.unlocks-section {
+  padding: 80px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.unlocks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+.unlock-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  cursor: pointer;
+}
+.unlock-thumb {
+  width: 100%;
+  height: 100%;
+  background: var(--mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.unlock-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.unlock-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.unlock-card.unlocked .unlock-overlay {
+  background: rgba(10,10,10,0.3);
+  backdrop-filter: none;
+}
+.unlock-icon {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.unlock-card.unlocked .unlock-icon { border-color: var(--teal); background: rgba(91,191,181,0.2); }
+.unlock-milestone {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 4px;
+}
+.unlock-card.unlocked .unlock-milestone { color: var(--teal); }
+.unlock-title {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--white);
+  text-align: center;
+  padding: 0 12px;
+}
+
+/* ── ACTIVITY FEED ── */
+.activity-section {
+  padding: 60px;
+  background: var(--off-black);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.activity-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.activity-feed { }
+.feed-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  align-items: center;
+}
+.feed-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.feed-text { font-size: 0.9rem; color: var(--cream); }
+.feed-text strong { color: var(--white); font-weight: 500; }
+.feed-time { font-size: 0.8rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
+
+/* Community wall */
+.community-wall { }
+.wall-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.wall-entry {
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 4px;
+  padding: 16px;
+}
+.wall-name {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.wall-badge {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.wall-message {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--light);
+  line-height: 1.5;
+}
+
+/* ── GATED UPDATES ── */
+.updates-section {
+  padding: 80px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.update-card {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 28px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  align-items: start;
+}
+.update-thumb {
+  width: 180px;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--mid);
+  position: relative;
+}
+.update-thumb img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+.update-lock-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.update-lock-icon { color: var(--accent); margin-bottom: 4px; }
+.update-lock-text { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--light); }
+.update-date {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.update-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.update-excerpt {
+  font-size: 0.9rem;
+  color: var(--light);
+  line-height: 1.6;
+}
+.update-card.locked .update-title { color: var(--muted); }
+.update-card.locked .update-excerpt { color: var(--mid); filter: blur(4px); user-select: none; }
+
+.updates-gate {
+  margin-top: 40px;
+  padding: 32px;
+  background: var(--dark);
+  border: 1px solid rgba(212,168,83,0.2);
+  border-radius: 4px;
+  text-align: center;
+}
+.gate-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.gate-sub {
+  color: var(--light);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+.gate-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.gate-btn:hover { background: var(--accent-dim); }
+
+/* ── BUDGET TRANSPARENCY ── */
+.budget-section {
+  padding: 80px 60px;
+  background: var(--off-black);
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.budget-inner { max-width: 900px; margin: 0 auto; }
+.budget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+}
+.budget-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.budget-item-name { color: var(--cream); font-size: 0.95rem; }
+.budget-item-amount { color: var(--white); font-weight: 500; font-variant-numeric: tabular-nums; }
+.budget-bar {
+  height: 3px;
+  background: var(--mid);
+  border-radius: 2px;
+  margin-top: 4px;
+}
+.budget-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--teal);
+}
+
+/* ── NEXT STORY ── */
+.next-story {
+  padding: 100px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.next-story::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(212,168,83,0.04) 0%, transparent 70%);
+}
+.next-tag {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  position: relative;
+}
+.next-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--white);
+  margin-bottom: 16px;
+  position: relative;
+}
+.next-sub {
+  color: var(--light);
+  font-size: 1.05rem;
+  max-width: 480px;
+  margin: 0 auto 32px;
+  position: relative;
+}
+.next-form {
+  display: flex;
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
+  position: relative;
+}
+.next-input {
+  flex: 1;
+  padding: 14px 20px;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  background: var(--dark);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white);
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.next-input::placeholder { color: var(--muted); }
+.next-input:focus { border-color: var(--accent); }
+.next-submit {
+  padding: 14px 28px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--black);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+.next-submit:hover { background: var(--accent-dim); }
+
+/* ── FOOTER ── */
+.footer {
+  padding: 40px 60px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+.footer a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+.footer a:hover { color: var(--white); }
+.footer-links { display: flex; gap: 24px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .tiers-grid { grid-template-columns: repeat(2, 1fr); }
+  .unlocks-grid { grid-template-columns: repeat(2, 1fr); }
+  .activity-inner { grid-template-columns: 1fr; }
+  .wall-grid { grid-template-columns: repeat(2, 1fr); }
+  .budget-grid { grid-template-columns: 1fr; }
+  .countdown-bar { padding: 0 20px; gap: 20px; font-size: 0.85rem; }
+  .hero-content { padding: 0 24px 40px; }
+}
+@media (max-width: 600px) {
+  .tiers-grid { grid-template-columns: 1fr; }
+  .unlocks-grid { grid-template-columns: 1fr 1fr; }
+  .countdown-bar { flex-wrap: wrap; height: auto; padding: 12px 20px; }
+  .update-card { grid-template-columns: 1fr; }
+  .update-thumb { width: 100%; height: 180px; }
+  .people-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-play { width: 64px; height: 64px; }
+  .hero-play-label { display: none; }
+  .image-pair { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo">future<span>.</span>ly</a>
+  <div class="nav-right">
+    <a href="#story" class="nav-link">The Story</a>
+    <a href="#people" class="nav-link">The People</a>
+    <a href="#support" class="nav-link">Support</a>
+    <a href="#updates" class="nav-link">Updates</a>
+    <a href="#support" class="nav-cta">Fund This Story</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-media">
+    <img src="img-hero.jpg" alt="Kids skating down a highway through palm trees in Siargao, Philippines">
+  </div>
+
+  <!-- Play button for documentary video -->
+  <div class="hero-play">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg>
+    <span class="hero-play-label">Watch the film</span>
+  </div>
+
+  <div class="hero-gradient"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Campaign 001 — Siargao, Philippines</div>
+    <h1 class="hero-title">Scrap Wood<br>Saints</h1>
+    <p class="hero-sub">15 kids in a remote Filipino village build skateboards from scrap wood and nail them to flip-flops. We're giving them the real thing.</p>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <span class="hero-stat-number">147</span>
+        <span class="hero-stat-label">Supporters</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">£3,100</span>
+        <span class="hero-stat-label">of £5,000 raised</span>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">62%</span>
+        <span class="hero-stat-label">Funded</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STICKY COUNTDOWN BAR ═══ -->
+<div class="countdown-bar">
+  <div class="countdown-progress">
+    <div class="countdown-fill"></div>
+    <div class="milestone-markers">
+      <div class="milestone-mark hit"><span class="milestone-label">Safety gear</span></div>
+      <div class="milestone-mark hit"><span class="milestone-label">10 setups</span></div>
+      <div class="milestone-mark"><span class="milestone-label">Mini ramp</span></div>
+      <div class="milestone-mark"><span class="milestone-label">Full build</span></div>
+    </div>
+  </div>
+  <div class="countdown-amount">
+    <div class="countdown-raised">£3,100 <span>/ £5,000</span></div>
+  </div>
+  <div class="countdown-timer">
+    <div class="timer-block"><div class="timer-number">11</div><div class="timer-label">Days</div></div>
+    <span class="timer-sep">:</span>
+    <div class="timer-block"><div class="timer-number">07</div><div class="timer-label">Hours</div></div>
+    <span class="timer-sep">:</span>
+    <div class="timer-block"><div class="timer-number">42</div><div class="timer-label">Min</div></div>
+  </div>
+  <button class="countdown-cta">Fund This Story</button>
+</div>
+
+<!-- ═══ THE STORY ═══ -->
+<section class="story" id="story">
+  <p class="story-intro">In a barangay on the southern tip of Siargao, <em>fifteen kids ride skateboards made from scrap wood, bottle caps, and flip-flop rubber.</em> They bomb hills on the main highway, barefoot, laughing, dodging tricycles.</p>
+
+  <p>Nobody taught them. There's no skatepark, no shop, no YouTube tutorial that works on their connection speed. They watched older kids surf and thought: we want that feeling too. So they built boards from whatever they could find — driftwood, old planks, bent nails for axles.</p>
+
+  <p>The boards barely roll. Some don't turn at all. But the kids ride them every day after school, down the same hill, over and over, until the sun drops behind the palms and their parents call them home.</p>
+</section>
+
+<!-- Full-width image break -->
+<div class="full-image">
+  <img src="img-boards.jpeg" alt="Handmade skateboards crafted from scrap wood and nails">
+  <span class="full-image-caption">Handmade boards — scrap wood, bent nails, bottle-cap bearings</span>
+</div>
+
+<section class="story">
+  <p class="story-pull">They don't need saving. They need setups.</p>
+
+  <p>This isn't a charity story. These kids aren't victims — they're builders, inventors, skaters who happen to live somewhere where a real skateboard costs more than a month's family income. They've already proven they'll ride anything. We just want to see what they do with the real thing.</p>
+
+  <p>The plan is specific: 15 complete setups (decks, trucks, wheels, bearings, helmets, pads), materials to build a proper mini ramp, and a community session led by local riders. Every peso is accounted for publicly. The budget is below.</p>
+
+  <p>Bren has been documenting this community for two years. He didn't set out to make a project — he just kept coming back because the kids kept building new boards. When strangers started messaging him wanting to help, we built future.ly to give them a way to do it that actually works.</p>
+</section>
+
+<!-- Image pair -->
+<div class="image-pair">
+  <img src="img-kids.jpeg" alt="Filipino kids skating down a curved road">
+  <img src="img-kids2.jpeg" alt="Kids riding scrap-wood boards together">
+</div>
+
+<!-- ═══ MEET THE PEOPLE ═══ -->
+<section class="people-section" id="people">
+  <div class="section-label">The People</div>
+  <h2 class="section-title">You're funding humans, not a cause</h2>
+  <div class="people-grid">
+    <div class="person-card">
+      <div class="person-avatar"><div class="person-avatar-placeholder">K</div></div>
+      <div class="person-name">Kael, 11</div>
+      <div class="person-role">Rider</div>
+      <div class="person-story">Rides a piece of plywood with bottle-cap wheels down the steepest hill in the barangay. Calls it flying.</div>
+    </div>
+    <div class="person-card">
+      <div class="person-avatar"><div class="person-avatar-placeholder">M</div></div>
+      <div class="person-name">Marco, 13</div>
+      <div class="person-role">Builder</div>
+      <div class="person-story">Makes boards for the younger kids. Has figured out axle geometry using bent nails and rubber bands.</div>
+    </div>
+    <div class="person-card">
+      <div class="person-avatar"><div class="person-avatar-placeholder">B</div></div>
+      <div class="person-name">Bren</div>
+      <div class="person-role">Filmmaker / On-ground</div>
+      <div class="person-story">Left media to document grassroots communities across SE Asia. He earns a share of every exchange on this campaign.</div>
+    </div>
+    <div class="person-card">
+      <div class="person-avatar"><div class="person-avatar-placeholder">R</div></div>
+      <div class="person-name">Rick</div>
+      <div class="person-role">Documentary Director</div>
+      <div class="person-story">Carries a camera everywhere. Shooting the documentary that sits at the heart of this campaign.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXCHANGE TIERS ═══ -->
+<section class="tiers-section" id="support">
+  <div class="tiers-inner">
+    <div class="section-label">Support This Story</div>
+    <h2 class="section-title">Get something real back</h2>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-image"><img src="img-aerial.webp" alt="Siargao aerial view"></div>
+        <div class="tier-body">
+          <div class="tier-label">Supporter</div>
+          <div class="tier-name">Join the Wall</div>
+          <div class="tier-desc">Your name on the community wall. Access to all story updates. Be part of this from the beginning.</div>
+          <div class="tier-price">From £5</div>
+          <div class="tier-price-sub">Any amount you choose</div>
+          <button class="tier-btn">Support</button>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-image"><img src="img-skater.webp" alt="Skater on Siargao road"></div>
+        <div class="tier-body">
+          <div class="tier-label">Personal</div>
+          <div class="tier-name">Thank You Card</div>
+          <div class="tier-desc">A handwritten card from one of the kids, written during their English classes. Shipped worldwide.</div>
+          <div class="tier-price">£15</div>
+          <div class="tier-price-sub">Ships in 6–8 weeks</div>
+          <button class="tier-btn">Get Yours</button>
+        </div>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-image"><img src="img-hero.jpg" alt="Kids skating the highway"></div>
+        <div class="tier-body">
+          <div class="tier-label">Standard</div>
+          <div class="tier-name">Signed Print</div>
+          <div class="tier-desc">A high-quality archival print from the documentary, hand-signed by Bren. A3, white border, giclée.</div>
+          <div class="tier-price">£35</div>
+          <div class="tier-price-sub">Print-on-demand, ships globally</div>
+          <button class="tier-btn">Get Yours</button>
+        </div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-image"><img src="img-boards.jpeg" alt="Handmade scrap wood boards"></div>
+        <div class="tier-body">
+          <div class="tier-label">Premium — Auction</div>
+          <div class="tier-name">Handmade Board</div>
+          <div class="tier-desc">An original scrap-wood board made by the kids. One of a kind. A piece of the story, framed or ridden.</div>
+          <div class="tier-remaining">3 of 5 remaining</div>
+          <div class="tier-price">Current bid: £180</div>
+          <div class="tier-price-sub">Auction ends in 11 days</div>
+          <button class="tier-btn">Place Bid</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTENT UNLOCKS ═══ -->
+<section class="unlocks-section">
+  <div class="section-label">Collective Unlocks</div>
+  <h2 class="section-title">Hit the milestone. Unlock the story.</h2>
+  <div class="unlocks-grid">
+    <div class="unlock-card unlocked">
+      <div class="unlock-thumb"><img src="img-kids.jpeg" alt="Documentary teaser"></div>
+      <div class="unlock-overlay">
+        <div class="unlock-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2"><polygon points="6,3 20,12 6,21"/></svg>
+        </div>
+        <div class="unlock-milestone">25% — Unlocked</div>
+        <div class="unlock-title">Documentary Teaser</div>
+      </div>
+    </div>
+    <div class="unlock-card unlocked">
+      <div class="unlock-thumb"><img src="img-boards.jpeg" alt="Building the boards"></div>
+      <div class="unlock-overlay">
+        <div class="unlock-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5BBFB5" stroke-width="2"><polygon points="6,3 20,12 6,21"/></svg>
+        </div>
+        <div class="unlock-milestone">50% — Unlocked</div>
+        <div class="unlock-title">Building the Boards</div>
+      </div>
+    </div>
+    <div class="unlock-card">
+      <div class="unlock-thumb"><img src="img-kids2.jpeg" alt="Personal message"></div>
+      <div class="unlock-overlay">
+        <div class="unlock-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="unlock-milestone">Unlocks at 75%</div>
+        <div class="unlock-title">A Message From Them</div>
+      </div>
+    </div>
+    <div class="unlock-card">
+      <div class="unlock-thumb"><img src="img-hero.jpg" alt="Full story"></div>
+      <div class="unlock-overlay">
+        <div class="unlock-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="unlock-milestone">Unlocks at 100%</div>
+        <div class="unlock-title">The Full Story</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LIVE ACTIVITY + COMMUNITY WALL ═══ -->
+<section class="activity-section">
+  <div class="activity-inner">
+    <div class="activity-feed">
+      <div class="section-label">Live Activity</div>
+      <h3 class="section-title" style="font-size:1.5rem; margin-bottom: 24px;">Happening now</h3>
+      <div class="feed-item">
+        <div class="feed-dot"></div>
+        <div class="feed-text"><strong>Sarah from Bristol</strong> backed the Signed Print tier</div>
+        <div class="feed-time">2 min ago</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="animation-delay: 0.5s;"></div>
+        <div class="feed-text"><strong>James from Sydney</strong> backed the Supporter tier</div>
+        <div class="feed-time">8 min ago</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="animation-delay: 1s;"></div>
+        <div class="feed-text"><strong>Someone from California</strong> placed a bid on Handmade Board</div>
+        <div class="feed-time">14 min ago</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="animation-delay: 1.5s;"></div>
+        <div class="feed-text"><strong>Tomoko from Tokyo</strong> backed the Thank You Card tier</div>
+        <div class="feed-time">23 min ago</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="animation-delay: 2s;"></div>
+        <div class="feed-text"><strong>Mike from London</strong> backed the Signed Print tier</div>
+        <div class="feed-time">31 min ago</div>
+      </div>
+    </div>
+    <div class="community-wall">
+      <div class="section-label">Community Wall</div>
+      <h3 class="section-title" style="font-size:1.5rem; margin-bottom: 24px;">147 supporters</h3>
+      <div class="wall-grid">
+        <div class="wall-entry">
+          <div class="wall-name">Tom H.</div>
+          <div class="wall-badge">Founding Supporter #3</div>
+          <div class="wall-message">These kids are incredible. Can't wait to see them on real setups.</div>
+        </div>
+        <div class="wall-entry">
+          <div class="wall-name">Aisha K.</div>
+          <div class="wall-badge">Founding Supporter #11</div>
+          <div class="wall-message">The documentary teaser made me cry. Sharing with everyone I know.</div>
+        </div>
+        <div class="wall-entry">
+          <div class="wall-name">Carlos M.</div>
+          <div class="wall-badge">Founding Supporter #27</div>
+          <div class="wall-message">From a skater in Mexico — this is what it's all about.</div>
+        </div>
+        <div class="wall-entry">
+          <div class="wall-name">Emma L.</div>
+          <div class="wall-badge"></div>
+          <div class="wall-message">Just backed the print. That highway shot is stunning.</div>
+        </div>
+        <div class="wall-entry">
+          <div class="wall-name">David P.</div>
+          <div class="wall-badge"></div>
+          <div class="wall-message">Do the kids have helmets? Would love to know they're safe on that hill.</div>
+        </div>
+        <div class="wall-entry">
+          <div class="wall-name">Anonymous</div>
+          <div class="wall-badge"></div>
+          <div class="wall-message">Keep going.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GATED UPDATES ═══ -->
+<section class="updates-section" id="updates">
+  <div class="section-label">Story Updates</div>
+  <h2 class="section-title">Follow what happens next</h2>
+
+  <div class="update-card">
+    <div class="update-thumb"><img src="img-kids.jpeg" alt="Update thumbnail"></div>
+    <div>
+      <div class="update-date">March 18, 2026</div>
+      <div class="update-title">The helmets arrived — and David, they fit</div>
+      <div class="update-excerpt">David from London asked on the wall if the kids have helmets. Today we can show him the answer. 15 helmets, 15 sets of pads, delivered to the barangay this morning...</div>
+    </div>
+  </div>
+
+  <div class="update-card">
+    <div class="update-thumb"><img src="img-skater.webp" alt="Update thumbnail"></div>
+    <div>
+      <div class="update-date">March 14, 2026</div>
+      <div class="update-title">First real setups assembled — the kids' reactions</div>
+      <div class="update-excerpt">We filmed everything. The moment Kael stepped on a real board for the first time... he didn't say anything. He just pushed off and didn't stop for twenty minutes...</div>
+    </div>
+  </div>
+
+  <div class="update-card locked">
+    <div class="update-thumb">
+      <img src="img-aerial.webp" alt="Locked update">
+      <div class="update-lock-overlay">
+        <div class="update-lock-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="update-lock-text">Supporters only</div>
+      </div>
+    </div>
+    <div>
+      <div class="update-date">March 10, 2026</div>
+      <div class="update-title">Behind the lens — Bren on why he keeps coming back</div>
+      <div class="update-excerpt">This update is exclusive to supporters. Fund this story to unlock all updates and follow the full journey as it unfolds...</div>
+    </div>
+  </div>
+
+  <div class="update-card locked">
+    <div class="update-thumb">
+      <img src="img-boards.jpeg" alt="Locked update">
+      <div class="update-lock-overlay">
+        <div class="update-lock-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="update-lock-text">Supporters only</div>
+      </div>
+    </div>
+    <div>
+      <div class="update-date">March 6, 2026</div>
+      <div class="update-title">The ramp sketch — Marco drew the design himself</div>
+      <div class="update-excerpt">This update is exclusive to supporters. Fund this story to unlock all updates and follow the full journey as it unfolds...</div>
+    </div>
+  </div>
+
+  <div class="updates-gate">
+    <div class="gate-title">Follow the full story</div>
+    <div class="gate-sub">Fund this campaign to unlock all updates. See what your money builds, who it reaches, and how the story unfolds — week by week.</div>
+    <button class="gate-btn">Fund This Story</button>
+  </div>
+</section>
+
+<!-- ═══ BUDGET TRANSPARENCY ═══ -->
+<section class="budget-section">
+  <div class="budget-inner">
+    <div class="section-label">Radical Transparency</div>
+    <h2 class="section-title">Where every pound goes</h2>
+    <div class="budget-grid">
+      <div>
+        <div class="budget-item">
+          <span class="budget-item-name">15× complete skateboard setups</span>
+          <span class="budget-item-amount">£1,800</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 100%;"></div></div>
+        <div class="budget-item">
+          <span class="budget-item-name">Safety gear (helmets + pads)</span>
+          <span class="budget-item-amount">£600</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 100%;"></div></div>
+        <div class="budget-item">
+          <span class="budget-item-name">Mini ramp materials + build</span>
+          <span class="budget-item-amount">£1,200</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 45%;"></div></div>
+      </div>
+      <div>
+        <div class="budget-item">
+          <span class="budget-item-name">Shipping (boards to auction winners)</span>
+          <span class="budget-item-amount">£400</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 30%;"></div></div>
+        <div class="budget-item">
+          <span class="budget-item-name">Community session (local riders)</span>
+          <span class="budget-item-amount">£300</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 0%;"></div></div>
+        <div class="budget-item">
+          <span class="budget-item-name">Print fulfillment + cards</span>
+          <span class="budget-item-amount">£700</span>
+        </div>
+        <div class="budget-bar"><div class="budget-bar-fill" style="width: 60%;"></div></div>
+      </div>
+    </div>
+    <p style="margin-top: 32px; font-size: 0.85rem; color: var(--muted);">Budget updated in real-time as funds are spent. Receipts published quarterly. Platform fee: £2 flat per exchange. Creator Fund: £1 per exchange (pays Bren and Rick). Payment processing: ~3% (Stripe, at cost).</p>
+  </div>
+</section>
+
+<!-- ═══ NEXT STORY ═══ -->
+<section class="next-story">
+  <div class="next-tag">Coming Next</div>
+  <h2 class="next-title">A different ocean.<br>A different story.</h2>
+  <p class="next-sub">250 students. Free English classes. A surf community in Mentawai, Indonesia. The next story is being filmed now.</p>
+  <form class="next-form" onsubmit="event.preventDefault();">
+    <input type="email" class="next-input" placeholder="Your email">
+    <button type="submit" class="next-submit">Notify Me</button>
+  </form>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <span>future.ly CIC — UK registered community interest company</span>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Safeguarding</a>
+    <a href="#">Creator Fund</a>
+    <a href="#">Terms</a>
+    <a href="#">Privacy</a>
+  </div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Animate progress bar on load
+window.addEventListener('load', () => {
+  const fill = document.querySelector('.countdown-fill');
+  fill.style.width = '0%';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      fill.style.width = '62%';
+    });
+  });
+});
+
+// Countdown timer (demo - counts down from 11d 7h 42m)
+let totalSeconds = 11 * 86400 + 7 * 3600 + 42 * 60;
+function updateTimer() {
+  const d = Math.floor(totalSeconds / 86400);
+  const h = Math.floor((totalSeconds % 86400) / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  document.querySelectorAll('.timer-number')[0].textContent = String(d).padStart(2, '0');
+  document.querySelectorAll('.timer-number')[1].textContent = String(h).padStart(2, '0');
+  document.querySelectorAll('.timer-number')[2].textContent = String(m).padStart(2, '0');
+  totalSeconds--;
+}
+setInterval(updateTimer, 60000);
+</script>
+
+</body>
+</html>
